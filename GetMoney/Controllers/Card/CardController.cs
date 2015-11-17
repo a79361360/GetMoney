@@ -43,6 +43,7 @@ namespace GetMoney.Controllers.Card
             try
             {
                 _bll.AddCard(dto);
+
                 if (num > 0)
                 {
                     JsonFormat(new ExtJson { success = true, msg = "添加成功！" });
