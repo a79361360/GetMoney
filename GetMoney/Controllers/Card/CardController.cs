@@ -43,11 +43,6 @@ namespace GetMoney.Controllers.Card
             try
             {
                 _bll.AddCard(dto);
-                //string strSql = "INSERT INTO [dbo].[Card]([CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate]";
-                //strSql += ",[CardDelayDay],[CardInputDate],[Remark])VALUES";
-                //strSql += "(" + dto.CardCode + ",'" + dto.CardName + "'," + dto.CardBankType + "," + dto.CardUseType + "," + dto.CardAmount + ",";
-                //strSql += "'" + dto.CardBillDate + "'," + dto.CardDelayDay + ",'" + dto.CardInputDate + "','" + dto.Remark + "')";
-                //var num = SqlHelper.ExecuteNonQuery(SqlHelper.SQLConnString, CommandType.Text, strSql);
                 if (num > 0)
                 {
                     JsonFormat(new ExtJson { success = true, msg = "添加成功！" });
