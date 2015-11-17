@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "这里是主页";
+}
+<body class="easyui-layout">
+    @*上北*@
+    <div data-options="region:'north',border:false" style="height:60px;">
+        <div id="top_left"></div>
+        <div class="layout_top_right">
+            <div class="tx"></div>
+            <div class="userinfo">
+                <table>
+                    <tr><td>账号：</td><td><span>a79361360</span></td></tr>
+                    <tr><td>手机号码：</td><td><span>18020637512</span></td></tr>
+                    <tr><td>账户金额：</td><td><span>500.00</span>元</td></tr>
+
+                </table>
+            </div>
+            <div class="other">
+                <div id="clock" class="lock"></div>
+                <div class="sys" title="切换主题">
+                    <img src="../Content/Icon/IconsExtension/rainbow.png" />
+                    <select>
+                        <option value="default">default</option>
+                        <option value="bootstrap">bootstrap</option>
+                        <option value="black">black</option>
+                        <option value="gray">gray</option>
+                        <option value="metro-blue">metro-blue</option>
+                        <option value="metro-green">metro-green</option>
+                    </select>
+                </div>
+                <div class="sys">
+                    <img src="../Content/Icon/IconsExtension/door_out.png" /><span>安全退出</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*左西*@
+    <div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:10px;">west content</div>
+    @*右东*@
+    <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
+    @*下南*@
+    <div data-options="region:'south',border:false" style="height:50px;">
+        <div style="margin-top: 5px">&copy;2013 版权所有</div>
+    </div>
+    @*中间*@
+    <div data-options="region:'center',title:'Center'"></div>
+</body>

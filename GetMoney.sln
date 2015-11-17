@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney", "GetMoney\GetMoney.csproj", "{84D2585C-E3E4-47B3-B9C1-DE80952DD8EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney.Framework", "GetMoney.Framework\GetMoney.Framework.csproj", "{E9150CE1-AC11-4FDB-A51B-944C5AE204C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney.Model", "GetMoney.Model\GetMoney.Model.csproj", "{964DE9D2-17E0-48B8-ABA3-5DFFCBC6EB8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney.Data", "GetMoney.Data\GetMoney.Data.csproj", "{61BCE72C-0E38-4F36-B200-605F92D3F437}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney.Application", "GetMoney.Application\GetMoney.Application.csproj", "{3503C854-8EDD-4F8D-8C5C-14655C771E95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney.Ioc", "GetMoney.Ioc\GetMoney.Ioc.csproj", "{EED91F69-83AC-4941-9A9B-1C282AA9CB9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney.Dal", "GetMoney.Dal\GetMoney.Dal.csproj", "{B68C2FDF-AA00-40C9-BDEC-8A9AA7DA3E6C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84D2585C-E3E4-47B3-B9C1-DE80952DD8EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84D2585C-E3E4-47B3-B9C1-DE80952DD8EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84D2585C-E3E4-47B3-B9C1-DE80952DD8EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84D2585C-E3E4-47B3-B9C1-DE80952DD8EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9150CE1-AC11-4FDB-A51B-944C5AE204C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9150CE1-AC11-4FDB-A51B-944C5AE204C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9150CE1-AC11-4FDB-A51B-944C5AE204C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9150CE1-AC11-4FDB-A51B-944C5AE204C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{964DE9D2-17E0-48B8-ABA3-5DFFCBC6EB8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{964DE9D2-17E0-48B8-ABA3-5DFFCBC6EB8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{964DE9D2-17E0-48B8-ABA3-5DFFCBC6EB8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{964DE9D2-17E0-48B8-ABA3-5DFFCBC6EB8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61BCE72C-0E38-4F36-B200-605F92D3F437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61BCE72C-0E38-4F36-B200-605F92D3F437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61BCE72C-0E38-4F36-B200-605F92D3F437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61BCE72C-0E38-4F36-B200-605F92D3F437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3503C854-8EDD-4F8D-8C5C-14655C771E95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3503C854-8EDD-4F8D-8C5C-14655C771E95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3503C854-8EDD-4F8D-8C5C-14655C771E95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3503C854-8EDD-4F8D-8C5C-14655C771E95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EED91F69-83AC-4941-9A9B-1C282AA9CB9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EED91F69-83AC-4941-9A9B-1C282AA9CB9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EED91F69-83AC-4941-9A9B-1C282AA9CB9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EED91F69-83AC-4941-9A9B-1C282AA9CB9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B68C2FDF-AA00-40C9-BDEC-8A9AA7DA3E6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68C2FDF-AA00-40C9-BDEC-8A9AA7DA3E6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68C2FDF-AA00-40C9-BDEC-8A9AA7DA3E6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68C2FDF-AA00-40C9-BDEC-8A9AA7DA3E6C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
+	EndGlobalSection
+EndGlobal

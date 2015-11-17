@@ -1,0 +1,91 @@
+﻿@*@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //使用jQuery异步提交表单
+            $('#documentForm').submit(function () {
+                jQuery.ajax({
+                    url: '/Card/AddCard',
+                    data: $('#documentForm').serialize(),
+                    type: "POST",
+                    beforeSend: function () {
+                        //在异步提交前要做的操作
+                    },
+                    success: function () {
+                        //在异步提交成功后要做的操作
+                        //$.messager.show({
+                        //    title: '提示',
+                        //    msg: '我是成功的'
+                        //});
+                        $.messager.alert('Info', '89876', 'info111');
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div>
+        @ViewBag.title
+    </div>
+    <form id="documentForm">
+        <table>
+            <tr><td>卡号</td><td><input name="CardCode" type="text" /></td></tr>
+            <tr><td>卡名</td><td><input name="CardName" type="text" /></td></tr>
+            <tr>
+                <td>银行类型</td>
+                <td>
+                    <select name="CardBankType">
+                        <option value="1">信用卡</option>
+                        <option value="2">借货平台</option>
+                        <option value="3">储蓄卡</option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td>使用类型</td><td><input name="CardUseType" type="text" /></td></tr>
+            <tr><td>信用额度</td><td><input name="CardAmount" type="text" /></td></tr>
+            <tr><td>账单日</td><td><input name="CardBillDate" type="text" /></td></tr>
+            <tr><td>延长日期</td><td><input name="CardDelayDay" type="text" /></td></tr>
+            <tr><td>备注</td><td><input name="Remark" type="text" /></td></tr>
+        </table>
+        <button id="btnConfirm" value="提交">提交</button>
+    </form>
+</body>
+</html>*@
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<div>
+    <h1>@(ViewBag.table)（数据表）</h1>
+</div>
+<table id="@(ViewBag.table)_dg" iconcls="icon-table" style="width: auto; height: auto; margin-top: 5px">
+    <thead>
+        <tr>
+            <th data-options="field:'Name',width:50,align:'left'">字段名</th>
+            <th data-options="field:'Type',width:50,align:'left'">类型</th>
+            <th data-options="field:'IsKeyDesc',width:30,align:'center'">主键</th>
+            <th data-options="field:'IsIdentityDesc',width:30,align:'center'">自增长</th>
+            <th data-options="field:'IdentIncr',width:30,align:'center'">递增量</th>
+            <th data-options="field:'Length',width:50,align:'left'">长度</th>
+            <th data-options="field:'Scale',width:50,align:'left'">小数</th>
+            <th data-options="field:'DefaultValue',width:50,align:'center'">默认值</th>
+            <th data-options="field:'IsNullableDesc',width:30,align:'center'">可空</th>
+            <th data-options="field:'Description',width:150,align:'left'">描述</th>
+            @*<th data-options="field:'IdentSeed',width:80,align:'left'">标识种子</th>
+                <th data-options="field:'Bytes',width:80,align:'left'">占用字节数</th>*@
+        </tr>
+    </thead>
+</table>
