@@ -52,7 +52,7 @@
     <Compile Include="ExtendActionResult.cs" />
     <Compile Include="ExtJson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIDataGrid.cs" />
+    <Compile Include="Common\UIDataGrid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
