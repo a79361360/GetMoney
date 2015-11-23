@@ -10,5 +10,6 @@ namespace GetMoney.Application.Card
     {
         string test();
         void AddCard(CardDto dto);
+        List<CardDto> FindCard(int? id);
     }
 }

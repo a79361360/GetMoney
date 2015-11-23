@@ -7,6 +7,7 @@ namespace GetMoney.Model
 {
     public class CardDto
     {
+        public int ID { get; set; }
         public int CardCode { get; set; }
         public string CardName { get; set; }
         //卡的银行类型例:建行信用卡,淘宝花呗,建行储蓄卡

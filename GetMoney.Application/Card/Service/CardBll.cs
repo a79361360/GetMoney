@@ -37,7 +37,12 @@ namespace GetMoney.Application.Card
             _repostory.Add(_build);
             _unitOfWork.Commit();
         }
+        public List<CardDto> FindCard(int? id) {
 
+            string strsql = "SELECT [CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate],[CardDelayDay],[CardInputDate],[Remark] FROM [dbo].[Card] WHERE ID" + id;
+            List<CardDto> list = new List<CardDto>();
+            return list;
+        }
 
     }
 }

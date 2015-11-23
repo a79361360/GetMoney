@@ -68,7 +68,7 @@
     ViewBag.Title = "Index";
     Layout = null;
 }
-<div>
+@*<div>
     <h1>@(ViewBag.table)（数据表）</h1>
 </div>
 <table id="@(ViewBag.table)_dg" iconcls="icon-table" style="width: auto; height: auto; margin-top: 5px">
@@ -84,8 +84,31 @@
             <th data-options="field:'DefaultValue',width:50,align:'center'">默认值</th>
             <th data-options="field:'IsNullableDesc',width:30,align:'center'">可空</th>
             <th data-options="field:'Description',width:150,align:'left'">描述</th>
-            @*<th data-options="field:'IdentSeed',width:80,align:'left'">标识种子</th>
-                <th data-options="field:'Bytes',width:80,align:'left'">占用字节数</th>*@
+            <th data-options="field:'IdentSeed',width:80,align:'left'">标识种子</th>
+            <th data-options="field:'Bytes',width:80,align:'left'">占用字节数</th>
         </tr>
     </thead>
-</table>
+</table>*@
+<script type="text/javascript">
+    $('#dg').datagrid({
+        url: '../Card/CardList',
+        columns: [[
+            { field: 'CardCode', title: '卡号', width: 100 },
+            { field: 'CardName', title: '卡名', width: 100, },
+            { field: 'CardBankType', title: '金额', width: 100 }
+        ]],
+        toolbar: [{
+            iconCls: 'icon-edit',
+            handler: function () { alert('编辑按钮') }
+        }, '-', {
+            iconCls: 'icon-help',
+            handler: function () { alert('帮助按钮') }
+        }]
+    });
+
+
+</script>
+
+<table id="dg">
+</table> 
+
