@@ -60,14 +60,15 @@ namespace GetMoney.Controllers.Card
         }
 
         public string CardList() {
-            string strsql = "SELECT [ID],[CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate],[CardDelayDay],[CardInputDate],[Remark] FROM [dbo].[Cards] WHERE ID=1";
-            DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.SQLConnString, CommandType.Text, strsql);
+            string strsql = "SELECT top 10 [ID],[CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate],[CardDelayDay],[CardInputDate],[Remark] FROM [dbo].[Cards]";
+            //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.SQLConnString, CommandType.Text, strsql);
+            DataSet ds = SqlHelper.Paging(SqlHelper.SQLConnString, "ID", "[dbo].[Cards]", "[ID],[CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate],[CardDelayDay],[CardInputDate],[Remark]", "", null, "", 5, 10);
             var list = new List<CardDto>();
             if (Utils.HasMoreRow(ds))
             {
-                list.AddRange(from DataRow dr in ds.Tables[0].Rows select DataRowToModel(dr));
+                list.AddRange(from DataRow dr in ds.Tables[1].Rows select DataRowToModel(dr));
             }
-            return JsonConvert.SerializeObject(new UIDataGrid(0, list));
+            return JsonConvert.SerializeObject(new UIDataGrid(ds.Tables[0].Rows[0]["recrowcount"].ToInt32(), list));
         }
 
         private CardDto DataRowToModel(DataRow row)

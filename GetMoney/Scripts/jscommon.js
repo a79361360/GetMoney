@@ -50,7 +50,7 @@ function OpenTabs(url, title, icon) {
     if (!tt.tabs('exists', title)) {
         $.getServerView(url, null, function (res) {
             //console.log(url);
-            console.log(res); 
+            //console.log(res); 
             tt.tabs('add', {
                 title: title,
                 closable: true,

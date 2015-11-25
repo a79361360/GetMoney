@@ -91,24 +91,55 @@
 </table>*@
 <script type="text/javascript">
     $('#dg').datagrid({
+        border:true,
         url: '../Card/CardList',
         columns: [[
             { field: 'CardCode', title: '卡号', width: 100 },
             { field: 'CardName', title: '卡名', width: 100, },
             { field: 'CardBankType', title: '金额', width: 100 }
         ]],
+        //toolbar:'#ft'
         toolbar: [{
+            iconCls: 'icon-add',
+            text:'新增',
+            handler: function () { alert('新增按钮') }
+        }, '-', {
             iconCls: 'icon-edit',
+            text: '编辑',
             handler: function () { alert('编辑按钮') }
         }, '-', {
-            iconCls: 'icon-help',
-            handler: function () { alert('帮助按钮') }
-        }]
+            iconCls: 'icon-remove',
+            text: '删除',
+            handler: function () { alert('删除按钮') }
+        }],
+        pagination: true,
+        rownumbers: true,
+        pageSize:5,
+        pageList:[5,10,15,20]
     });
 
 
 </script>
-
+<div id="tb" style="padding:2px 5px;">
+    开始时间: <input class="easyui-datebox" style="width:110px">
+    结束时间: <input class="easyui-datebox" style="width:110px">
+    Language:
+    <select class="easyui-combobox" panelheight="auto" style="width:100px">
+        <option value="java">Java</option>
+        <option value="c">C</option>
+        <option value="basic">Basic</option>
+        <option value="perl">Perl</option>
+        <option value="python">Python</option>
+    </select>
+    <input class="easyui-textbox" data-options="buttonText:'Search',buttonIcon:'icon-search',prompt:'Search...'" style="width:450px;">
+</div>
 <table id="dg">
+
 </table> 
+
+@*<div id="ft" style="padding:2px 5px;">
+    <a href="#" class="easyui-linkbutton" iconcls="icon-add" plain="true">新增</a>
+    <a href="#" class="easyui-linkbutton" iconcls="icon-edit" plain="true">编辑</a>
+    <a href="#" class="easyui-linkbutton" iconcls="icon-remove" plain="true">删除</a>
+</div>*@
 
