@@ -60,9 +60,18 @@ namespace GetMoney.Controllers.Card
         }
 
         public string CardList() {
+            int spage = 0, epage = 0;
+            if (Request["page"] != null && Request["rows"] != null)
+            {
+                string page = Request["page"].ToString();
+                string rows = Request["rows"].ToString();
+
+                spage = Convert.ToInt32(Request["rows"]) * (Convert.ToInt32(Request["page"]) - 1);
+                epage = spage + Convert.ToInt32(Request["rows"]);
+            }
             string strsql = "SELECT top 10 [ID],[CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate],[CardDelayDay],[CardInputDate],[Remark] FROM [dbo].[Cards]";
             //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.SQLConnString, CommandType.Text, strsql);
-            DataSet ds = SqlHelper.Paging(SqlHelper.SQLConnString, "ID", "[dbo].[Cards]", "[ID],[CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate],[CardDelayDay],[CardInputDate],[Remark]", "", null, "", 5, 10);
+            DataSet ds = SqlHelper.Paging(SqlHelper.SQLConnString, "ID", "[dbo].[Cards]", "[ID],[CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate],[CardDelayDay],[CardInputDate],[Remark]", "", null, "", spage, epage);
             var list = new List<CardDto>();
             if (Utils.HasMoreRow(ds))
             {

@@ -93,10 +93,13 @@
     $('#dg').datagrid({
         border:true,
         url: '../Card/CardList',
+        singleSelect: true,
+        striped:true,
         columns: [[
-            { field: 'CardCode', title: '卡号', width: 100 },
-            { field: 'CardName', title: '卡名', width: 100, },
-            { field: 'CardBankType', title: '金额', width: 100 }
+            { field: 'ID', title: 'ID', width: 100, align: 'center' },
+            { field: 'CardCode', title: '卡号', width: 100, align: 'center' },
+            { field: 'CardName', title: '卡名', width: 100, align: 'center' },
+            { field: 'CardBankType', title: '金额', width: 100, align: 'center' }
         ]],
         //toolbar:'#ft'
         toolbar: [{
@@ -115,7 +118,11 @@
         pagination: true,
         rownumbers: true,
         pageSize:5,
-        pageList:[5,10,15,20]
+        pageList: [5, 10, 15, 20],
+        onSelectPage: function (num, page) {
+            console.log(num)
+            console.log(page)
+        }
     });
 
 
