@@ -44,9 +44,12 @@ namespace GetMoney.Dal
             throw new NotImplementedException();
         }
 
-        public T Get(Guid id)
+        public T Get(int id)
         {
-            throw new NotImplementedException();
+            if (id != null)
+                return CreateSet().SingleOrDefault(p => p.id == id);
+            else
+                return null;
         }
 
         public IEnumerable<T> GetAll()

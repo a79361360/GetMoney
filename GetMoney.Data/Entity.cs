@@ -7,8 +7,19 @@ namespace GetMoney.Data
 {
     public class Entity
     {
+        int _id;
+        public int id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                _id = value;
+            }
+        }
         #region override Methods
-
         /// <summary>
         /// 判断两个对象是否相等
         /// </summary>

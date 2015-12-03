@@ -10,6 +10,7 @@ namespace GetMoney.Application.Card
     {
         string test();
         void AddCard(CardDto dto);
+        void RemoveCard(CardDto dto);
         List<CardDto> FindCard(int? id);
     }
 }

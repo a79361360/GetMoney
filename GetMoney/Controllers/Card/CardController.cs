@@ -79,7 +79,9 @@ namespace GetMoney.Controllers.Card
             }
             return JsonConvert.SerializeObject(new UIDataGrid(ds.Tables[0].Rows[0]["recrowcount"].ToInt32(), list));
         }
+        public void RemoveCard() { 
 
+        }
         private CardDto DataRowToModel(DataRow row)
         {
             var model = new CardDto();
