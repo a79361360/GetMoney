@@ -50,6 +50,10 @@
       <Project>{61bce72c-0e38-4f36-b200-605f92d3f437}</Project>
       <Name>GetMoney.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GetMoney.Framework\GetMoney.Framework.csproj">
+      <Project>{e9150ce1-ac11-4fdb-a51b-944c5ae204c8}</Project>
+      <Name>GetMoney.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GetMoney.Model\GetMoney.Model.csproj">
       <Project>{964de9d2-17e0-48b8-aba3-5dffcbc6eb8e}</Project>
       <Name>GetMoney.Model</Name>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Common
+namespace GetMoney.Framework.Common
 {
     public static class Verifier
     {

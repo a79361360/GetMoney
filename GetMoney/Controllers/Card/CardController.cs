@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using GetMoney.Framework.Common;
 using DataAccess;
 using GetMoney.Application.Card;
 using GetMoney.Framework;
@@ -79,8 +79,8 @@ namespace GetMoney.Controllers.Card
             }
             return JsonConvert.SerializeObject(new UIDataGrid(ds.Tables[0].Rows[0]["recrowcount"].ToInt32(), list));
         }
-        public void RemoveCard() { 
-
+        public void RemoveCards(string[] ids) {
+            _bll.RemoveCards(ids);
         }
         private CardDto DataRowToModel(DataRow row)
         {

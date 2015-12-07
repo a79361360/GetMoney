@@ -17,7 +17,7 @@ using System.Web.UI;
 using System.Data.OleDb;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Common
+namespace GetMoney.Framework.Common
 {
     /// <summary>
     /// Summary description for Util.
@@ -1634,5 +1634,6 @@ namespace Common
 
             return sArray;
         }
+
     }
 }

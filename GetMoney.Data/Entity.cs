@@ -26,23 +26,23 @@ namespace GetMoney.Data
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(Entity left, Entity right)
-        {
-            if (object.Equals(left, null))
-                return (object.Equals(right, null)) ? true : false;
-            else
-                return left.Equals(right);
-        }
+        //public static bool operator ==(Entity left, Entity right)
+        //{
+        //    if (object.Equals(left, null))
+        //        return (object.Equals(right, null)) ? true : false;
+        //    else
+        //        return left.Equals(right);
+        //}
         /// <summary>
         /// 判断两个对象是否不相等
         /// </summary>
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(Entity left, Entity right)
-        {
-            return !(left == right);
-        }
+        //public static bool operator !=(Entity left, Entity right)
+        //{
+        //    return !(left == right);
+        //}
         #endregion
     }
 }

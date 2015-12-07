@@ -13,6 +13,7 @@ namespace GetMoney.Data
         void Merge(TEntity persisted, TEntity current);
         void Remove(TEntity item);
         TEntity Get(Guid id);
+        TEntity Get(int id);
         IEnumerable<TEntity> GetAll();
     }
 }

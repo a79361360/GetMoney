@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GetMoney.Framework.Common;
+
 
 namespace GetMoney.Application.Card
 {
@@ -44,5 +46,33 @@ namespace GetMoney.Application.Card
             return list;
         }
 
+
+
+        public bool RemoveCards(string[] ids)
+        {
+            bool result = false;
+            if (ids.Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            else
+            {
+                try
+                {
+                    foreach (var id in ids)
+                    {
+                        int gid = id.ToInt32();
+                        var _dto = _repostory.Get(gid);
+                        _repostory.Remove(_dto);
+                        _repostory.UnitOfWork.Commit();
+                    }
+                    result = true;
+                }catch{
+                    result = false;
+                    return result;
+                }
+            }
+            return result;
+        }
     }
 }

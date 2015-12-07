@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common
+namespace GetMoney.Framework.Common
 {
     public static class Convertor
     {

@@ -93,9 +93,10 @@
     $('#dg').datagrid({
         border:true,
         url: '../Card/CardList',
-        singleSelect: true,
+        //singleSelect: true,
         striped:true,
         columns: [[
+            { field: 'ck', title: '全选', checkbox: true, width: 100, align: 'center' },
             { field: 'ID', title: 'ID', width: 100, align: 'center' },
             { field: 'CardCode', title: '卡号', width: 100, align: 'center' },
             { field: 'CardName', title: '卡名', width: 100, align: 'center' },
@@ -105,7 +106,7 @@
         toolbar: [{
             iconCls: 'icon-add',
             text:'新增',
-            handler: function () { alert('新增按钮') }
+            handler: function () { alert(checkIds); alert('新增按钮') }
         }, '-', {
             iconCls: 'icon-edit',
             text: '编辑',
@@ -118,14 +119,67 @@
         pagination: true,
         rownumbers: true,
         pageSize:5,
-        pageList: [5, 10, 15, 20],
+        pageList: [5, 10, 15, 20, 25, 30],
         onSelectPage: function (num, page) {
             console.log(num)
             console.log(page)
+        },
+        //grid的事件
+        onLoadSuccess: function (data) {
+            if (markAll == 'all') {
+                $(this).datagrid('checkAll');
+            }
+            if (markAll == '' && checkIds.length == 0) {
+                $(this).datagrid('uncheckAll');
+            }
+            $.each(cacelIds, function (index) {
+                var rowIndex = $('#bankData_data_grid').datagrid(
+                  'getRowIndex', cacelIds[index]);
+                if (rowIndex != -1) {
+                    $('#bankData_data_grid').datagrid('uncheckRow',
+                      rowIndex);
+                }
+            });
+        },
+        onCheck: function (index, row) {
+            //选中行的时候，移除记录的选中的id，并且添加选中行的ID到选中id的数组里面
+            checkIds.push(row.ID);
+            if (cacelIds.length > 0) {
+                cacelIds.pop(row.ID);
+            }
+            //当选中行的时候，判断是否都选中了，如果都选中，则全选的勾选框勾选
+            if (cacelIds.length == 0 && markAll == 'all') {
+                $('#allCheck').prop('checked', true);
+            }
+        },
+        onUncheck: function (index, row) {
+            //当取消选中行的时候，将全选的勾选改变为非勾选    
+            checkIds.pop(row.ID);
+            $('#allCheck').attr('checked', false);
+            if ($.inArray(row.ID, cacelIds) == -1) {
+                //记录ID到取消勾选的记录集合里面
+                cacelIds.push(row.ID);
+            }
         }
     });
+    /*全选*/
+    function checkAll(obj) {
+        //是否选中
+        var isCheck = $('#allCheck:checked').length >= 1 ? true : false;
+        if (isCheck) {
+            markAll = 'all';
+            $('#bankData_data_grid').datagrid('checkAll');
+            cacelIds = [];//清空记录的id
+        } else {
+            $('#bankData_data_grid').datagrid('uncheckAll');
+            markAll = '';
+            checkIds = [];//清空记录id 
 
-
+        }
+    }
+    var markAll = '';//标记是否选中了全选按钮
+    var cacelIds = [];//标记取消选中行的ID
+    var checkIds = [];//标记选中的行的ID 
 </script>
 <div id="tb" style="padding:2px 5px;">
     开始时间: <input class="easyui-datebox" style="width:110px">

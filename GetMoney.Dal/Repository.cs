@@ -46,7 +46,7 @@ namespace GetMoney.Dal
 
         public T Get(int id)
         {
-            if (id != null)
+            if (id != 0)
                 return CreateSet().SingleOrDefault(p => p.id == id);
             else
                 return null;
@@ -65,6 +65,12 @@ namespace GetMoney.Dal
         IDbSet<T> CreateSet()
         {
             return _UnitOfWork.CreateSet<T>();
+        }
+
+
+        public T Get(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
