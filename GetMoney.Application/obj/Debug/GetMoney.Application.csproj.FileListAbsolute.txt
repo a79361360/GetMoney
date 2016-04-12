@@ -13,7 +13,6 @@ G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\GetMoney.Data.pdb
 G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\GetMoney.Model.pdb
 G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\EntityFramework.xml
 G:\ZongQiu\C#\GetMoney\GetMoney.Application\obj\Debug\GetMoney.Application.pdb
-G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\zh-Hans\EntityFramework.resources.dll
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Application\bin\Debug\GetMoney.Application.dll
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Application\bin\Debug\GetMoney.Application.pdb
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Application\bin\Debug\GetMoney.Data.dll
@@ -58,3 +57,15 @@ E:\NetWorkPace\GetMoney\GetMoney.Application\bin\Debug\GetMoney.Model.pdb
 E:\NetWorkPace\GetMoney\GetMoney.Application\bin\Debug\EntityFramework.xml
 E:\NetWorkPace\GetMoney\GetMoney.Application\bin\Debug\zh-Hans\EntityFramework.resources.dll
 E:\NetWorkPace\GetMoney\GetMoney.Application\obj\Debug\GetMoney.Application.csprojResolveAssemblyReference.cache
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\GetMoney.Framework.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\Newtonsoft.Json.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\GetMoney.Framework.pdb
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\GetMoney.Application.dll.config
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\EntityFramework.SqlServer.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\System.Net.Http.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\System.Net.Http.WebRequest.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\EntityFramework.SqlServer.xml
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\System.Net.Http.xml
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\System.Net.Http.WebRequest.xml
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\zh-Hans\System.Net.Http.resources.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Application\bin\Debug\zh-Hans\System.Net.Http.WebRequest.resources.dll

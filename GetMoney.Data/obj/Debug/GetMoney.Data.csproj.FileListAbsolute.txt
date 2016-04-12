@@ -18,7 +18,6 @@ E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Data\bin\Debug\zh-Hans\EntityFr
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Data\obj\Debug\GetMoney.Data.csprojResolveAssemblyReference.cache
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Data\obj\Debug\GetMoney.Data.dll
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Data\obj\Debug\GetMoney.Data.pdb
-G:\ZongQiu\C#\GetMoney\GetMoney.Data\obj\Debug\GetMoney.Data.csprojResolveAssemblyReference.cache
 E:\VS2012\C#\MVC\GetMoney\GetMoney.Data\bin\Debug\GetMoney.Data.dll
 E:\VS2012\C#\MVC\GetMoney\GetMoney.Data\bin\Debug\GetMoney.Data.pdb
 E:\VS2012\C#\MVC\GetMoney\GetMoney.Data\bin\Debug\EntityFramework.dll

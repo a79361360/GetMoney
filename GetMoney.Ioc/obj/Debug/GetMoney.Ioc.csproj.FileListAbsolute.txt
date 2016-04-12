@@ -113,3 +113,6 @@ E:\NetWorkPace\GetMoney\GetMoney.Ioc\bin\Debug\GetMoney.Data.pdb
 E:\NetWorkPace\GetMoney\GetMoney.Ioc\bin\Debug\EntityFramework.xml
 E:\NetWorkPace\GetMoney\GetMoney.Ioc\bin\Debug\GetMoney.Model.pdb
 E:\NetWorkPace\GetMoney\GetMoney.Ioc\bin\Debug\zh-Hans\EntityFramework.resources.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Ioc\bin\Debug\GetMoney.Framework.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Ioc\bin\Debug\Newtonsoft.Json.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Ioc\bin\Debug\GetMoney.Framework.pdb
