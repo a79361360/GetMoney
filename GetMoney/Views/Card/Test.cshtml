@@ -94,9 +94,9 @@
         border:true,
         url: '../Card/CardList',
         //singleSelect: true,
-        striped:true,
+        striped: true,
         columns: [[
-            { field: 'ck', title: '全选', checkbox: true, width: 100, align: 'center' },
+            { field: 'ck', title: '全选', checkbox: true, width: 100, align: 'center', id: 'allCheck' },
             { field: 'ID', title: 'ID', width: 100, align: 'center' },
             { field: 'CardCode', title: '卡号', width: 100, align: 'center' },
             { field: 'CardName', title: '卡名', width: 100, align: 'center' },
@@ -142,6 +142,7 @@
             });
         },
         onCheck: function (index, row) {
+            console.log(1111)
             //选中行的时候，移除记录的选中的id，并且添加选中行的ID到选中id的数组里面
             checkIds.push(row.ID);
             if (cacelIds.length > 0) {
