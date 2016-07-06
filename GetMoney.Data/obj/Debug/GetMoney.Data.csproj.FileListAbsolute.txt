@@ -36,3 +36,4 @@ E:\NetWorkPace\项目压缩包\GetMoney\GetMoney\GetMoney.Data\obj\Debug\GetMone
 E:\NetWorkPace\GetMoney\GetMoney.Data\bin\Debug\EntityFramework.dll
 E:\NetWorkPace\GetMoney\GetMoney.Data\bin\Debug\EntityFramework.xml
 E:\NetWorkPace\GetMoney\GetMoney.Data\bin\Debug\zh-Hans\EntityFramework.resources.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Data\obj\Debug\GetMoney.Data.csprojResolveAssemblyReference.cache
