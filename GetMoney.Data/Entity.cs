@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GetMoney.Data
 {
-    public class Entity
+    public class Entity 
     {
         int _id;
         public int id

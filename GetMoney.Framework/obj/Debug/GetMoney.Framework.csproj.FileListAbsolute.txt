@@ -3,11 +3,6 @@ E:\NetWorkPace\GetMoney\GetMoney.Framework\bin\Debug\GetMoney.Framework.pdb
 E:\NetWorkPace\GetMoney\GetMoney.Framework\obj\Debug\GetMoney.Framework.csprojResolveAssemblyReference.cache
 E:\NetWorkPace\GetMoney\GetMoney.Framework\obj\Debug\GetMoney.Framework.dll
 E:\NetWorkPace\GetMoney\GetMoney.Framework\obj\Debug\GetMoney.Framework.pdb
-G:\ZongQiu\C#\GetMoney\GetMoney.Framework\bin\Debug\GetMoney.Framework.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Framework\bin\Debug\GetMoney.Framework.pdb
-G:\ZongQiu\C#\GetMoney\GetMoney.Framework\obj\Debug\GetMoney.Framework.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Framework\obj\Debug\GetMoney.Framework.pdb
-G:\ZongQiu\C#\GetMoney\GetMoney.Framework\bin\Debug\Newtonsoft.Json.dll
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Framework\bin\Debug\GetMoney.Framework.dll
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Framework\bin\Debug\GetMoney.Framework.pdb
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Framework\bin\Debug\Newtonsoft.Json.dll
@@ -26,4 +21,8 @@ E:\NetWorkPace\项目压缩包\GetMoney\GetMoney\GetMoney.Framework\obj\Debug\Ge
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney\GetMoney.Framework\obj\Debug\GetMoney.Framework.dll
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney\GetMoney.Framework\obj\Debug\GetMoney.Framework.pdb
 E:\NetWorkPace\GetMoney\GetMoney.Framework\bin\Debug\Newtonsoft.Json.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Framework\obj\Debug\GetMoney.Framework.csprojResolveAssemblyReference.cache
+G:\ZongQiu\C#\GetMoney\GetMoney.Framework\bin\Debug\GetMoney.Framework.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Framework\bin\Debug\GetMoney.Framework.pdb
+G:\ZongQiu\C#\GetMoney\GetMoney.Framework\bin\Debug\Newtonsoft.Json.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Framework\obj\Debug\GetMoney.Framework.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Framework\obj\Debug\GetMoney.Framework.pdb

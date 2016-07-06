@@ -13,7 +13,7 @@ namespace GetMoney.Dal
           : DbContext, IQueryableUnitOfWork
     {
         public DBContextOfUnitWork()
-            : base("name=SQLConnString")
+            : base("GetMoney")
         {
 
         }
@@ -59,6 +59,7 @@ namespace GetMoney.Dal
         {
             modelBuilder.Configurations.Add(new OnlyNameTestConfiguration());
             modelBuilder.Configurations.Add(new CardConfiguration());
+            modelBuilder.Configurations.Add(new OrderConfiguration());
             base.OnModelCreating(modelBuilder);
         }
     }

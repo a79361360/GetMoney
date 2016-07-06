@@ -1,13 +1,3 @@
-G:\ZongQiu\C#\GetMoney\GetMoney.Dal\obj\Debug\GetMoney.Dal.csprojResolveAssemblyReference.cache
-G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\GetMoney.Dal.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\GetMoney.Dal.pdb
-G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\EntityFramework.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\GetMoney.Data.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\GetMoney.Data.pdb
-G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\EntityFramework.xml
-G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\zh-Hans\EntityFramework.resources.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Dal\obj\Debug\GetMoney.Dal.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Dal\obj\Debug\GetMoney.Dal.pdb
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Dal\bin\Debug\GetMoney.Dal.dll
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Dal\bin\Debug\GetMoney.Dal.pdb
 E:\NetWorkPace\项目压缩包\GetMoney\GetMoney.Dal\bin\Debug\EntityFramework.dll
@@ -48,3 +38,13 @@ E:\NetWorkPace\GetMoney\GetMoney.Dal\bin\Debug\zh-Hans\EntityFramework.resources
 E:\NetWorkPace\GetMoney\GetMoney.Dal\obj\Debug\GetMoney.Dal.csprojResolveAssemblyReference.cache
 E:\NetWorkPace\GetMoney\GetMoney.Dal\obj\Debug\GetMoney.Dal.dll
 E:\NetWorkPace\GetMoney\GetMoney.Dal\obj\Debug\GetMoney.Dal.pdb
+G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\GetMoney.Dal.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\GetMoney.Dal.pdb
+G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\EntityFramework.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\GetMoney.Data.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\GetMoney.Data.pdb
+G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\EntityFramework.xml
+G:\ZongQiu\C#\GetMoney\GetMoney.Dal\bin\Debug\zh-Hans\EntityFramework.resources.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Dal\obj\Debug\GetMoney.Dal.csprojResolveAssemblyReference.cache
+G:\ZongQiu\C#\GetMoney\GetMoney.Dal\obj\Debug\GetMoney.Dal.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Dal\obj\Debug\GetMoney.Dal.pdb
