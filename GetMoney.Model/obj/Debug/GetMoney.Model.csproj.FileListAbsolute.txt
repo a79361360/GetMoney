@@ -21,3 +21,4 @@ G:\ZongQiu\C#\GetMoney\GetMoney.Model\bin\Debug\GetMoney.Model.dll
 G:\ZongQiu\C#\GetMoney\GetMoney.Model\bin\Debug\GetMoney.Model.pdb
 G:\ZongQiu\C#\GetMoney\GetMoney.Model\obj\Debug\GetMoney.Model.dll
 G:\ZongQiu\C#\GetMoney\GetMoney.Model\obj\Debug\GetMoney.Model.pdb
+G:\ZongQiu\C#\GetMoney\GetMoney.Model\obj\Debug\GetMoney.Model.csprojResolveAssemblyReference.cache

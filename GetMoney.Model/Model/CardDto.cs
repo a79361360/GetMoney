@@ -17,8 +17,8 @@ namespace GetMoney.Model
         //信用卡的使用额度(借贷卡额度为0)
         public int CardAmount { get; set; }
         //账单日
-        public DateTime CardBillDate { get; set; }
         //延期时长(用来计算最后还款日/到期日)
+        public DateTime CardBillDate { get; set; }
         public int CardDelayDay { get; set; }
         //录入时间
         public DateTime CardInputDate { get; set; }

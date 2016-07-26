@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney.Ioc", "GetMoney.Io
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney.Dal", "GetMoney.Dal\GetMoney.Dal.csproj", "{B68C2FDF-AA00-40C9-BDEC-8A9AA7DA3E6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney.Common", "GetMoney.Common\GetMoney.Common.csproj", "{3B284068-357D-4F66-B070-1F8E5CFBEFB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{B68C2FDF-AA00-40C9-BDEC-8A9AA7DA3E6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B68C2FDF-AA00-40C9-BDEC-8A9AA7DA3E6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B68C2FDF-AA00-40C9-BDEC-8A9AA7DA3E6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B284068-357D-4F66-B070-1F8E5CFBEFB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B284068-357D-4F66-B070-1F8E5CFBEFB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B284068-357D-4F66-B070-1F8E5CFBEFB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B284068-357D-4F66-B070-1F8E5CFBEFB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
