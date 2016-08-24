@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/TestPage/mricode.pagination.css" rel="stylesheet" />
+    <script src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
+    <script src="~/Content/TestPage/mricode.pagination.js"></script>
+</head>
+<body>
+    <div id="page" class="m-pagination"></div>
+    <script>
+        $(function () {
+            $.ajax("/Order/AddOrder", { pageIndex: 0, pageSize: 10 }, function (ret) {
+                console.log(ret)
+            })
+        })
+        //$("#page").pagination({
+        //    total: 100,
+        //    firstBtnText: '首页',
+        //    lastBtnText: '尾页',
+        //    prevBtnText: '上一页',
+        //    nextBtnText: '下一页',
+        //    showInfo: true,
+        //    showJump: true,
+        //    jumpBtnText:'跳转',
+        //    showPageSizes: true,
+        //    infoFormat: '{start} ~ {end}条，共{total}条',
+        //    debug: true,
+        //    pageElementSort: ['$page', '$size', '$jump', '$info'],
+        //    remote: {
+        //        url: '/Order/ListOrderPage',  //请求地址
+        //        params: { query: "test" },       //自定义请求参数
+        //        success: function (data) {
+        //            //$("#eventLog").append(' remote callback : ' + JSON.stringify(data) + '<br />');
+        //            console.log(data)
+        //        },
+        //        totalName: 'total'              //指定返回数据的总数据量的字段名
+        //    }
+        //});
+    </script>
+</body>
+</html>

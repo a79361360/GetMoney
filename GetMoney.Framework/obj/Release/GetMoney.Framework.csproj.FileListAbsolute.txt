@@ -1,0 +1,6 @@
+G:\ZongQiu\C#\GetMoney\GetMoney.Framework\bin\Release\GetMoney.Framework.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Framework\bin\Release\GetMoney.Framework.pdb
+G:\ZongQiu\C#\GetMoney\GetMoney.Framework\bin\Release\Newtonsoft.Json.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Framework\obj\Release\GetMoney.Framework.csprojResolveAssemblyReference.cache
+G:\ZongQiu\C#\GetMoney\GetMoney.Framework\obj\Release\GetMoney.Framework.dll
+G:\ZongQiu\C#\GetMoney\GetMoney.Framework\obj\Release\GetMoney.Framework.pdb

@@ -1,0 +1,207 @@
+﻿@*@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //使用jQuery异步提交表单
+            $('#documentForm').submit(function () {
+                jQuery.ajax({
+                    url: '/Card/AddCard',
+                    data: $('#documentForm').serialize(),
+                    type: "POST",
+                    beforeSend: function () {
+                        //在异步提交前要做的操作
+                    },
+                    success: function () {
+                        //在异步提交成功后要做的操作
+                        //$.messager.show({
+                        //    title: '提示',
+                        //    msg: '我是成功的'
+                        //});
+                        $.messager.alert('Info', '89876', 'info111');
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div>
+        @ViewBag.title
+    </div>
+    <form id="documentForm">
+        <table>
+            <tr><td>卡号</td><td><input name="CardCode" type="text" /></td></tr>
+            <tr><td>卡名</td><td><input name="CardName" type="text" /></td></tr>
+            <tr>
+                <td>银行类型</td>
+                <td>
+                    <select name="CardBankType">
+                        <option value="1">信用卡</option>
+                        <option value="2">借货平台</option>
+                        <option value="3">储蓄卡</option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td>使用类型</td><td><input name="CardUseType" type="text" /></td></tr>
+            <tr><td>信用额度</td><td><input name="CardAmount" type="text" /></td></tr>
+            <tr><td>账单日</td><td><input name="CardBillDate" type="text" /></td></tr>
+            <tr><td>延长日期</td><td><input name="CardDelayDay" type="text" /></td></tr>
+            <tr><td>备注</td><td><input name="Remark" type="text" /></td></tr>
+        </table>
+        <button id="btnConfirm" value="提交">提交</button>
+    </form>
+</body>
+</html>*@
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+@*<div>
+    <h1>@(ViewBag.table)（数据表）</h1>
+</div>
+<table id="@(ViewBag.table)_dg" iconcls="icon-table" style="width: auto; height: auto; margin-top: 5px">
+    <thead>
+        <tr>
+            <th data-options="field:'Name',width:50,align:'left'">字段名</th>
+            <th data-options="field:'Type',width:50,align:'left'">类型</th>
+            <th data-options="field:'IsKeyDesc',width:30,align:'center'">主键</th>
+            <th data-options="field:'IsIdentityDesc',width:30,align:'center'">自增长</th>
+            <th data-options="field:'IdentIncr',width:30,align:'center'">递增量</th>
+            <th data-options="field:'Length',width:50,align:'left'">长度</th>
+            <th data-options="field:'Scale',width:50,align:'left'">小数</th>
+            <th data-options="field:'DefaultValue',width:50,align:'center'">默认值</th>
+            <th data-options="field:'IsNullableDesc',width:30,align:'center'">可空</th>
+            <th data-options="field:'Description',width:150,align:'left'">描述</th>
+            <th data-options="field:'IdentSeed',width:80,align:'left'">标识种子</th>
+            <th data-options="field:'Bytes',width:80,align:'left'">占用字节数</th>
+        </tr>
+    </thead>
+</table>*@
+<script type="text/javascript">
+    $('#dg').datagrid({
+        border:true,
+        url: '../Card/CardList',
+        //singleSelect: true,
+        striped: true,
+        columns: [[
+            { field: 'ck', title: '全选', checkbox: true, width: 100, align: 'center', id: 'allCheck' },
+            { field: 'ID', title: 'ID', width: 100, align: 'center' },
+            { field: 'CardCode', title: '卡号', width: 100, align: 'center' },
+            { field: 'CardName', title: '卡名', width: 100, align: 'center' },
+            { field: 'CardBankType', title: '金额', width: 100, align: 'center' }
+        ]],
+        //toolbar:'#ft'
+        toolbar: [{
+            iconCls: 'icon-add',
+            text:'新增',
+            handler: function () { alert(checkIds); alert('新增按钮') }
+        }, '-', {
+            iconCls: 'icon-edit',
+            text: '编辑',
+            handler: function () { alert('编辑按钮') }
+        }, '-', {
+            iconCls: 'icon-remove',
+            text: '删除',
+            handler: function () { alert('删除按钮') }
+        }],
+        pagination: true,
+        rownumbers: true,
+        pageSize:5,
+        pageList: [5, 10, 15, 20, 25, 30],
+        onSelectPage: function (num, page) {
+            console.log(num)
+            console.log(page)
+        },
+        //grid的事件
+        onLoadSuccess: function (data) {
+            if (markAll == 'all') {
+                $(this).datagrid('checkAll');
+            }
+            if (markAll == '' && checkIds.length == 0) {
+                $(this).datagrid('uncheckAll');
+            }
+            $.each(cacelIds, function (index) {
+                var rowIndex = $('#bankData_data_grid').datagrid(
+                  'getRowIndex', cacelIds[index]);
+                if (rowIndex != -1) {
+                    $('#bankData_data_grid').datagrid('uncheckRow',
+                      rowIndex);
+                }
+            });
+        },
+        onCheck: function (index, row) {
+            console.log(1111)
+            //选中行的时候，移除记录的选中的id，并且添加选中行的ID到选中id的数组里面
+            checkIds.push(row.ID);
+            if (cacelIds.length > 0) {
+                cacelIds.pop(row.ID);
+            }
+            //当选中行的时候，判断是否都选中了，如果都选中，则全选的勾选框勾选
+            if (cacelIds.length == 0 && markAll == 'all') {
+                $('#allCheck').prop('checked', true);
+            }
+        },
+        onUncheck: function (index, row) {
+            //当取消选中行的时候，将全选的勾选改变为非勾选    
+            checkIds.pop(row.ID);
+            $('#allCheck').attr('checked', false);
+            if ($.inArray(row.ID, cacelIds) == -1) {
+                //记录ID到取消勾选的记录集合里面
+                cacelIds.push(row.ID);
+            }
+        }
+    });
+    /*全选*/
+    function checkAll(obj) {
+        //是否选中
+        var isCheck = $('#allCheck:checked').length >= 1 ? true : false;
+        if (isCheck) {
+            markAll = 'all';
+            $('#bankData_data_grid').datagrid('checkAll');
+            cacelIds = [];//清空记录的id
+        } else {
+            $('#bankData_data_grid').datagrid('uncheckAll');
+            markAll = '';
+            checkIds = [];//清空记录id 
+
+        }
+    }
+    var markAll = '';//标记是否选中了全选按钮
+    var cacelIds = [];//标记取消选中行的ID
+    var checkIds = [];//标记选中的行的ID 
+</script>
+<div id="tb" style="padding:2px 5px;">
+    开始时间: <input class="easyui-datebox" style="width:110px">
+    结束时间: <input class="easyui-datebox" style="width:110px">
+    Language:
+    <select class="easyui-combobox" panelheight="auto" style="width:100px">
+        <option value="java">Java</option>
+        <option value="c">C</option>
+        <option value="basic">Basic</option>
+        <option value="perl">Perl</option>
+        <option value="python">Python</option>
+    </select>
+    <input class="easyui-textbox" data-options="buttonText:'Search',buttonIcon:'icon-search',prompt:'Search...'" style="width:450px;">
+</div>
+<table id="dg">
+
+</table> 
+
+@*<div id="ft" style="padding:2px 5px;">
+    <a href="#" class="easyui-linkbutton" iconcls="icon-add" plain="true">新增</a>
+    <a href="#" class="easyui-linkbutton" iconcls="icon-edit" plain="true">编辑</a>
+    <a href="#" class="easyui-linkbutton" iconcls="icon-remove" plain="true">删除</a>
+</div>*@
+

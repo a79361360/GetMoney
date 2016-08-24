@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddCard</title>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            console.log("123")
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <table>
+            <tr><td>卡号</td><td><input name="CardCode" type="text" /></td></tr>
+            <tr><td>卡名</td><td><input name="CardName" type="text" /></td></tr>
+            <tr><td>银行类型</td>
+                <td>
+                    <select name="CardBankType">
+                        <option value="1">信用卡</option>
+                        <option value="2">借货平台</option>
+                        <option value="3">储蓄卡</option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td>使用类型</td><td><input name="CardUseType" type="text" /></td></tr>
+            <tr><td>信用额度</td><td><input name="CardAmount" type="text" /></td></tr>
+            <tr><td>账单日</td><td><input name="CardBillDate" type="text" /></td></tr>
+            <tr><td>延长日期</td><td><input name="CardDelayDay" type="text" /></td></tr>
+            <tr><td>备注</td><td><input name="Remark" type="text" /></td></tr>
+        </table>
+    </div>
+</body>
+</html>
