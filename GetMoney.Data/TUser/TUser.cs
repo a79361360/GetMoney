@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 
-namespace GetMoney.Data.User
+namespace GetMoney.Data.TUser
 {
-    public class User
+    public class TUser: Entity
     {
         /// <summary>
         /// 用户ID
@@ -26,7 +27,7 @@ namespace GetMoney.Data.User
         /// <summary>
         /// 用户身份证号
         /// </summary>
-        public string Identity { get; set; }
+        public string IdentityNum { get; set; }
         /// <summary>
         /// 手机号码
         /// </summary>

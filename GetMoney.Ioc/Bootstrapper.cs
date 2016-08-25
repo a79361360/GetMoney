@@ -9,8 +9,9 @@ using GetMoney.Data.Card;
 using GetMoney.Dal;
 using GetMoney.Application.OnlyNameTest;
 using GetMoney.Data.OnlyNameTest;
-using GetMoney.Application.Order;
+using GetMoney.Application;
 using GetMoney.Data.Order;
+using GetMoney.Data.TUser;
 
 namespace GetMoney.Ioc
 {
@@ -33,12 +34,14 @@ namespace GetMoney.Ioc
             container.RegisterType<IOnlyNameTestBll, OnlyNameTestBll>();
             container.RegisterType<IOrderBll, OrderBll>();
             container.RegisterType<IOrderDal, OrderDal>();
+            container.RegisterType<ITUserBll, TUserBll>();
+            container.RegisterType<ITUserDal, TUserDal>();
 
             container.RegisterType<ICardRepository, CardRepository>();
             container.RegisterType<IOnlyNameTestRepository, OnlyNameTestRepository>();
             container.RegisterType<IOrderRepository, OrderRepository>();
+            container.RegisterType<ITUserRepository, TUserRepository>();
 
-            
 
             return container;
         }

@@ -1,4 +1,4 @@
-﻿using GetMoney.Data.User;
+﻿using GetMoney.Data.TUser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +6,10 @@ using System.Text;
 
 namespace GetMoney.Dal
 {
-    public class UserRepository
-   : Repository<User>, IUserRepository
+    public class TUserRepository
+   : Repository<TUser>, ITUserRepository
     {
-        public UserRepository(DBContextOfUnitWork unitOfWork)
+        public TUserRepository(DBContextOfUnitWork unitOfWork)
             : base(unitOfWork)
         {
         }

@@ -5,9 +5,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace GetMoney.Dal.User
+namespace GetMoney.Dal
 {
-    public class UserDal : IUserDal
+    public class TUserDal : ITUserDal
     {
         public DataTable ListUserPage(ref int Total, SqlPageParam Param)
         {

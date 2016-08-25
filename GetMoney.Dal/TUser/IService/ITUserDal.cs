@@ -4,9 +4,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace GetMoney.Dal.User
+namespace GetMoney.Dal
 {
-    interface IUserDal
+    public interface ITUserDal
     {
         DataTable ListUserPage(ref int Total, SqlPageParam Param);
     }

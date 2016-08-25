@@ -3,28 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GetMoney.Data.User
+namespace GetMoney.Data.TUser
 {
-    public class UserFactory
+    public class TUserFactory
     {
-        public static User Create(
+        public static TUser Create(
             string UserName,
             string NickName,
             int UserJb,
-            string Identity,
+            string IdentityNum,
             string Phone,
             string TxUrl,
-            int State)
+            int State,
+            DateTime Addtime)
         {
-            return new User
+            return new TUser
             {
                 UserName=UserName,
                 NickName=NickName,
                 UserJb=UserJb,
-                Identity =Identity,
+                IdentityNum = IdentityNum,
                 Phone=Phone,
                 TxUrl=TxUrl,
-                State = State
+                State = State,
+                Addtime = Addtime
             };
         }
     }

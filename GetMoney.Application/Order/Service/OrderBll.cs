@@ -7,7 +7,7 @@ using System.Text;
 using GetMoney.Framework.Common;
 using GetMoney.Dal;
 
-namespace GetMoney.Application.Order
+namespace GetMoney.Application
 {
     public class OrderBll : IOrderBll
     {

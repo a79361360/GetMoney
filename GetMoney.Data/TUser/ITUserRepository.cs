@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GetMoney.Data.User
+namespace GetMoney.Data.TUser
 {
-    public interface IUserRepository
-    : IRepository<User>
+    public interface ITUserRepository
+    : IRepository<TUser>
     {
 
     }
