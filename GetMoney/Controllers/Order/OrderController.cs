@@ -24,7 +24,8 @@ namespace GetMoney.Controllers.Order
             return View();
         }
 
-        public void AddOrder() { 
+        public ActionResult AddOrder()
+        { 
             OrderDto dto = new OrderDto();
             dto.OrderNo = DateTime.Now.ToString("yyyyMMddHHmmssfffffff");
             dto.PeoperNum = 20;
@@ -38,26 +39,26 @@ namespace GetMoney.Controllers.Order
             dto.State = 1;
             dto.Remark = "测试";
             _bll.AddOrder(dto);
-            JsonFormat(new ExtJson { success = true, msg = "添加成功！" });
+            return JsonFormat(new ExtJson { success = true, msg = "添加成功！" });
         }
-        public void Remove() {
+        public ActionResult Remove() {
             string id = "1";
             bool result = _bll.RemoveOrder(id);
             if (result) 
-                JsonFormat(new ExtJson { success = true, msg = "添加成功！" });
+                return JsonFormat(new ExtJson { success = true, msg = "添加成功！" });
             else
-                JsonFormat(new ExtJson { success = false, msg = "添加失败！" });
+                return JsonFormat(new ExtJson { success = false, msg = "添加失败！" });
         }
-        public void ListOrderPage() {
+        public ActionResult ListOrderPage()
+        {
             int pageIndex = Convert.ToInt32(Request["pageIndex"]);
             int pageSize = Convert.ToInt32(Request["pageSize"]);
             int Total = 0;
             IList<OrderDto> list = _bll.ListOrderPage(ref Total, pageSize, pageIndex);
             if (list.Count > 0)
-                Json(new ExtJson { success = true, msg = "添加成功！" });
-                //JsonFormat(new ExtJsonPage { success = true, code = 1000, msg = "查询成功！", total = Total, list = list });
+                return JsonFormat(new ExtJsonPage { success = true, code = 1000, msg = "查询成功！", total = Total, list = list });
             else
-                JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
+                return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
         }
     }
 }

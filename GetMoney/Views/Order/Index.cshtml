@@ -16,33 +16,32 @@
     <div id="page" class="m-pagination"></div>
     <script>
         $(function () {
-            $.ajax("/Order/AddOrder", { pageIndex: 0, pageSize: 10 }, function (ret) {
+            $.ajax("/Order/ListOrderPage", { pageIndex: 0, pageSize: 10 }, function (ret) {
                 console.log(ret)
             })
         })
-        //$("#page").pagination({
-        //    total: 100,
-        //    firstBtnText: '首页',
-        //    lastBtnText: '尾页',
-        //    prevBtnText: '上一页',
-        //    nextBtnText: '下一页',
-        //    showInfo: true,
-        //    showJump: true,
-        //    jumpBtnText:'跳转',
-        //    showPageSizes: true,
-        //    infoFormat: '{start} ~ {end}条，共{total}条',
-        //    debug: true,
-        //    pageElementSort: ['$page', '$size', '$jump', '$info'],
-        //    remote: {
-        //        url: '/Order/ListOrderPage',  //请求地址
-        //        params: { query: "test" },       //自定义请求参数
-        //        success: function (data) {
-        //            //$("#eventLog").append(' remote callback : ' + JSON.stringify(data) + '<br />');
-        //            console.log(data)
-        //        },
-        //        totalName: 'total'              //指定返回数据的总数据量的字段名
-        //    }
-        //});
+        $("#page").pagination({
+            firstBtnText: '首页',
+            lastBtnText: '尾页',
+            prevBtnText: '上一页',
+            nextBtnText: '下一页',
+            showInfo: true,
+            showJump: true,
+            jumpBtnText:'跳转',
+            showPageSizes: true,
+            infoFormat: '{start} ~ {end}条，共{total}条',
+            debug: true,
+            pageElementSort: ['$page', '$size', '$jump', '$info'],
+            remote: {
+                url: '/Order/ListOrderPage',  //请求地址
+                params: { query: "test" },       //自定义请求参数
+                success: function (data) {
+                    //$("#eventLog").append(' remote callback : ' + JSON.stringify(data) + '<br />');
+                    console.log(data)
+                },
+                totalName: 'total'              //指定返回数据的总数据量的字段名
+            }
+        });
     </script>
 </body>
 </html>

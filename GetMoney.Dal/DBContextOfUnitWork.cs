@@ -18,7 +18,7 @@ namespace GetMoney.Dal
 
         //}
         public DBContextOfUnitWork()
-            : base("server=127.0.0.1,1433;database=GetMoney;user id=sa;password=123;MultipleActiveResultSets=true;")
+            : base("server=127.0.0.1;database=GetMoney;user id=sa;password=123;MultipleActiveResultSets=true;")
         {
 
         }
