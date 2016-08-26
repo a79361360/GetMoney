@@ -12,16 +12,16 @@ namespace GetMoney.Dal
     public class DBContextOfUnitWork
           : DbContext, IQueryableUnitOfWork
     {
-        //public DBContextOfUnitWork()
-        //    : base("GetMoney")
-        //{
-
-        //}
         public DBContextOfUnitWork()
-            : base("server=127.0.0.1,1433;database=GetMoney;user id=sa;password=123;MultipleActiveResultSets=true;")
+            : base("GetMoney")
         {
 
         }
+        //public DBContextOfUnitWork()
+        //    : base("server=127.0.0.1,1433;database=GetMoney;user id=sa;password=123;MultipleActiveResultSets=true;")
+        //{
+
+        //}
         public IDbSet<TEntity> CreateSet<TEntity>() where TEntity : class{
             return base.Set<TEntity>();
         }

@@ -9,7 +9,7 @@ namespace GetMoney.Data.Order
 {
     public class Order : Entity
     {
-        public new int id { get; set; }
+        public int id { get; set; }
         //会单号
         public string OrderNo { get; set; }
         /// <summary>
