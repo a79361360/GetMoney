@@ -10,7 +10,6 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using GetMoney.Data;
 
 namespace GetMoney.Controllers.Card
 {
@@ -61,24 +60,26 @@ namespace GetMoney.Controllers.Card
         }
 
         public string CardList() {
-            int spage = 0, epage = 0;
-            if (Request["page"] != null && Request["rows"] != null)
-            {
-                string page = Request["page"].ToString();
-                string rows = Request["rows"].ToString();
+            //int spage = 0, epage = 0;
+            //if (Request["page"] != null && Request["rows"] != null)
+            //{
+            //    string page = Request["page"].ToString();
+            //    string rows = Request["rows"].ToString();
 
-                spage = Convert.ToInt32(Request["rows"]) * (Convert.ToInt32(Request["page"]) - 1);
-                epage = spage + Convert.ToInt32(Request["rows"]);
-            }
-            //string strsql = "SELECT top 10 [ID],[CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate],[CardDelayDay],[CardInputDate],[Remark] FROM [dbo].[Cards]";
-            //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.SQLConnString, CommandType.Text, strsql);
-            DataSet ds = SqlHelper.Paging(SqlHelper.SQLConnString, "ID", "[dbo].[Cards]", "[ID],[CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate],[CardDelayDay],[CardInputDate],[Remark]", "", null, "", spage, epage);
-            var list = new List<CardDto>();
-            if (Utils.HasMoreRow(ds))
-            {
-                list.AddRange(from DataRow dr in ds.Tables[1].Rows select DataRowToModel(dr));
-            }
-            return JsonConvert.SerializeObject(new UIDataGrid(ds.Tables[0].Rows[0]["recrowcount"].ToInt32(), list));
+            //    spage = Convert.ToInt32(Request["rows"]) * (Convert.ToInt32(Request["page"]) - 1);
+            //    epage = spage + Convert.ToInt32(Request["rows"]);
+            //}
+            ////string strsql = "SELECT top 10 [ID],[CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate],[CardDelayDay],[CardInputDate],[Remark] FROM [dbo].[Cards]";
+            ////DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.SQLConnString, CommandType.Text, strsql);
+            //DataSet ds = SqlHelper.Paging(SqlHelper.SQLConnString, "ID", "[dbo].[Cards]", "[ID],[CardCode],[CardName],[CardBankType],[CardUseType],[CardAmount],[CardBillDate],[CardDelayDay],[CardInputDate],[Remark]", "", null, "", spage, epage);
+            //var list = new List<CardDto>();
+            //if (Utils.HasMoreRow(ds))
+            //{
+            //    list.AddRange(from DataRow dr in ds.Tables[1].Rows select DataRowToModel(dr));
+            //}
+            //
+            //return JsonConvert.SerializeObject(new UIDataGrid(ds.Tables[0].Rows[0]["recrowcount"].ToInt32(), list));
+            return "";
         }
         public void RemoveCards(string[] ids) {
             _bll.RemoveCards(ids);

@@ -9,6 +9,7 @@ namespace GetMoney.Application
     public interface ITUserBll
     {
         void AddTUser(TUserDto dto);
+        void RegTUser(TUserDto dto, out Dictionary<string, object> list);
         bool RemoveTUsers(string[] ids);
         bool RemoveTUser(string id);
         IList<TUserDto> ListTUserPage(ref int Total, int pageSize, int pageIndex);

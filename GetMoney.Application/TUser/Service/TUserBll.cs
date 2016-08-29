@@ -25,16 +25,24 @@ namespace GetMoney.Application
             var _unitOfWork = _repostory.UnitOfWork;
             var _build = TUserFactory.Create(
                 dto.UserName,
+                dto.UserPwd,
+                dto.BankPwd,
                 dto.NickName,
                 dto.UserJb,
+                dto.TrueName,
                 dto.IdentityNum,
                 dto.Phone,
+                dto.RegIP,
                 dto.TxUrl,
                 dto.State,
                 dto.Addtime
                 );
             _repostory.Add(_build);
             _unitOfWork.Commit();
+        }
+        public void RegTUser(TUserDto dto, out Dictionary<string, object> list)
+        {
+            _dal.AddTUserByProce(dto.UserName, dto.UserPwd, dto.RegIP, out list);
         }
 
         public IList<TUserDto> ListTUserPage(ref int Total, int pageSize, int pageIndex)
@@ -98,5 +106,8 @@ namespace GetMoney.Application
             }
             return result;
         }
+
+
+
     }
 }

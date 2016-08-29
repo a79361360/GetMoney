@@ -8,13 +8,17 @@ namespace GetMoney.Model.Model
     public class TUserDto
     {
         /// <summary>
-        /// 用户ID
-        /// </summary>
-        public int Userid { get; set; }
-        /// <summary>
         /// 用户账号
         /// </summary>
         public string UserName { get; set; }
+        /// <summary>
+        /// 用户密码
+        /// </summary>
+        public string UserPwd { get; set; }
+        /// <summary>
+        /// 账户密码
+        /// </summary>
+        public string BankPwd { get; set; }
         /// <summary>
         /// 用户昵称
         /// </summary>
@@ -24,6 +28,10 @@ namespace GetMoney.Model.Model
         /// </summary>
         public int UserJb { get; set; }
         /// <summary>
+        /// 真实姓名
+        /// </summary>
+        public string TrueName { get; set; }
+        /// <summary>
         /// 用户身份证号
         /// </summary>
         public string IdentityNum { get; set; }
@@ -31,6 +39,10 @@ namespace GetMoney.Model.Model
         /// 手机号码
         /// </summary>
         public string Phone { get; set; }
+        /// <summary>
+        /// 注册IP
+        /// </summary>
+        public string RegIP { get; set; }
         /// <summary>
         /// 头像地址
         /// </summary>

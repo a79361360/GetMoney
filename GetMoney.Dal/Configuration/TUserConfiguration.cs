@@ -11,7 +11,7 @@ namespace GetMoney.Dal.Configuration
     {
         public TUserConfiguration()
         {
-            this.HasKey(key => key.Userid);
+            this.HasKey(key => key.id);
             this.Property(p => p.UserName)
                 .IsRequired()
                 .HasMaxLength(50);

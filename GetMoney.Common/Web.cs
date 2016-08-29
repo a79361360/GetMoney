@@ -81,32 +81,56 @@ namespace GetMoney.Common
                 return value.Replace("'", "''").Replace(";", "").Replace("--", "");
             return value;
         }
-
         /// <summary>
-        /// 获取当前访问机IP地址
+        /// 获取web客户端ip
         /// </summary>
         /// <returns></returns>
-        public string GetIP()
+        public string GetWebClientIp()
         {
-            //return (System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] == null || System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] == "") ? System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"] : System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            //如果客户端使用了代理服务器，则利用HTTP_X_FORWARDED_FOR找到客户端IP地址
-            string userHostAddress = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"].ToString().Split(',')[0].Trim();
-            //否则直接读取REMOTE_ADDR获取客户端IP地址
-            if (string.IsNullOrEmpty(userHostAddress))
+
+            string userIP = "127.0.0.2";    //如果没取到IP,使用127.0.0.2
+
+            try
             {
-                userHostAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                if (System.Web.HttpContext.Current == null
+            || System.Web.HttpContext.Current.Request == null
+            || System.Web.HttpContext.Current.Request.ServerVariables == null)
+                    return "";
+
+                string CustomerIP = "";
+
+                //CDN加速后取到的IP simone 090805
+                CustomerIP = System.Web.HttpContext.Current.Request.Headers["Cdn-Src-Ip"];
+                if (!string.IsNullOrEmpty(CustomerIP) && IsIP(CustomerIP))
+                {
+                    return CustomerIP;
+                }
+
+                CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+
+                if (!String.IsNullOrEmpty(CustomerIP) && IsIP(CustomerIP))
+                    return CustomerIP;
+
+                if (System.Web.HttpContext.Current.Request.ServerVariables["HTTP_VIA"] != null)
+                {
+                    CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                    if (CustomerIP == null)
+                        CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                }
+                else
+                {
+                    CustomerIP = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                }
+
+                if (string.Compare(CustomerIP, "unknown", true) == 0 && IsIP(CustomerIP))
+                    return System.Web.HttpContext.Current.Request.UserHostAddress;
+                return CustomerIP;
             }
-            //前两者均失败，则利用Request.UserHostAddress属性获取IP地址，但此时无法确定该IP是客户端IP还是代理IP
-            if (string.IsNullOrEmpty(userHostAddress))
-            {
-                userHostAddress = HttpContext.Current.Request.UserHostAddress;
-            }
-            //最后判断获取是否成功，并检查IP地址的格式（检查其格式非常重要）
-            if (!string.IsNullOrEmpty(userHostAddress) && IsIP(userHostAddress))
-            {
-                return userHostAddress;
-            }
-            return "127.0.0.1";
+            catch { }
+
+            return userIP;
+
         }
         /// <summary>
         /// 检查IP地址格式
