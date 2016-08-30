@@ -107,7 +107,9 @@ namespace GetMoney.Application
             return result;
         }
 
-
-
+        public void AddTUserFriend(List<TUserDto> list)
+        {
+            
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace GetMoney.Dal
     {
         DataTable ListUserPage(ref int Total, SqlPageParam Param);
         void AddTUserByProce(string UserName, string Pwd, string IP,out Dictionary<string, object> list);
+        void AddTUserFriend(int userid,int pcid);
     }
 }

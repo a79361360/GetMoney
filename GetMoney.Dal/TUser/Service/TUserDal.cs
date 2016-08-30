@@ -37,5 +37,11 @@ namespace GetMoney.Dal
             string[] str = new string[] { "@Userid", "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }
+
+        public void AddTUserFriend(int userid,int pcid)
+        {
+            string sql = "insert into TUserFriend(Userid,Pcid)values(" + userid + "," + pcid + ")";
+            dal.ExtSql(sql);
+        }
     }
 }
