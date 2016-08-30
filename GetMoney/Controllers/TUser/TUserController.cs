@@ -1,6 +1,7 @@
 ﻿using GetMoney.Application;
 using GetMoney.Common;
 using GetMoney.Common.Expand;
+using GetMoney.Common.SerializeObject;
 using GetMoney.Framework;
 using GetMoney.Model.Model;
 using System;
@@ -95,5 +96,15 @@ namespace GetMoney.Controllers.TUser
             else
                 return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
         }
+        public ActionResult TUserFriend()
+        {
+            string stt = CommonManager.WebObj.RequestForm("data", "");
+            List<ttt> list = SerializeJson<ttt>.JSONStringToList(stt);
+            return JsonFormat(new ExtJson { success = true, msg = "添加成功！", jsonresult = list });
+        }
+    }
+    public class ttt {
+        public string name { get; set; }
+        public string index { get; set; }
     }
 }
