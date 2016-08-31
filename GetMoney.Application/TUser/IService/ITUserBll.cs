@@ -13,6 +13,7 @@ namespace GetMoney.Application
         bool RemoveTUsers(string[] ids);
         bool RemoveTUser(string id);
         IList<TUserDto> ListTUserPage(ref int Total, int pageSize, int pageIndex);
-        void AddTUserFriend(List<TUserDto> list);
+        IList<TUserDto> ListTUserPage(ref int Total, int pageSize, int pageIndex, string filter);
+        void AddTUserFriend(int userid,List<FriendDto> list);
     }
 }

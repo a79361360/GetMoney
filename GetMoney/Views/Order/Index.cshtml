@@ -11,15 +11,29 @@
     <link href="~/Content/TestPage/mricode.pagination.css" rel="stylesheet" />
     <script src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
     <script src="~/Content/TestPage/mricode.pagination.js"></script>
+    <style type="text/css">
+        .tablelist td
+        {
+            text-align: center;
+            border:1px solid #d5d5d5;
+        }
+         .tablelist tr th
+        {
+            text-align: center;
+            border:1px solid #d5d5d5;
+        }
+    </style>
 </head>
+
 <body>
+    <div id="tblist"></div>
     <div id="page" class="m-pagination"></div>
     <script>
-        $(function () {
-            $.ajax("/Order/ListOrderPage", { pageIndex: 0, pageSize: 10 }, function (ret) {
-                console.log(ret)
-            })
-        })
+        //$(function () {
+        //    $.ajax("/Order/ListOrderPage", { pageIndex: 0, pageSize: 10 }, function (ret) {
+        //        console.log(ret)
+        //    })
+        //})
         $("#page").pagination({
             firstBtnText: '首页',
             lastBtnText: '尾页',
@@ -38,6 +52,12 @@
                 success: function (data) {
                     //$("#eventLog").append(' remote callback : ' + JSON.stringify(data) + '<br />');
                     console.log(data)
+                    var str = "<table class=\"tablelist\"><tr><th>序号</th><th>会单ID</th><th>开会日期</th><th>开会时间</th><th>会单人数</th><th>会单金额</th><th>会单总额</th><th>会单状态</th></tr>";
+                    $.each(data.list, function (i, o) {
+                        str += "<tr><td>" + i + "</td><td>" + o.OrderNo + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.State + "</td></tr>";
+                    })
+                    str += "</table>";
+                    $("#tblist").html(str);
                 },
                 totalName: 'total'              //指定返回数据的总数据量的字段名
             }

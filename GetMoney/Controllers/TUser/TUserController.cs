@@ -89,22 +89,24 @@ namespace GetMoney.Controllers.TUser
         {
             int pageIndex = Convert.ToInt32(Request["pageIndex"]);
             int pageSize = Convert.ToInt32(Request["pageSize"]);
+            string type = CommonManager.WebObj.Request("type", "");
+            string text = CommonManager.WebObj.Request("text", "");
+            string filter = type + " like %" + text + "%";
             int Total = 0;
-            IList<TUserDto> list = _bll.ListTUserPage(ref Total, pageSize, pageIndex);
+            IList<TUserDto> list = _bll.ListTUserPage(ref Total, pageSize, pageIndex, filter);
             if (list.Count > 0)
                 return JsonFormat(new ExtJsonPage { success = true, code = 1000, msg = "查询成功！", total = Total, list = list });
             else
                 return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
         }
+        public ActionResult TUserSearch() {
+            return View();
+        }
         public ActionResult TUserFriend()
         {
             string stt = CommonManager.WebObj.RequestForm("data", "");
-            List<ttt> list = SerializeJson<ttt>.JSONStringToList(stt);
+            List<FriendDto> list = SerializeJson<FriendDto>.JSONStringToList(stt);
             return JsonFormat(new ExtJson { success = true, msg = "添加成功！", jsonresult = list });
         }
-    }
-    public class ttt {
-        public string name { get; set; }
-        public string index { get; set; }
     }
 }

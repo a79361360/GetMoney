@@ -7,6 +7,7 @@ namespace GetMoney.Model.Model
 {
     public class TUserDto
     {
+        public int id { get; set; }
         /// <summary>
         /// 用户账号
         /// </summary>

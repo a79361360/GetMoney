@@ -50,7 +50,21 @@ namespace GetMoney.Application
             SqlPageParam param = new SqlPageParam();
             param.TableName = "TUsers";
             param.PrimaryKey = "Userid";
-            param.Fields = "Userid,UserName,NickName,UserJb,IdentityNum,Phone,TxUrl,State,Addtime";
+            param.Fields = "id,UserName,NickName,UserJb,IdentityNum,Phone,TxUrl,State,Addtime";
+            param.PageSize = pageSize;
+            param.PageIndex = pageIndex;
+            param.Filter = "";
+            param.Group = "";
+            param.Order = "Userid";
+            IList<TUserDto> list = DataTableToList.ModelConvertHelper<TUserDto>.ConvertToModel(_dal.ListUserPage(ref Total, param));
+            return list;
+        }
+        public IList<TUserDto> ListTUserPage(ref int Total, int pageSize, int pageIndex,string filter)
+        {
+            SqlPageParam param = new SqlPageParam();
+            param.TableName = "TUsers";
+            param.PrimaryKey = "Userid";
+            param.Fields = "id,UserName,NickName,UserJb,IdentityNum,Phone,TxUrl,State,Addtime";
             param.PageSize = pageSize;
             param.PageIndex = pageIndex;
             param.Filter = "";
@@ -107,9 +121,12 @@ namespace GetMoney.Application
             return result;
         }
 
-        public void AddTUserFriend(List<TUserDto> list)
+        public void AddTUserFriend(int userid, List<FriendDto> list)
         {
-            
+            foreach (var item in list)
+            {
+                _dal.AddTUserFriend(userid, item.Pcid);
+            }
         }
     }
 }

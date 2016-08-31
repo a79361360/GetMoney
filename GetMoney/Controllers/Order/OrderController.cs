@@ -21,7 +21,6 @@ namespace GetMoney.Controllers.Order
 
         public ActionResult Index()
         {
-            AddOrder();
             return View();
         }
 
