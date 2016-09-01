@@ -91,7 +91,11 @@ namespace GetMoney.Controllers.TUser
             int pageSize = Convert.ToInt32(Request["pageSize"]);
             string type = CommonManager.WebObj.Request("type", "");
             string text = CommonManager.WebObj.Request("text", "");
-            string filter = type + " like %" + text + "%";
+            string filter = "";
+            if (!string.IsNullOrEmpty(text))
+            {
+                filter = type + " like '%" + text + "%'";
+            }
             int Total = 0;
             IList<TUserDto> list = _bll.ListTUserPage(ref Total, pageSize, pageIndex, filter);
             if (list.Count > 0)

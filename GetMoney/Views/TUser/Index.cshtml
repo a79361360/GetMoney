@@ -49,52 +49,52 @@
                 <td><input id="text" type="text"></td>
                 <td colspan="3">
                     <select id="sel">
-                        <option value="1">极速28</option>
-                        <option value="2">PC28</option>
-                        <option value="10">PK10</option>
-                    </select>
-                </td>
-                <td>
-                    <select id="row">
-                        <option value="10">10条</option>
-                        <option value="100">100条</option>
-                        <option value="1000">1000条</option>
-                        <option value="">所有</option>
+                        <option value="TrueName">真实姓名</option>
+                        <option value="Phone">手机号码</option>
+                        <option value="10">身份证号码</option>
                     </select>
                 </td>
                 <td><input id="search" type="button" style="width:80px; cursor:pointer" value="查询"></td>
-                <td><div id="divretreate" style="display:none"><input id="retreate" type="button" style="width:80px; cursor:pointer" value="手动结算"></div></td>
             </tr>
     </table>
     <div id="tblist"></div>
     <div id="page" class="m-pagination"></div>
     <script>
-        $("#page").pagination({
-            firstBtnText: '首页',
-            lastBtnText: '尾页',
-            prevBtnText: '上一页',
-            nextBtnText: '下一页',
-            showInfo: true,
-            showJump: true,
-            jumpBtnText:'跳转',
-            showPageSizes: true,
-            infoFormat: '{start} ~ {end}条，共{total}条',
-            debug: true,
-            pageElementSort: ['$page', '$size', '$jump', '$info'],
-            remote: {
-                url: '/TUser/ListTUserPage',  //请求地址
-                params: { query: "test" },       //自定义请求参数
-                success: function (data) {
-                    var str = "<table class=\"tablelist\"><tr><th>序号</th><th>会单ID</th><th>开会日期</th><th>开会时间</th><th>会单人数</th><th>会单金额</th><th>会单总额</th><th>会单状态</th></tr>";
-                    $.each(data.list, function (i, o) {
-                        str += "<tr><td>" + i + "</td><td>" + o.OrderNo + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.State + "</td></tr>";
-                    })
-                    str += "</table>";
-                    $("#tblist").html(str);
-                },
-                totalName: 'total'              //指定返回数据的总数据量的字段名
-            }
-        });
+        $(function () {
+            $("#search").click(function () {
+                var isInited = $("#page").pagination();
+                if (isInited) $("#page").pagination('destroy');
+                var text = $("#text").val();
+                var type = $("#sel").val();
+                $("#page").pagination({
+                    firstBtnText: '首页',
+                    lastBtnText: '尾页',
+                    prevBtnText: '上一页',
+                    nextBtnText: '下一页',
+                    showInfo: true,
+                    showJump: true,
+                    jumpBtnText: '跳转',
+                    showPageSizes: true,
+                    infoFormat: '{start} ~ {end}条，共{total}条',
+                    debug: true,
+                    pageElementSort: ['$page', '$size', '$jump', '$info'],
+                    remote: {
+                        url: '/TUser/ListTUserPage',  //请求地址
+                        params: { text: text, type: type },       //自定义请求参数
+                        success: function (data) {
+                            var str = "<table class=\"tablelist\"><tr><th>序号</th><th>用户账号</th><th>用户昵称</th><th>真实姓名</th><th>身份证号</th><th>手机号码</th><th>会员状态</th></tr>";
+                            $.each(data.list, function (i, o) {
+                                str += "<tr><td>" + i + "</td><td>" + o.UserName + "</td><td>" + o.NickName + "</td><td>" + o.TrueName + "</td><td>" + o.IdentityNum + "</td><td>" + o.Phone + "</td><td>" + o.State + "</td></tr>";
+                            })
+                            str += "</table>";
+                            $("#tblist").html(str);
+                        },
+                        totalName: 'total'              //指定返回数据的总数据量的字段名
+                    }
+                });
+            })
+        })
+
     </script>
 </body>
 </html>

@@ -63,13 +63,13 @@ namespace GetMoney.Application
         {
             SqlPageParam param = new SqlPageParam();
             param.TableName = "TUsers";
-            param.PrimaryKey = "Userid";
-            param.Fields = "id,UserName,NickName,UserJb,IdentityNum,Phone,TxUrl,State,Addtime";
+            param.PrimaryKey = "id";
+            param.Fields = "id,UserName,NickName,TrueName,UserJb,IdentityNum,Phone,TxUrl,State,Addtime";
             param.PageSize = pageSize;
             param.PageIndex = pageIndex;
-            param.Filter = "";
+            param.Filter = filter;
             param.Group = "";
-            param.Order = "Userid";
+            param.Order = "id";
             IList<TUserDto> list = DataTableToList.ModelConvertHelper<TUserDto>.ConvertToModel(_dal.ListUserPage(ref Total, param));
             return list;
         }
