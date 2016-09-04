@@ -18,7 +18,7 @@ namespace GetMoney.Dal
         }
 
 
-        public void AddTUserByProce(string UserName, string Pwd,string IP,out Dictionary<string, object> list)
+        public void AddTUserByProce(string UserName, string Pwd, string BankPwd,string NickName,string TrueName,string IdentityNum,string Phone, string RegIp,string TxUrl, out Dictionary<string, object> list)
         {
             string ProName="SP_AddNewUser";
             SqlParameter[] parameter = new[]
@@ -26,14 +26,26 @@ namespace GetMoney.Dal
                 new SqlParameter("@UserName",SqlDbType.NVarChar,20),
                 new SqlParameter("@Password",SqlDbType.NVarChar,50),
                 new SqlParameter("@BankPwd",SqlDbType.NVarChar,50),
+                new SqlParameter("@NickName",SqlDbType.NVarChar,20),
+                new SqlParameter("@TrueName",SqlDbType.NVarChar,20),
+                new SqlParameter("@IdentityNum",SqlDbType.NVarChar,20),
+                new SqlParameter("@Phone",SqlDbType.NVarChar,12),
+                new SqlParameter("@RegIP",SqlDbType.NVarChar,16),
+                new SqlParameter("@TxUrl",SqlDbType.NVarChar,100),
                 new SqlParameter("@Userid",SqlDbType.Int),
                 new SqlParameter("@ReturnValue",SqlDbType.Int)
             };
             parameter[0].Value = UserName;
             parameter[1].Value = Pwd;
-            parameter[2].Value = Pwd;
-            parameter[3].Direction = ParameterDirection.Output;
-            parameter[4].Direction = ParameterDirection.ReturnValue;
+            parameter[2].Value = BankPwd;
+            parameter[3].Value = NickName;
+            parameter[4].Value = TrueName;
+            parameter[5].Value = IdentityNum;
+            parameter[6].Value = Phone;
+            parameter[7].Value = RegIp;
+            parameter[8].Value = TxUrl;
+            parameter[9].Direction = ParameterDirection.Output;
+            parameter[10].Direction = ParameterDirection.ReturnValue;
             string[] str = new string[] { "@Userid", "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }

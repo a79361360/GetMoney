@@ -95,7 +95,7 @@ namespace GetMoney.Application
             SqlPageParam param = new SqlPageParam();
             param.TableName = "Orders";
             param.PrimaryKey = "id";
-            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,InputDate,Remark,MoneySendType,MeetType,MeetNum,MeetDate,MeetTime,State";
+            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,InputDate,Remark,MoneySendType,MeetType,MeetNum,MeetDate,CONVERT(varchar(8), MeetTime, 108) MeetTime,State";
             param.PageSize = pageSize;
             param.PageIndex = pageIndex;
             param.Filter = "";

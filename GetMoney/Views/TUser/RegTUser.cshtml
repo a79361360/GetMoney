@@ -1,0 +1,85 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RegTUser</title>
+    <script src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#qrzc").click(function () {
+                var username = $("input[name='username']").val();
+                var newpwd = $("input[name='newpwd']").val();
+                var quepwd = $("input[name='quepwd']").val();
+                var nickname = $("input[name='nickname']").val();
+                var truename = $("input[name='truename']").val();
+                var identitynum = $("input[name='identitynum']").val();
+                var phone = $("input[name='phone']").val();
+                var txurl = $("input[name='txurl']").val();
+                var data = {
+                    UserName: username, UserPwd: newpwd, BankPwd: newpwd, NickName: nickname,
+                    TrueName: truename, IdentityNum: identitynum, Phone: phone, TxUrl: txurl
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/TUser/FullRegTUser",
+                    dataType: 'json',
+                    data: data,
+                    success: function (data) {
+                        if (data.success) {
+                            console.log(data.msg)
+                        } else {
+                            console.log(data.msg)
+                        }
+                    }
+                });
+            })
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>用户名：</td>
+                <td><input type="text" name="username" /></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input type="text" name="newpwd" /></td>
+            </tr>
+            <tr>
+                <td>确认密码：</td>
+                <td><input type="text" name="quepwd" /></td>
+            </tr>
+            <tr>
+                <td>呢称：</td>
+                <td><input type="text" name="nickname" /></td>
+            </tr>
+            <tr>
+                <td>真实姓名：</td>
+                <td><input type="text" name="truename" /></td>
+            </tr>
+            <tr>
+                <td>身份证号码：</td>
+                <td><input type="text" name="identitynum" /></td>
+            </tr>
+            <tr>
+                <td>手机号码：</td>
+                <td><input type="text" name="phone" /></td>
+            </tr>
+            <tr>
+                <td>头像地址：</td>
+                <td><input type="text" name="txurl" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><button id="qrzc" type="button">确认注册</button></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

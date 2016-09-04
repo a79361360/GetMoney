@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <script src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#lg").click(function () {
+                var uid = $("input[name='uid']").val();
+                var data = { uid: uid };
+                $.ajax({
+                    type: "POST",
+                    url: "/TUser/WebLogin",
+                    dataType: 'json',
+                    data: data,
+                    success: function (data) {
+                        if (data.success) {
+                            console.log(data.msg)
+                        } else {
+                            console.log(data.msg)
+                        }
+                    }
+                });
+            })
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td><input name="uid" type="text" /></td>
+                <td><button id="lg">登入</button></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

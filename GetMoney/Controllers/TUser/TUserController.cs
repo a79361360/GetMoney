@@ -46,11 +46,18 @@ namespace GetMoney.Controllers.TUser
             return JsonFormat(new ExtJson { success = true, msg = "添加成功！" });
         }
         public ActionResult RegTUser() {
+            return View();
+        }
+        /// <summary>
+        /// 快速注册
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult QuickRegTUser() { 
             TUserDto dto = new TUserDto();
-            //dto.UserName = CommonManager.WebObj.RequestForm("UserName", "");
-            //dto.UserPwd = CommonManager.WebObj.RequestForm("UserPwd", "").MD5();
-            dto.UserName = CommonManager.WebObj.Request("UserName", "");
-            dto.UserPwd = CommonManager.WebObj.Request("UserPwd", "").MD5();
+            dto.UserName = CommonManager.WebObj.RequestForm("UserName", "");
+            dto.UserPwd = CommonManager.WebObj.RequestForm("UserPwd", "").MD5();
+            dto.BankPwd = dto.UserPwd;
+            dto.NickName = dto.UserName;
             dto.RegIP = CommonManager.WebObj.GetWebClientIp();
             Dictionary<string, object> list = new Dictionary<string, object>();
             int result = -1;    //注册结果
@@ -58,6 +65,84 @@ namespace GetMoney.Controllers.TUser
             if (!string.IsNullOrEmpty(dto.UserName) || !string.IsNullOrEmpty(dto.UserPwd)) { 
                 _bll.RegTUser(dto, out list);
                 if (list.Count > 0) {
+                    result = Convert.ToInt32(list["@ReturnValue"]);
+                    switch (result)
+                    {
+                        case 1:
+                            Session["Userid"] = list["@Userid"].ToString();
+                            break;  
+                        default:
+                            msg = "注册失败!";
+                            break;
+
+                    }
+                }
+            }
+            if (result == 1)
+                return JsonFormat(new ExtJson { success = true, msg = msg });
+            else
+                return JsonFormat(new ExtJson { success = false, msg = msg });
+        }
+        /// <summary>
+        /// 手机注册
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PhoneRegTUser() {
+            TUserDto dto = new TUserDto();
+            dto.UserName = CommonManager.WebObj.RequestForm("UserName", "");
+            dto.UserPwd = CommonManager.WebObj.RequestForm("UserPwd", "").MD5();
+            dto.BankPwd = dto.UserPwd;
+            dto.Phone = CommonManager.WebObj.RequestForm("UserName", "");
+            dto.RegIP = CommonManager.WebObj.GetWebClientIp();
+            Dictionary<string, object> list = new Dictionary<string, object>();
+            int result = -1;    //注册结果
+            string msg = "注册成功!";
+            if (!string.IsNullOrEmpty(dto.UserName) || !string.IsNullOrEmpty(dto.UserPwd))
+            {
+                _bll.RegTUser(dto, out list);
+                if (list.Count > 0)
+                {
+                    result = Convert.ToInt32(list["@ReturnValue"]);
+                    switch (result)
+                    {
+                        case 1:
+                            Session["Userid"] = list["@Userid"].ToString();
+                            break;
+                        default:
+                            msg = "注册失败!";
+                            break;
+
+                    }
+                }
+            }
+            if (result == 1)
+                return JsonFormat(new ExtJson { success = true, msg = msg });
+            else
+                return JsonFormat(new ExtJson { success = false, msg = msg });
+        }
+        /// <summary>
+        /// 完整注册
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult FullRegTUser() {
+            TUserDto dto = new TUserDto();
+            dto.UserName = CommonManager.WebObj.RequestForm("UserName", "");
+            dto.UserPwd = CommonManager.WebObj.RequestForm("UserPwd", "").MD5();
+            dto.BankPwd = CommonManager.WebObj.RequestForm("BankPwd", "").MD5();
+            dto.NickName = CommonManager.WebObj.RequestForm("NickName", "");
+            dto.TrueName = CommonManager.WebObj.RequestForm("TrueName", "");
+            dto.IdentityNum = CommonManager.WebObj.RequestForm("IdentityNum", "");
+            dto.Phone = CommonManager.WebObj.RequestForm("Phone", "");
+            dto.RegIP = CommonManager.WebObj.GetWebClientIp();
+            dto.Phone = CommonManager.WebObj.RequestForm("TxUrl", "");
+            Dictionary<string, object> list = new Dictionary<string, object>();
+            int result = -1;    //注册结果
+            string msg = "注册成功!";
+            if (!string.IsNullOrEmpty(dto.UserName) || !string.IsNullOrEmpty(dto.UserPwd))
+            {
+                _bll.RegTUser(dto, out list);
+                if (list.Count > 0)
+                {
                     result = Convert.ToInt32(list["@ReturnValue"]);
                     switch (result)
                     {
@@ -109,8 +194,23 @@ namespace GetMoney.Controllers.TUser
         public ActionResult TUserFriend()
         {
             string stt = CommonManager.WebObj.RequestForm("data", "");
-            List<FriendDto> list = SerializeJson<FriendDto>.JSONStringToList(stt);
+            List<UIdsDto> list = SerializeJson<UIdsDto>.JSONStringToList(stt);
             return JsonFormat(new ExtJson { success = true, msg = "添加成功！", jsonresult = list });
+        }
+        public ActionResult Login() {
+            return View();
+        }
+        public ActionResult WebLogin()
+        {
+            string uid = CommonManager.WebObj.RequestForm("uid", "");
+            if (uid != "")
+            {
+                Session["uid"] = uid;
+                return JsonFormat(new ExtJson { success = true, msg = "登入成功" });
+            }
+            else {
+                return JsonFormat(new ExtJson { success = false, msg = "登入失败" });
+            }
         }
     }
 }

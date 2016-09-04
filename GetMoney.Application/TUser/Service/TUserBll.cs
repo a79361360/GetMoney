@@ -42,7 +42,7 @@ namespace GetMoney.Application
         }
         public void RegTUser(TUserDto dto, out Dictionary<string, object> list)
         {
-            _dal.AddTUserByProce(dto.UserName, dto.UserPwd, dto.RegIP, out list);
+            _dal.AddTUserByProce(dto.UserName, dto.UserPwd, dto.BankPwd, dto.NickName, dto.TrueName, dto.IdentityNum, dto.Phone, dto.RegIP, dto.TxUrl, out list);
         }
 
         public IList<TUserDto> ListTUserPage(ref int Total, int pageSize, int pageIndex)
@@ -127,6 +127,11 @@ namespace GetMoney.Application
             {
                 _dal.AddTUserFriend(userid, item.Pcid);
             }
+        }
+
+        public void VerifyTUsers(TUserDto dto) { 
+
+
         }
     }
 }
