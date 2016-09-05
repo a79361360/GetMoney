@@ -55,6 +55,7 @@
                     </select>
                 </td>
                 <td><input id="search" type="button" style="width:80px; cursor:pointer" value="查询"></td>
+                <td><input id="takefinds" type="button" style="width:80px; cursor:pointer" value="加为好友"></td>
             </tr>
     </table>
     <div id="tblist"></div>
@@ -82,9 +83,9 @@
                         url: '/TUser/ListTUserPage',  //请求地址
                         params: { text: text, type: type },       //自定义请求参数
                         success: function (data) {
-                            var str = "<table class=\"tablelist\"><tr><th>序号</th><th>用户账号</th><th>用户昵称</th><th>真实姓名</th><th>身份证号</th><th>手机号码</th><th>会员状态</th></tr>";
+                            var str = "<table class=\"tablelist\"><tr><th>序号</th><th>用户ID</th><th>用户账号</th><th>用户昵称</th><th>真实姓名</th><th>身份证号</th><th>手机号码</th><th>会员状态</th></tr>";
                             $.each(data.list, function (i, o) {
-                                str += "<tr><td>" + i + "</td><td>" + o.UserName + "</td><td>" + o.NickName + "</td><td>" + o.TrueName + "</td><td>" + o.IdentityNum + "</td><td>" + o.Phone + "</td><td>" + o.State + "</td></tr>";
+                                str += "<tr><td>" + i + "</td><td onclick=\"addatr(this)\">" + o.id + "</td><td>" + o.UserName + "</td><td>" + o.NickName + "</td><td>" + o.TrueName + "</td><td>" + o.IdentityNum + "</td><td>" + o.Phone + "</td><td>" + o.State + "</td></tr>";
                             })
                             str += "</table>";
                             $("#tblist").html(str);
@@ -93,6 +94,32 @@
                     }
                 });
             })
+            var list = [];   //数组对象
+            addatr = function (e) {
+                $(e).attr("get", 1);
+            }
+            $("#takefinds").click(function () {
+                var tr = $(".tablelist tr");
+                var data;   //元素对象
+                $.each(tr, function (i, o) {
+                    var getval = $(o).find("td").eq(1).attr("get");
+                    if (getval == "1") {
+                        data = new Object();    //元素对象实例
+                        data.id = $(o).find("td").eq(1).text();
+                        list.push(data);
+                    }
+                })
+                $.ajax({
+                    type: "POST",
+                    url: '/TUser/TUserFriend',
+                    data: { data: JSON.stringify(list) },
+                    dataType: 'json',
+                    success: function (data) {
+
+                    }
+                });
+            })
+
         })
 
     </script>
