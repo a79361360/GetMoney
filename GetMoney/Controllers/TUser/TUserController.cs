@@ -194,7 +194,7 @@ namespace GetMoney.Controllers.TUser
         public ActionResult TUserFriend()
         {
             string stt = CommonManager.WebObj.RequestForm("data", "");
-            List<UIdsDto> list = SerializeJson<UIdsDto>.JSONStringToList(stt);
+            List<UListDto> list = SerializeJson<UListDto>.JSONStringToList(stt);
             return JsonFormat(new ExtJson { success = true, msg = "添加成功！", jsonresult = list });
         }
         public ActionResult Login() {

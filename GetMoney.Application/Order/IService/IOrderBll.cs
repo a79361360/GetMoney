@@ -12,5 +12,6 @@ namespace GetMoney.Application
         bool RemoveOrders(string[] ids);
         bool RemoveOrder(string id);
         IList<OrderDto> ListOrderPage(ref int Total, int pageSize, int pageIndex);
+        IList<OrderDto> ListOrderPage(ref int Total, int pageSize, int pageIndex, string filter);
     }
 }

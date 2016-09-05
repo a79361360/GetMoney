@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GetMoney.Model.Model
 {
-    public class UIdsDto
+    public class UListDto
     {
         public int id { get; set; }
     }

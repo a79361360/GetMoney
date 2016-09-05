@@ -1,4 +1,5 @@
 ﻿using GetMoney.Application;
+using GetMoney.Common;
 using GetMoney.Framework;
 using GetMoney.Model;
 using System;
@@ -53,12 +54,22 @@ namespace GetMoney.Controllers.Order
         {
             int pageIndex = Convert.ToInt32(Request["pageIndex"]);
             int pageSize = Convert.ToInt32(Request["pageSize"]);
+            string type = CommonManager.WebObj.Request("type", "");
+            string text = CommonManager.WebObj.Request("text", "");
+            string filter = "";
+            if (!string.IsNullOrEmpty(text))
+            {
+                filter = type + " like '%" + text + "%'";
+            }
             int Total = 0;
-            IList<OrderDto> list = _bll.ListOrderPage(ref Total, pageSize, pageIndex);
+            IList<OrderDto> list = _bll.ListOrderPage(ref Total, pageSize, pageIndex, filter);
             if (list.Count > 0)
                 return JsonFormat(new ExtJsonPage { success = true, code = 1000, msg = "查询成功！", total = Total, list = list });
             else
                 return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
+
+
+
         }
     }
 }
