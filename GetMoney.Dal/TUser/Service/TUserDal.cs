@@ -52,7 +52,7 @@ namespace GetMoney.Dal
 
         public void AddTUserFriend(int userid,int pcid)
         {
-            string sql = "insert into TUserFriend(Userid,Pcid)values(" + userid + "," + pcid + ")";
+            string sql = "insert into TUserFriends(Userid,Pcid)values(" + userid + "," + pcid + ")";
             dal.ExtSql(sql);
         }
     }

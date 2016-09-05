@@ -121,11 +121,11 @@ namespace GetMoney.Application
             return result;
         }
 
-        public void AddTUserFriend(int userid, List<FriendDto> list)
+        public void AddTUserFriend(int userid, List<int> list)
         {
-            foreach (var item in list)
+            foreach (int item in list)
             {
-                _dal.AddTUserFriend(userid, item.Pcid);
+                _dal.AddTUserFriend(userid, item);
             }
         }
 
