@@ -193,8 +193,14 @@ namespace GetMoney.Controllers.TUser
         }
         public ActionResult TUserFriend()
         {
-            string stt = CommonManager.WebObj.RequestForm("data", "");
-            List<UListDto> list = SerializeJson<UListDto>.JSONStringToList(stt);
+            string data = CommonManager.WebObj.RequestForm("data", ""); //参数字符串
+            string userid = "0";
+            if(Session["uid"]==null){
+                return JsonFormat(new ExtJson { success = false, msg = "！" });
+            }
+            userid = Session["uid"].ToString();
+            List<UListDto> list = SerializeJson<UListDto>.JSONStringToList(data);
+            _bll.AddTUserFriend(Convert.ToInt32(userid), list);
             return JsonFormat(new ExtJson { success = true, msg = "添加成功！", jsonresult = list });
         }
         public ActionResult Login() {

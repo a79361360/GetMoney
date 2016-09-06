@@ -11,6 +11,7 @@ namespace GetMoney.Dal
     {
         DataTable ListUserPage(ref int Total, SqlPageParam Param);
         void AddTUserByProce(string UserName, string Pwd, string BankPwd, string NickName, string TrueName, string IdentityNum, string Phone, string RegIp, string TxUrl, out Dictionary<string, object> list);
-        void AddTUserFriend(int userid,int pcid);
+        int AddTUserFriend(int userid,int pcid);
+        bool VerifyUserByUnamePwd(string UserName, string UserPwd);
     }
 }
