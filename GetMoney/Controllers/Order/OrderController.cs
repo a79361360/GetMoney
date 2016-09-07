@@ -71,5 +71,10 @@ namespace GetMoney.Controllers.Order
 
 
         }
+
+        public ActionResult CreateOrder() {
+            //_bll.CreateOrder()
+            return View();
+        }
     }
 }

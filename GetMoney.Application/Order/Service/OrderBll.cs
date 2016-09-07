@@ -118,5 +118,18 @@ namespace GetMoney.Application
             IList<OrderDto> list = DataTableToList.ModelConvertHelper<OrderDto>.ConvertToModel(_dal.ListOrderPage(ref Total, param));
             return list;
         }
+
+        public int CreateOrder(int PeoperNum, string UserIds, int PeoperMoney, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, string MeetDate, DateTime MeetTime)
+        {
+            string OrderNo = DateTime.Now.ToString("yyyyMMddHHmmssfffffff");    //互助单号
+            Dictionary<string, object> dic;
+            int result = 0;
+            _dal.CreateOrder(OrderNo, PeoperNum, UserIds, PeoperMoney, MoneySendType, MeetType, MeetNum, FirstDate, MeetDate, MeetTime, out dic);
+            if (Convert.ToInt32(dic["@ReturnValue"]) == 1)
+            {
+                result = 1;
+            }
+            return result;
+        }
     }
 }

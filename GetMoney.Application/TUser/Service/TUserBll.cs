@@ -121,12 +121,19 @@ namespace GetMoney.Application
             return result;
         }
 
-        public void AddTUserFriend(int userid, List<UListDto> list)
+        public int AddTUserFriend(int userid, List<UListDto> list)
         {
+            Dictionary<string, object> dic;
+            int result = 0;
             foreach (UListDto item in list)
             {
-                _dal.AddTUserFriend(userid, item.id);
+                dic = new Dictionary<string, object>();
+                _dal.MakeTUserFriend(userid, item.id, 1,out dic);
+                if (Convert.ToInt32(dic["@ReturnValue"]) == 1) {
+                    result++;
+                }
             }
+            return result;
         }
         public bool VerifyTUsers(TUserDto dto) {
             bool result = _dal.VerifyUserByUnamePwd(dto.UserName, dto.UserPwd);

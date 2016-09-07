@@ -13,5 +13,6 @@ namespace GetMoney.Application
         bool RemoveOrder(string id);
         IList<OrderDto> ListOrderPage(ref int Total, int pageSize, int pageIndex);
         IList<OrderDto> ListOrderPage(ref int Total, int pageSize, int pageIndex, string filter);
+        int CreateOrder(int PeoperNum, string UserIds, int PeoperMoney, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, string MeetDate, DateTime MeetTime);
     }
 }

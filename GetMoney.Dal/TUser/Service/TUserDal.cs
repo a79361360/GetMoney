@@ -50,11 +50,32 @@ namespace GetMoney.Dal
             dal.ExtProc(ProName, parameter, str, out list);
         }
 
-        public int AddTUserFriend(int userid,int pcid)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="pcid"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public void MakeTUserFriend(int userid, int pcid, int type, out Dictionary<string, object> list)
         {
-            string sql = "insert into TUserFriends(Userid,Pcid)values(" + userid + "," + pcid + ")";
-            int result = dal.IntExtSql(sql);
-            return result;
+            string ProName = "SP_FriendUser";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@Userid",SqlDbType.Int),
+                new SqlParameter("@Pcid",SqlDbType.Int),
+                new SqlParameter("@Type",SqlDbType.Int),
+                new SqlParameter("@ReturnValue",SqlDbType.Int)
+            };
+            parameter[0].Value = userid;
+            parameter[1].Value = pcid;
+            parameter[2].Value = type;
+            parameter[3].Direction = ParameterDirection.ReturnValue;
+            string[] str = new string[] { "@ReturnValue" };
+            dal.ExtProc(ProName, parameter, str, out list);
+            //string sql = "insert into TUserFriends(Userid,Pcid)values(" + userid + "," + pcid + ")";
+            //int result = dal.IntExtSql(sql);
+            //return result;
         }
         /// <summary>
         /// 根据UserName和UserPwd判断用户是否存在

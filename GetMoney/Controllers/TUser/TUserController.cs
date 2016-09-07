@@ -196,12 +196,18 @@ namespace GetMoney.Controllers.TUser
             string data = CommonManager.WebObj.RequestForm("data", ""); //参数字符串
             string userid = "0";
             if(Session["uid"]==null){
-                return JsonFormat(new ExtJson { success = false, msg = "！" });
+                return JsonFormat(new ExtJson { success = false, msg = "登入状态已失效！" });
             }
             userid = Session["uid"].ToString();
             List<UListDto> list = SerializeJson<UListDto>.JSONStringToList(data);
-            _bll.AddTUserFriend(Convert.ToInt32(userid), list);
-            return JsonFormat(new ExtJson { success = true, msg = "添加成功！", jsonresult = list });
+            int Rnum = _bll.AddTUserFriend(Convert.ToInt32(userid), list);
+            if (Rnum > 0)
+            {
+                return JsonFormat(new ExtJson { success = true, msg = "添加成功！", jsonresult = Rnum });
+            }
+            else {
+                return JsonFormat(new ExtJson { success = false, msg = "添加失败！", jsonresult = "" });
+            }
         }
         public ActionResult Login() {
             return View();
