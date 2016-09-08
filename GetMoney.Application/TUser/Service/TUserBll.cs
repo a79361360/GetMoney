@@ -73,6 +73,28 @@ namespace GetMoney.Application
             IList<TUserDto> list = DataTableToList.ModelConvertHelper<TUserDto>.ConvertToModel(_dal.ListUserPage(ref Total, param));
             return list;
         }
+        /// <summary>
+        /// 翻页查询当前用户好友
+        /// </summary>
+        /// <param name="Total">总条数</param>
+        /// <param name="pageSize">一页大小</param>
+        /// <param name="pageIndex">当前页索引</param>
+        /// <param name="filter">条件</param>
+        /// <returns></returns>
+        public IList<FriendDto> ListFriendPage(ref int Total, int pageSize, int pageIndex, string filter)
+        {
+            SqlPageParam param = new SqlPageParam();
+            param.TableName = "TUserFriends inner join TUsers on TUserFriends.Pcid = TUsers.id";
+            param.PrimaryKey = "TUserFriends.id";
+            param.Fields = "TUserFriends.Userid,TUserFriends.Pcid,TUsers.UserName,TUsers.NickName,TrueName,TUsers.Phone";
+            param.PageSize = pageSize;
+            param.PageIndex = pageIndex;
+            param.Filter = filter;
+            param.Group = "";
+            param.Order = "TUserFriends.id";
+            IList<FriendDto> list = DataTableToList.ModelConvertHelper<FriendDto>.ConvertToModel(_dal.ListUserPage(ref Total, param));
+            return list;
+        }
 
         public bool RemoveTUser(string id)
         {

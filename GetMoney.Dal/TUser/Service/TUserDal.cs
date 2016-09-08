@@ -13,8 +13,10 @@ namespace GetMoney.Dal
         SqlDal dal = new SqlDal();
         public DataTable ListUserPage(ref int Total, SqlPageParam Param)
         {
-            DataSet ds = SqlHelper.PageResult(SqlHelper.SQLConnString, Param.TableName, Param.PrimaryKey, Param.Fields, Param.PageSize, Param.PageIndex, Param.Filter, Param.Group, Param.Order, ref Total);
-            return ds.Tables[0];
+            //DataSet ds = SqlHelper.PageResult(SqlHelper.SQLConnString, Param.TableName, Param.PrimaryKey, Param.Fields, Param.PageSize, Param.PageIndex, Param.Filter, Param.Group, Param.Order, ref Total);
+            //return ds.Tables[0];
+            DataTable dt = dal.PageResult(Param.TableName, Param.PrimaryKey, Param.Fields, Param.PageSize, Param.PageIndex, Param.Filter, Param.Group, Param.Order, ref Total);
+            return dt;
         }
 
 
@@ -98,5 +100,7 @@ namespace GetMoney.Dal
             }
             return false;
         }
+
+
     }
 }

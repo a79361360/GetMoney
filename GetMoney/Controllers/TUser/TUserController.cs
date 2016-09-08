@@ -191,11 +191,19 @@ namespace GetMoney.Controllers.TUser
         public ActionResult TUserSearch() {
             return View();
         }
+        /// <summary>
+        /// 批量添加好友
+        /// </summary>
+        /// <returns></returns>
         public ActionResult TUserFriend()
         {
+            return View();
+        }
+        public ActionResult CreateFriend() {
             string data = CommonManager.WebObj.RequestForm("data", ""); //参数字符串
             string userid = "0";
-            if(Session["uid"]==null){
+            if (Session["uid"] == null)
+            {
                 return JsonFormat(new ExtJson { success = false, msg = "登入状态已失效！" });
             }
             userid = Session["uid"].ToString();
@@ -205,9 +213,40 @@ namespace GetMoney.Controllers.TUser
             {
                 return JsonFormat(new ExtJson { success = true, msg = "添加成功！", jsonresult = Rnum });
             }
-            else {
+            else
+            {
                 return JsonFormat(new ExtJson { success = false, msg = "添加失败！", jsonresult = "" });
             }
+        }
+        /// <summary>
+        /// 查询我的好友
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SearchFriend() {
+            if (Session["uid"] == null)
+            {
+                return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "登入状态已失效！" });
+            }
+            int pageIndex = Convert.ToInt32(Request["pageIndex"]);
+            int pageSize = Convert.ToInt32(Request["pageSize"]);
+            string type = CommonManager.WebObj.Request("type", "");     //手机,实名,昵称
+            string text = CommonManager.WebObj.Request("text", "");     //查询条件的内容
+            int Userid = Convert.ToInt32(Session["uid"]);               //当前登入的用户
+            string State = CommonManager.WebObj.Request("state", "");   //是好友查询还是黑名单查询
+            string filter = "TUserFriends.Userid=" + Userid;
+            if (!string.IsNullOrEmpty(State)) {
+                filter += " and TUserFriends.State=" + State.FilterSql();
+            }
+            if (!string.IsNullOrEmpty(text))
+            {
+                filter += " and TUsers." + type + " like '%" + text.FilterSql() + "%'";
+            }
+            int Total = 0;
+            IList<FriendDto> list = _bll.ListFriendPage(ref Total, pageSize, pageIndex, filter);
+            if (list.Count > 0)
+                return JsonFormat(new ExtJsonPage { success = true, code = 1000, msg = "查询成功！", total = Total, list = list });
+            else
+                return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
         }
         public ActionResult Login() {
             return View();

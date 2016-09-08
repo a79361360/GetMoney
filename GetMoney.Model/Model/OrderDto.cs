@@ -15,6 +15,10 @@ namespace GetMoney.Model
         /// </summary>
         public int PeoperNum { get; set; }
         /// <summary>
+        /// 用户ID列表
+        /// </summary>
+        public string PeoperIds { get; set; }
+        /// <summary>
         /// 每个用户每次标会需要上缴的标准金额
         /// </summary>
         public int PeoperMoney { get; set; }
@@ -33,6 +37,10 @@ namespace GetMoney.Model
         /// 标会类型(1约定标会日期,2间隔30天标会),暂时只有第一种形式
         /// </summary>
         public int MeetType { get; set; }
+        /// <summary>
+        /// 首次标会日期
+        /// </summary>
+        public DateTime FirstDate { get; set; }
         /// <summary>
         /// 指定每个月标会次数(暂定最多5次)
         /// </summary>

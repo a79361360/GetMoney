@@ -119,12 +119,12 @@ namespace GetMoney.Application
             return list;
         }
 
-        public int CreateOrder(int PeoperNum, string UserIds, int PeoperMoney, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, string MeetDate, DateTime MeetTime)
+        public int CreateOrder(OrderDto dto)
         {
-            string OrderNo = DateTime.Now.ToString("yyyyMMddHHmmssfffffff");    //互助单号
+            dto.OrderNo = DateTime.Now.ToString("yyyyMMddHHmmssfffffff");    //互助单号
             Dictionary<string, object> dic;
             int result = 0;
-            _dal.CreateOrder(OrderNo, PeoperNum, UserIds, PeoperMoney, MoneySendType, MeetType, MeetNum, FirstDate, MeetDate, MeetTime, out dic);
+            _dal.CreateOrder(dto.OrderNo, dto.PeoperNum, dto.PeoperIds, dto.PeoperMoney, dto.MoneySendType, dto.MeetType, dto.MeetNum, dto.FirstDate, dto.MeetDate, dto.MeetTime, out dic);
             if (Convert.ToInt32(dic["@ReturnValue"]) == 1)
             {
                 result = 1;

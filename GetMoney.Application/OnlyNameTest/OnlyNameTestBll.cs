@@ -1,4 +1,5 @@
-﻿using GetMoney.Data.OnlyNameTest;
+﻿using GetMoney.Dal;
+using GetMoney.Data.OnlyNameTest;
 using GetMoney.Model;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,11 @@ namespace GetMoney.Application.OnlyNameTest
     public class OnlyNameTestBll:IOnlyNameTestBll
     {
         IOnlyNameTestRepository _repostory;
-        public OnlyNameTestBll(IOnlyNameTestRepository repostory)
+        ITUserDal _dal;
+        public OnlyNameTestBll(IOnlyNameTestRepository repostory, ITUserDal dal)
         {
             _repostory = repostory;
+            _dal = dal;
         }
         public void Add(OnlyNameTestDto dto)
         {

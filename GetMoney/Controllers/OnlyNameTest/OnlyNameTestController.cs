@@ -18,10 +18,6 @@ namespace GetMoney.Controllers.OnlyNameTest
         {
             _bll = bll;
         }
-        public ActionResult Index()
-        {
-            return View();
-        }
         public void TestDbcontext()
         {
             OnlyNameTestDto dto = new OnlyNameTestDto();

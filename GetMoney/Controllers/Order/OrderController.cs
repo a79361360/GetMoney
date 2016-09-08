@@ -71,10 +71,35 @@ namespace GetMoney.Controllers.Order
 
 
         }
-
-        public ActionResult CreateOrder() {
-            //_bll.CreateOrder()
+        public ActionResult OrderPortal() {
             return View();
+        }
+        public ActionResult CreateOrder() {
+            string PeoperNum = Request.Form["peonum"];
+            string Peoper = Request.Form["uids"];
+            string PeoperMoney = Request.Form["peomoney"];
+            string MoneySendType = Request.Form["moneystype"];
+            string MeetType = Request.Form["meettype"];
+            string MeetNum = Request.Form["meetnum"];
+            string FirstDate = Request.Form["fistdate"];
+            string MeetDate = Request.Form["meetdate"];
+            string MeetTime = Request.Form["meettime"];
+            OrderDto dto = new OrderDto();
+            dto.PeoperNum = Convert.ToInt32(PeoperNum);
+            dto.PeoperIds = Peoper;
+            dto.PeoperMoney = Convert.ToInt32(PeoperMoney);
+            dto.MoneySendType = Convert.ToInt32(MoneySendType);
+            dto.MeetType = Convert.ToInt32(MeetType);
+            dto.MeetNum = Convert.ToInt32(MeetNum);
+            dto.MeetDate = MeetDate;
+            int result = _bll.CreateOrder(dto);
+            if (result == 1)
+            {
+                return JsonFormat(new ExtJson { success = true, msg = "添加成功！" });
+            }
+            else {
+                return JsonFormat(new ExtJson { success = false, msg = "添加失败！" });
+            }
         }
     }
 }

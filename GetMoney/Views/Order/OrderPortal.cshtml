@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OrderPortal</title>
+    <script src="~/Content/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+    <table>
+        <tr><td>放款类型</td><td><select id="moneysendtype"><option value="1">会款总额+利息</option></select></td></tr>
+        <tr><td>标会类型</td><td><select id="meettype"><option value="1">约定标会日期</option></select></td></tr>
+        <tr><td>月标会次数</td><td><select id="meetnum"><option value="1">每月一次</option></select></td></tr>
+        <tr><td>首次标会日期时间</td><td><input id="firstname" type="text" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readOnly: true })" /></td></tr>
+        <tr><td>会费金额</td><td><input id="peopermoney" type="text" /></td></tr>
+        <tr><td>会员人数</td><td><input id="peopernum" type="text" /></td></tr>
+    </table>
+</body>
+</html>
