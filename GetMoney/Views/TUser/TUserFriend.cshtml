@@ -42,7 +42,7 @@
                             if (data.success) {
                                 var str = "<table class=\"tablelist\"><tr><th>选中次数</th><th>好友ID</th><th>真实姓名</th><th>手机号码</th><th>操作</th></tr>";
                                 $.each(data.list, function (i, o) {
-                                    str += "<tr><td>0</td><td>" + o.Pcid + "</td><td>" + o.TrueName + "</td><td>" + o.Phone + "</td><td><span>添加</span><span>减少</span></td></tr>";
+                                    str += "<tr><td>0</td><td>" + o.Pcid + "</td><td>" + o.TrueName + "</td><td>" + o.Phone + "</td><td><span onclick=\"pitchbtn(1,this)\">添加</span><span onclick=\"pitchbtn(2,this)\">减少</span></td></tr>";
                                 })
                                 str += "</table>";
                                 $("#gfriendtblist").html(str);
@@ -53,6 +53,20 @@
                 });
             })
         })
+        var friendids = [];
+        delegbefore = function () {
+
+        }
+        pitchbtn = function (type, e) {
+            var v = $(e).parent().parent().find("td").eq(1).text();
+            if (type == 1) {
+                friendids.push(v)
+            }
+            if (type == 2) {
+                friendids.splice(jQuery.inArray(v, friendids), 1);
+            }
+            console.log(friendids)
+        }
     </script>
 </head>
 <body>
