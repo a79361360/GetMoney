@@ -9,15 +9,59 @@
     <meta name="viewport" content="width=device-width" />
     <title>OrderPortal</title>
     <script src="~/Content/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+        delebefore = function () {
+            var list = friendids;
+            var str = "";
+            $.each(list, function (i, o) {
+                str += "<li><span>" + i + 1 + "</span><span>" + o.id + "</span><span>" + o.tname + "</span><span>" + o.phone + "</span></li>";
+            })
+            $("#ulist").html(str);
+        }
+        $(function () {
+            $("#orderbtn").click(function () {
+                var moneystype = $("#moneysendtype").val();
+                var meettype = $("#meettype").val();
+                var meetnum = $("#meetnum").val();
+                var peomoney = $("#peomoney").val();
+                var firsdate = $("#firsdate").val();
+                var peonum = $("#peopernum").val();
+                var peonum = $("#peopernum").val();
+                var peonum = $("#peopernum").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: '/Order/CreateOrder',
+                    data: { data: JSON.stringify(friendids) },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                            console.log(data.msg)
+                        } else {
+                            console.log("1213123")
+                        }
+                    }
+                });
+            })
+        })
+    </script>
 </head>
 <body>
     <table>
         <tr><td>放款类型</td><td><select id="moneysendtype"><option value="1">会款总额+利息</option></select></td></tr>
         <tr><td>标会类型</td><td><select id="meettype"><option value="1">约定标会日期</option></select></td></tr>
         <tr><td>月标会次数</td><td><select id="meetnum"><option value="1">每月一次</option></select></td></tr>
-        <tr><td>首次标会日期时间</td><td><input id="firstname" type="text" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readOnly: true })" /></td></tr>
+        <tr><td>首次标会日期时间</td><td><input id="firsdate" type="text" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readOnly: true })" /></td></tr>
         <tr><td>会费金额</td><td><input id="peopermoney" type="text" /></td></tr>
         <tr><td>会员人数</td><td><input id="peopernum" type="text" /></td></tr>
+        <tr>
+            <td>会员列表：</td>
+            <td>
+                <ul id="ulist"></ul>
+            </td>
+        </tr>
+        <tr><td colspan="2"><button id="orderbtn">提交</button></td></tr>
     </table>
+    @Html.Action("TUserFriend", "TUser")
 </body>
 </html>

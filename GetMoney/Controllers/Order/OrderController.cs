@@ -75,15 +75,15 @@ namespace GetMoney.Controllers.Order
             return View();
         }
         public ActionResult CreateOrder() {
-            string PeoperNum = Request.Form["peonum"];
-            string Peoper = Request.Form["uids"];
-            string PeoperMoney = Request.Form["peomoney"];
-            string MoneySendType = Request.Form["moneystype"];
-            string MeetType = Request.Form["meettype"];
-            string MeetNum = Request.Form["meetnum"];
-            string FirstDate = Request.Form["fistdate"];
-            string MeetDate = Request.Form["meetdate"];
-            string MeetTime = Request.Form["meettime"];
+            string PeoperNum = Request.Form["peonum"];          //会员人数
+            string Peoper = Request.Form["uids"];               //会员列表
+            string PeoperMoney = Request.Form["peomoney"];      //会费金额
+            string MoneySendType = Request.Form["moneystype"];  //会费发放方式
+            string MeetType = Request.Form["meettype"];         //标会类型
+            string MeetNum = Request.Form["meetnum"];           //每月标会次数
+            string FirstDate = Request.Form["firstdate"];        //首次标会日期
+            //string MeetDate = Request.Form["meetdate"];         //标会日期
+            //string MeetTime = Request.Form["meettime"];         //标会时间
             OrderDto dto = new OrderDto();
             dto.PeoperNum = Convert.ToInt32(PeoperNum);
             dto.PeoperIds = Peoper;
@@ -91,7 +91,7 @@ namespace GetMoney.Controllers.Order
             dto.MoneySendType = Convert.ToInt32(MoneySendType);
             dto.MeetType = Convert.ToInt32(MeetType);
             dto.MeetNum = Convert.ToInt32(MeetNum);
-            dto.MeetDate = MeetDate;
+            //dto.MeetDate = MeetDate;
             int result = _bll.CreateOrder(dto);
             if (result == 1)
             {

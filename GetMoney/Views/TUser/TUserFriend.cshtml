@@ -52,20 +52,34 @@
                     }
                 });
             })
+            //清空friends
+            $("#clear").click(function () {
+                friendids = [];
+                delebefore();
+            })
         })
         var friendids = [];
-        delegbefore = function () {
-
-        }
+        //操作按钮
         pitchbtn = function (type, e) {
-            var v = $(e).parent().parent().find("td").eq(1).text();
+            var o = new Object();
+            var v = $(e).parent().parent().find("td").eq(1).text(); //id值
+            var tname = $(e).parent().parent().find("td").eq(2).text(); //真实姓名
+            var phone = $(e).parent().parent().find("td").eq(3).text(); //手机号码
+            var csobj = $(e).parent().parent().find("td").eq(0);    //第1列的TD对象
             if (type == 1) {
-                friendids.push(v)
+                o.id = v;o.tname = tname;o.phone = phone;   //对象
+                friendids.push(o);  //添加
+                csobj.text(parseInt(csobj.text()) + 1);
             }
             if (type == 2) {
-                friendids.splice(jQuery.inArray(v, friendids), 1);
+                o.id = v;o.tname = tname;o.phone = phone;   //对象
+                friendids.splice(jQuery.inArray(o, friendids), 1);  //移除
+                csobj.text(parseInt(csobj.text()) - 1);
             }
-            console.log(friendids)
+            //如果这个方法存在就调用
+            if (typeof delebefore === 'function') {
+                delebefore();
+            }
         }
     </script>
 </head>
@@ -80,6 +94,7 @@
                 </select>
             </td>
             <td><input id="search" type="button" style="width:80px; cursor:pointer" value="查询"></td>
+            <td><input id="clear" type="button" style="width:80px; cursor:pointer" value="清空"></td>
         </tr>
     </table>
     <div id="gfriendtblist"></div>
