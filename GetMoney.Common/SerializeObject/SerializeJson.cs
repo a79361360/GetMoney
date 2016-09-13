@@ -8,10 +8,10 @@ namespace GetMoney.Common.SerializeObject
 {
     public static class SerializeJson<T>
     {
-        public static List<T> JSONStringToList(string JsonStr)
+        public static IList<T> JSONStringToList(string JsonStr)
         {
-            List<T> objs = JsonConvert.DeserializeObject<List<T>>(JsonStr);
+            IList<T> objs = JsonConvert.DeserializeObject<IList<T>>(JsonStr);
             return objs;
-        } 
+        }
     }
 }

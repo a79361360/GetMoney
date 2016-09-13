@@ -3,7 +3,7 @@ using GetMoney.Common;
 using GetMoney.Common.Expand;
 using GetMoney.Common.SerializeObject;
 using GetMoney.Framework;
-using GetMoney.Model.Model;
+using GetMoney.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -207,7 +207,7 @@ namespace GetMoney.Controllers.TUser
                 return JsonFormat(new ExtJson { success = false, msg = "登入状态已失效！" });
             }
             userid = Session["uid"].ToString();
-            List<UListDto> list = SerializeJson<UListDto>.JSONStringToList(data);
+            IList<UListDto> list = SerializeJson<UListDto>.JSONStringToList(data);
             int Rnum = _bll.AddTUserFriend(Convert.ToInt32(userid), list);
             if (Rnum > 0)
             {

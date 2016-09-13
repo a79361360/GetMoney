@@ -131,5 +131,13 @@ namespace GetMoney.Application
             }
             return result;
         }
+        public string ListToString(IList<UListDto> list) {
+            IList<int> intlist = new List<int>();
+            foreach (var item in list) {
+                intlist.Add(item.id);
+            }
+            string result = string.Join(",", intlist.ToArray());
+            return result;
+        }
     }
 }

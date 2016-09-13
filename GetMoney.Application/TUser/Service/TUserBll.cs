@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GetMoney.Model.Model;
+using GetMoney.Model;
 using GetMoney.Data.TUser;
 using GetMoney.Dal;
 using GetMoney.Framework.Common;
@@ -143,7 +143,7 @@ namespace GetMoney.Application
             return result;
         }
 
-        public int AddTUserFriend(int userid, List<UListDto> list)
+        public int AddTUserFriend(int userid, IList<UListDto> list)
         {
             Dictionary<string, object> dic;
             int result = 0;

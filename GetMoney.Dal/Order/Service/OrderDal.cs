@@ -38,11 +38,12 @@ namespace GetMoney.Dal
             parameter[2].Value = UserIds;
             parameter[3].Value = PeoperMoney;
             parameter[4].Value = MoneySendType;
-            parameter[5].Value = MeetNum;
-            parameter[6].Value = FirstDate;
-            parameter[7].Value = MeetDate;
-            parameter[8].Value = MeetTime;
-            parameter[9].Direction = ParameterDirection.ReturnValue;
+            parameter[5].Value = MeetType;
+            parameter[6].Value = MeetNum;
+            parameter[7].Value = FirstDate;
+            parameter[8].Value = MeetDate;
+            parameter[9].Value = MeetTime;
+            parameter[10].Direction = ParameterDirection.ReturnValue;
             string[] str = new string[] { "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }

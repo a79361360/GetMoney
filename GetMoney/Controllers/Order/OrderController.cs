@@ -1,5 +1,6 @@
 ﻿using GetMoney.Application;
 using GetMoney.Common;
+using GetMoney.Common.SerializeObject;
 using GetMoney.Framework;
 using GetMoney.Model;
 using System;
@@ -88,7 +89,8 @@ namespace GetMoney.Controllers.Order
             string MeetTime = "19:00";         //标会时间
             OrderDto dto = new OrderDto();
             dto.PeoperNum = Convert.ToInt32(PeoperNum);
-            dto.PeoperIds = Peoper;
+            IList<UListDto> list = SerializeJson<UListDto>.JSONStringToList(Peoper);    //会员列表
+            dto.PeoperIds = _bll.ListToString(list);    //会员ids
             dto.PeoperMoney = Convert.ToInt32(PeoperMoney);
             dto.MoneySendType = Convert.ToInt32(MoneySendType);
             dto.MeetType = Convert.ToInt32(MeetType);

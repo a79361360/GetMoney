@@ -21,14 +21,13 @@
         }
         $(function () {
             $("#orderbtn").click(function () {
-                console.log(1111)
                 var moneystype = $("#moneysendtype").val(); //会款发放方式
-                var meettype = $("#meettype").val();    //标会类型
-                var meetnum = $("#meetnum").val();      //每月标会次数
-                var peomoney = $("#peomoney").val();    //会费金额
-                var firstdate = $("#firstdate").val();    //首次标会日期
-                var peonum = $("#peopernum").val();     //标会人数
-                var uids = JSON.stringify(friendids);    //会员列表
+                var meettype = $("#meettype").val();        //标会类型
+                var meetnum = $("#meetnum").val();          //每月标会次数
+                var peomoney = $("#peomoney").val();        //会费金额
+                var firstdate = $("#firstdate").val();      //首次标会日期
+                var peonum = $("#peopernum").val();         //标会人数
+                var uids = JSON.stringify(friendids);       //会员列表
                 var data = {
                     peonum: peonum,
                     uids: uids,
@@ -38,7 +37,6 @@
                     meetnum: meetnum,
                     firstdate: firstdate
                 };
-                console.log(data)
                 $.ajax({
                     type: "POST",
                     url: '/Order/CreateOrder',

@@ -1,4 +1,4 @@
-﻿using GetMoney.Model.Model;
+﻿using GetMoney.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +39,6 @@ namespace GetMoney.Application
         /// <param name="filter"></param>
         /// <returns></returns>
         IList<FriendDto> ListFriendPage(ref int Total, int pageSize, int pageIndex, string filter);
-        int AddTUserFriend(int userid, List<UListDto> list);
+        int AddTUserFriend(int userid, IList<UListDto> list);
     }
 }

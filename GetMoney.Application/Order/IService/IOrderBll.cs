@@ -14,5 +14,6 @@ namespace GetMoney.Application
         IList<OrderDto> ListOrderPage(ref int Total, int pageSize, int pageIndex);
         IList<OrderDto> ListOrderPage(ref int Total, int pageSize, int pageIndex, string filter);
         int CreateOrder(OrderDto dto);
+        string ListToString(IList<UListDto> list);
     }
 }
