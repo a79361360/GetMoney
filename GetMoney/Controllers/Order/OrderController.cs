@@ -84,6 +84,8 @@ namespace GetMoney.Controllers.Order
             string FirstDate = Request.Form["firstdate"];        //首次标会日期
             //string MeetDate = Request.Form["meetdate"];         //标会日期
             //string MeetTime = Request.Form["meettime"];         //标会时间
+            string MeetDate = "20";         //标会日期
+            string MeetTime = "19:00";         //标会时间
             OrderDto dto = new OrderDto();
             dto.PeoperNum = Convert.ToInt32(PeoperNum);
             dto.PeoperIds = Peoper;
@@ -91,7 +93,9 @@ namespace GetMoney.Controllers.Order
             dto.MoneySendType = Convert.ToInt32(MoneySendType);
             dto.MeetType = Convert.ToInt32(MeetType);
             dto.MeetNum = Convert.ToInt32(MeetNum);
-            //dto.MeetDate = MeetDate;
+            dto.FirstDate = Convert.ToDateTime(FirstDate);
+            dto.MeetDate = MeetDate;
+            dto.MeetTime = Convert.ToDateTime(MeetTime);
             int result = _bll.CreateOrder(dto);
             if (result == 1)
             {
