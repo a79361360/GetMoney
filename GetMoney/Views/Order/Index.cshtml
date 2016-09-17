@@ -67,7 +67,7 @@
                             console.log(data)
                             var str = "<table class=\"tablelist\"><tr><th>序号</th><th>会单ID</th><th>会钱发放类型</th><th>开会日期</th><th>开会时间</th><th>会单人数</th><th>会单金额</th><th>会单总额</th><th>会单状态</th><th>操作</th></tr>";
                             $.each(data.list, function (i, o) {
-                                str += "<tr><td>" + (i + 1) + "</td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><a href='#' onclick=\"FindOrderLists('" + o.OrderNo + "')\">取得列表</a></td></tr>";
+                                str += "<tr><td>" + (i + 1) + "</td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><a href='#' onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">展开</a></td></tr>";
                             })
                             str += "</table>";
                             $("#tblist").html(str);
@@ -83,21 +83,40 @@
             if (v == 2) return '死会';
             if (v == 3) return '险会';
         }
-        FindOrderLists = function (No) {
-            console.log(No)
+        FindOrderLists = function (e, No) {
+            var text = $(e).text();
+            if (text == "展开") {
+                $(e).text("收缩");
+                var trobj = $("#jl" + No);
+                if (trobj.length > 0) {
+                    trobj.show();
+                    return;
+                }
+            } else {
+                $(e).text("展开");
+                trobj.hide();
+            }
             $.ajax({
                 type: "GET",
                 url: '/Order/OrderLists',
                 data: { orderno: No },
                 dataType: 'json',
                 success: function (data) {
+                    //<table id=\"jl" + No + "\">
+                    var str = "<tr id=\"jl" + No + "\"><th>记录ID</th><th>标会日期</th><th>真实姓名</th><th>标金金额</th><th>记录状态</th><th>操作</th></tr>";
+                    var objdata = data.jsonresult;
                     if (data.success) {
-                        console.log(data)
-                    } else {
-                        console.log("1213123")
-                    }
+                        $.each(objdata, function (i, o) {
+                            var cztext = "填写标金"; if (o.State == "1") cztext = "展开明细";
+                            str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + o.TrueName + "</td><td>" + o.AccrualMoney + "</td><td>" + o.State + "</td><td onclick=\"FindOrderUser(" + o.State + ")\">" + cztext + "</td></tr>";
+                        })
+                        $(e).parent().parent().after(str);
+                    } 
                 }
             });
+        }
+        FindOrderUser = function (state) {
+            console.log(state)
         }
     </script>
 </body>
