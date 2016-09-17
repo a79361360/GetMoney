@@ -13,10 +13,12 @@ namespace GetMoney.Dal
         SqlDal dal = new SqlDal();
         public DataTable ListOrderPage(ref int Total, SqlPageParam Param)
         {
-            DataSet ds = SqlHelper.PageResult(SqlHelper.SQLConnString, Param.TableName, Param.PrimaryKey, Param.Fields, Param.PageSize, Param.PageIndex, Param.Filter, Param.Group, Param.Order, ref Total);
-            return ds.Tables[0];
+            //DataSet ds = SqlHelper.PageResult(SqlHelper.SQLConnString, Param.TableName, Param.PrimaryKey, Param.Fields, Param.PageSize, Param.PageIndex, Param.Filter, Param.Group, Param.Order, ref Total);
+            //return ds.Tables[0];
+            DataTable dt = dal.PageResult(Param.TableName, Param.PrimaryKey, Param.Fields, Param.PageSize, Param.PageIndex, Param.Filter, Param.Group, Param.Order, ref Total);
+            return dt;
         }
-        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds,int PeoperMoney,int MoneySendType,int MeetType,int MeetNum,DateTime FirstDate,string MeetDate,DateTime MeetTime, out Dictionary<string, object> list)
+        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, string MeetDate, string MeetTime, out Dictionary<string, object> list)
         {
             string ProName = "SP_AddNewOrder";
             SqlParameter[] parameter = new[]
@@ -30,7 +32,7 @@ namespace GetMoney.Dal
                 new SqlParameter("@MeetNum",SqlDbType.Int),
                 new SqlParameter("@FirstDate",SqlDbType.DateTime),
                 new SqlParameter("@MeetDate",SqlDbType.NVarChar,14),
-                new SqlParameter("@MeetTime",SqlDbType.DateTime),
+                new SqlParameter("@MeetTime",SqlDbType.NVarChar,30),
                 new SqlParameter("@ReturnValue",SqlDbType.Int)
             };
             parameter[0].Value = OrderNo;
@@ -46,6 +48,15 @@ namespace GetMoney.Dal
             parameter[10].Direction = ParameterDirection.ReturnValue;
             string[] str = new string[] { "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
+        }
+        public DataTable OrderLists(string No) {
+            string sql = "select a.ID,a.OrderNo,a.MeetDate,a.Userid,b.TrueName,a.AccrualMoney,a.State from Order_Lists a left outer join TUsers b on a.Userid=b.id where a.OrderNo=@No";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@No",SqlDbType.NVarChar,50)
+            };
+            parameter[0].Value = No;
+            return dal.ExtSql(sql, parameter);
         }
     }
 }

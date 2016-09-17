@@ -32,7 +32,11 @@ namespace GetMoney.Model
         /// <summary>
         /// 会钱总额发放类型(1为全额发放,每月需要在标准金额上补充标息,2为减掉标息后发放,每还是只需要上缴标准金额)
         /// </summary>
-        public int MoneySendType { get; set; }
+        public MnSdTypeEnum MoneySendType { get; set; }
+        /// <summary>
+        /// MoneySendType的Name保存给View使用
+        /// </summary>
+        public string MSType { get; set; }
         /// <summary>
         /// 标会类型(1约定标会日期,2间隔30天标会),暂时只有第一种形式
         /// </summary>
@@ -52,7 +56,7 @@ namespace GetMoney.Model
         /// <summary>
         /// 标会时间(具体的时间:例如晚上7点就是:    19:00)
         /// </summary>
-        public DateTime MeetTime { get; set; }
+        public string MeetTime { get; set; }
         //录入时间
         public DateTime InputDate { get; set; }
         //当前会的状态(1活会,2死会,3险会)

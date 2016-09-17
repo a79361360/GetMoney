@@ -16,7 +16,7 @@ namespace GetMoney.Data.Order
             int MeetType,
             int MeetNum,
             string MeetDate,
-            DateTime MeetTime,
+            string MeetTime,
             DateTime InputDate,
             int State,
             string Remark)

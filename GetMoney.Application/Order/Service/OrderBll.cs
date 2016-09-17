@@ -31,7 +31,7 @@ namespace GetMoney.Application
                 dto.OrderNo,
                 dto.PeoperNum,
                 dto.PeoperMoney,
-                dto.MoneySendType,
+                (int)dto.MoneySendType,
                 dto.MeetType,
                 dto.MeetNum,
                 dto.MeetDate,
@@ -95,7 +95,7 @@ namespace GetMoney.Application
             SqlPageParam param = new SqlPageParam();
             param.TableName = "Orders";
             param.PrimaryKey = "id";
-            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,InputDate,Remark,MoneySendType,MeetType,MeetNum,MeetDate,CONVERT(varchar(8), MeetTime, 108) MeetTime,State";
+            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,InputDate,Remark,MoneySendType,MeetType,MeetNum,MeetDate,MeetTime,State";
             param.PageSize = pageSize;
             param.PageIndex = pageIndex;
             param.Filter = "";
@@ -116,6 +116,9 @@ namespace GetMoney.Application
             param.Group = "";
             param.Order = "id";
             IList<OrderDto> list = DataTableToList.ModelConvertHelper<OrderDto>.ConvertToModel(_dal.ListOrderPage(ref Total, param));
+            foreach (var item in list) {
+                item.MSType = Enum.GetName(typeof(MnSdTypeEnum), (int)item.MoneySendType);
+            }
             return list;
         }
 
@@ -124,7 +127,7 @@ namespace GetMoney.Application
             dto.OrderNo = DateTime.Now.ToString("yyyyMMddHHmmssfffffff");    //互助单号
             Dictionary<string, object> dic;
             int result = 0;
-            _dal.CreateOrder(dto.OrderNo, dto.PeoperNum, dto.PeoperIds, dto.PeoperMoney, dto.MoneySendType, dto.MeetType, dto.MeetNum, dto.FirstDate, dto.MeetDate, dto.MeetTime, out dic);
+            _dal.CreateOrder(dto.OrderNo, dto.PeoperNum, dto.PeoperIds, dto.PeoperMoney, (int)dto.MoneySendType, dto.MeetType, dto.MeetNum, dto.FirstDate, dto.MeetDate, dto.MeetTime, out dic);
             if (Convert.ToInt32(dic["@ReturnValue"]) == 1)
             {
                 result = 1;
@@ -138,6 +141,10 @@ namespace GetMoney.Application
             }
             string result = string.Join(",", intlist.ToArray());
             return result;
+        }
+        public IList<OrderListDto> OrderLists(string No) {
+            IList<OrderListDto> list = DataTableToList.ModelConvertHelper<OrderListDto>.ConvertToModel(_dal.OrderLists(No));
+            return list;
         }
     }
 }

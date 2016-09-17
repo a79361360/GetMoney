@@ -32,11 +32,11 @@ namespace GetMoney.Controllers.Order
             dto.OrderNo = DateTime.Now.ToString("yyyyMMddHHmmssfffffff");
             dto.PeoperNum = 20;
             dto.PeoperMoney = 2000;
-            dto.MoneySendType = 1;
+            dto.MoneySendType = (MnSdTypeEnum)1;
             dto.MeetType = 1;
             dto.MeetNum = 1;
             dto.MeetDate = "26";
-            dto.MeetTime = Convert.ToDateTime("19:00");
+            dto.MeetTime = "19:00";
             dto.InputDate = DateTime.Now;
             dto.State = 1;
             dto.Remark = "测试";
@@ -92,12 +92,12 @@ namespace GetMoney.Controllers.Order
             IList<UListDto> list = SerializeJson<UListDto>.JSONStringToList(Peoper);    //会员列表
             dto.PeoperIds = _bll.ListToString(list);    //会员ids
             dto.PeoperMoney = Convert.ToInt32(PeoperMoney);
-            dto.MoneySendType = Convert.ToInt32(MoneySendType);
+            dto.MoneySendType = (MnSdTypeEnum)Convert.ToInt32(MoneySendType);
             dto.MeetType = Convert.ToInt32(MeetType);
             dto.MeetNum = Convert.ToInt32(MeetNum);
             dto.FirstDate = Convert.ToDateTime(FirstDate);
             dto.MeetDate = MeetDate;
-            dto.MeetTime = Convert.ToDateTime(MeetTime);
+            dto.MeetTime = MeetTime;
             int result = _bll.CreateOrder(dto);
             if (result == 1)
             {
@@ -106,6 +106,18 @@ namespace GetMoney.Controllers.Order
             else {
                 return JsonFormat(new ExtJson { success = false, msg = "添加失败！" });
             }
+        }
+
+        public ActionResult OrderLists() {
+            string OrderNo = CommonManager.WebObj.Request("orderno", "");
+            if (string.IsNullOrEmpty(OrderNo)) {
+                return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "单号不能为空！" });
+            }
+            IList<OrderListDto> list = _bll.OrderLists(OrderNo);
+            if (list.Count > 0)
+                return JsonFormat(new ExtJson { success = true, code = 1000, msg = "查询成功！", jsonresult = list });
+            else
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "查询失败！" });
         }
     }
 }

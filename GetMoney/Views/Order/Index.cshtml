@@ -34,7 +34,7 @@
                     <option value="OrderNo">会单号</option>
                 </select>
             </td>
-            <td><input id="search" type="button" style="width:80px; cursor:pointer" value="查询"></td>
+            <td><input id="search" type="button" style="width:80px; cursor:pointer" value="查询">@Html.Raw(ViewBag.ll)</td>
         </tr>
     </table>
 
@@ -65,9 +65,9 @@
                         success: function (data) {
                             //$("#eventLog").append(' remote callback : ' + JSON.stringify(data) + '<br />');
                             console.log(data)
-                            var str = "<table class=\"tablelist\"><tr><th>序号</th><th>会单ID</th><th>开会日期</th><th>开会时间</th><th>会单人数</th><th>会单金额</th><th>会单总额</th><th>会单状态</th></tr>";
+                            var str = "<table class=\"tablelist\"><tr><th>序号</th><th>会单ID</th><th>会钱发放类型</th><th>开会日期</th><th>开会时间</th><th>会单人数</th><th>会单金额</th><th>会单总额</th><th>会单状态</th><th>操作</th></tr>";
                             $.each(data.list, function (i, o) {
-                                str += "<tr><td>" + i + "</td><td>" + o.OrderNo + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.State + "</td></tr>";
+                                str += "<tr><td>" + (i + 1) + "</td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><a href='#' onclick=\"FindOrderLists('" + o.OrderNo + "')\">取得列表</a></td></tr>";
                             })
                             str += "</table>";
                             $("#tblist").html(str);
@@ -77,6 +77,28 @@
                 });
             })
         })
+        //会单状态
+        GetStateN = function (v) {
+            if (v == 1) return '活会';
+            if (v == 2) return '死会';
+            if (v == 3) return '险会';
+        }
+        FindOrderLists = function (No) {
+            console.log(No)
+            $.ajax({
+                type: "GET",
+                url: '/Order/OrderLists',
+                data: { orderno: No },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        console.log(data)
+                    } else {
+                        console.log("1213123")
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>

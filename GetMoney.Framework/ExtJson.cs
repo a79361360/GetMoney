@@ -8,7 +8,7 @@ namespace GetMoney.Framework
     public class ExtJson
     {
         public bool success { get; set; }
-        public bool code { get; set; }
+        public int code { get; set; }
         public string msg { get; set; }
         public object jsonresult { get; set; }
     }

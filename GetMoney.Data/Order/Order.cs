@@ -44,7 +44,7 @@ namespace GetMoney.Data.Order
         /// <summary>
         /// 标会时间(具体的时间:例如晚上7点就是:    19:00)
         /// </summary>
-        public DateTime MeetTime { get; set; }
+        public string MeetTime { get; set; }
         //录入时间
         public DateTime InputDate { get; set; }
         //当前会的状态(1活会,2死会,3险会)
