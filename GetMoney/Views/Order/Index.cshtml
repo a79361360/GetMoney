@@ -8,9 +8,11 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <link href="~/Content/TestPage/dialog.css" rel="stylesheet" />
     <link href="~/Content/TestPage/mricode.pagination.css" rel="stylesheet" />
     <script src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
     <script src="~/Content/TestPage/mricode.pagination.js"></script>
+    <script src="~/Content/TestPage/dsdialog.js"></script>
     <style type="text/css">
         .tablelist td
         {
@@ -65,9 +67,11 @@
                         success: function (data) {
                             //$("#eventLog").append(' remote callback : ' + JSON.stringify(data) + '<br />');
                             console.log(data)
+                            //var str = "<div><ul class=\"th\"><li>序号</li><li>会单ID</li><li>会钱发放类型</li><li>开会日期</li><li>开会时间</li><li>会单人数</li><li>会单金额</li><li>会单总额</li><li>会单状态</li><li class=\"last\">操作</li></ul>";
                             var str = "<table class=\"tablelist\"><tr><th>序号</th><th>会单ID</th><th>会钱发放类型</th><th>开会日期</th><th>开会时间</th><th>会单人数</th><th>会单金额</th><th>会单总额</th><th>会单状态</th><th>操作</th></tr>";
                             $.each(data.list, function (i, o) {
-                                str += "<tr><td>" + (i + 1) + "</td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><a href='#' onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">展开</a></td></tr>";
+                                //str += "<ul class=\"td\"><li>" + (i + 1) + "</li><li>" + o.OrderNo + "</li><li>" + o.MSType + "</li><li>" + o.MeetDate + "</li><li>" + o.MeetTime + "</li><li>" + o.PeoperNum + "</li><li>" + o.PeoperMoney + "</li><li>" + o.AllPeoperMoney + "</li><li>" + GetStateN(o.State) + "</li><li class=\"last\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">展开</li></ul>";
+                                str += "<tr><td>" + (i + 1) + "</td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><a href='#' onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</a></td></tr>";
                             })
                             str += "</table>";
                             $("#tblist").html(str);
@@ -84,39 +88,30 @@
             if (v == 3) return '险会';
         }
         FindOrderLists = function (e, No) {
-            var text = $(e).text();
-            if (text == "展开") {
-                $(e).text("收缩");
-                var trobj = $("#jl" + No);
-                if (trobj.length > 0) {
-                    trobj.show();
-                    return;
-                }
-            } else {
-                $(e).text("展开");
-                trobj.hide();
-            }
             $.ajax({
                 type: "GET",
                 url: '/Order/OrderLists',
                 data: { orderno: No },
                 dataType: 'json',
                 success: function (data) {
-                    //<table id=\"jl" + No + "\">
-                    var str = "<tr id=\"jl" + No + "\"><th>记录ID</th><th>标会日期</th><th>真实姓名</th><th>标金金额</th><th>记录状态</th><th>操作</th></tr>";
+                    //var str = "<div id=\"jl" + No + "\"><ul class=\"th\"><li>记录ID</li><li>标会日期</li><li>真实姓名</li><li>标金金额</li><li>记录状态</li><li class=\"last\">操作</li></ul>";
+                    var str = "<table class=\"tablelist\" id=\"jl" + No + "\"><tr><th>记录ID</th><th>标会日期</th><th>真实姓名</th><th>标金金额</th><th>记录状态</th><th>操作</th></tr>";
                     var objdata = data.jsonresult;
                     if (data.success) {
                         $.each(objdata, function (i, o) {
                             var cztext = "填写标金"; if (o.State == "1") cztext = "展开明细";
+                            //str += "<ul class=\"td\"><li>" + o.ID + "</li><li>" + o.MeetDate + "</li><li>" + o.TrueName + "</li><li>" + o.AccrualMoney + "</li><li>" + o.State + "</li><li class=\"last\" onclick=\"FindOrderUser(" + o.State + ")\">" + cztext + "</li></ul>";
                             str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + o.TrueName + "</td><td>" + o.AccrualMoney + "</td><td>" + o.State + "</td><td onclick=\"FindOrderUser(" + o.State + ")\">" + cztext + "</td></tr>";
                         })
-                        $(e).parent().parent().after(str);
+                        str += "</table>";
+                        //$(e).parent().parent().after(str);
+                        ds.dialog({ title: '会单记录', content: str, timeout: 0 });
                     } 
                 }
             });
         }
         FindOrderUser = function (state) {
-            console.log(state)
+            ds.dialog({ title: '会单明细', content: "再弹一个", timeout: 0 });
         }
     </script>
 </body>
