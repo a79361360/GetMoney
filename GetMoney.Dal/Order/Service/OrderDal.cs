@@ -58,5 +58,14 @@ namespace GetMoney.Dal
             parameter[0].Value = No;
             return dal.ExtSql(sql, parameter);
         }
+        public DataTable OrderListUser(string OrderListID) {
+            string sql = "select a.id,a.OrderNo,a.OrderListID,a.Userid,b.TrueName,a.AccrualMoney,a.Addtime,a.Lastdate from Order_ListUsers a left outer join TUsers b on a.Userid=b.id where a.OrderListID=@ListID";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@ListID",SqlDbType.NVarChar,50)
+            };
+            parameter[0].Value = OrderListID;
+            return dal.ExtSql(sql, parameter);
+        }
     }
 }

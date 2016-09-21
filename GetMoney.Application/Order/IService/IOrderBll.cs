@@ -16,5 +16,6 @@ namespace GetMoney.Application
         int CreateOrder(OrderDto dto);
         string ListToString(IList<UListDto> list);
         IList<OrderListDto> OrderLists(string No);
+        IList<OrderListUserDto> OrderListUser(string OrderListID);
     }
 }

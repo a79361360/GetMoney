@@ -101,7 +101,7 @@
                         $.each(objdata, function (i, o) {
                             var cztext = "填写标金"; if (o.State == "1") cztext = "展开明细";
                             //str += "<ul class=\"td\"><li>" + o.ID + "</li><li>" + o.MeetDate + "</li><li>" + o.TrueName + "</li><li>" + o.AccrualMoney + "</li><li>" + o.State + "</li><li class=\"last\" onclick=\"FindOrderUser(" + o.State + ")\">" + cztext + "</li></ul>";
-                            str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + o.TrueName + "</td><td>" + o.AccrualMoney + "</td><td>" + o.State + "</td><td onclick=\"FindOrderUser(" + o.State + ")\">" + cztext + "</td></tr>";
+                            str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + o.TrueName + "</td><td>" + o.AccrualMoney + "</td><td>" + o.State + "</td><td onclick=\"FindOrderUser(" + o.ID + "," + o.State + ")\">" + cztext + "</td></tr>";
                         })
                         str += "</table>";
                         //$(e).parent().parent().after(str);
@@ -110,8 +110,22 @@
                 }
             });
         }
-        FindOrderUser = function (state) {
-            ds.dialog({ title: '会单明细', content: "再弹一个", timeout: 0 });
+        FindOrderUser = function (jlid, state) {
+            if (state == "1") {
+                $.getJSON("/Order/OrderListUsers", { jlid: jlid }, function (ret) {
+                    if (ret.code == 1000) {
+                        var str = "<table class=\"tablelist\"><tr><th>真实姓名</th><th>标金金额</th></tr>";
+                        $.each(ret.jsonresult, function (i, obj) {
+                            str += "<tr><td>" + obj.TrueName + "</td><td>" + obj.AccrualMoney + "</td></tr>";
+                        })
+                        str += "</table>";
+                        ds.dialog({ title: '会单明细', content: str, timeout: 0 });
+                    }
+                });
+            } if (state == "2") {
+
+                ds.dialog({ title: '会单明细', content: "再弹一个", timeout: 0 });
+            }
         }
     </script>
 </body>

@@ -111,9 +111,22 @@ namespace GetMoney.Controllers.Order
         public ActionResult OrderLists() {
             string OrderNo = CommonManager.WebObj.Request("orderno", "");
             if (string.IsNullOrEmpty(OrderNo)) {
-                return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "单号不能为空！" });
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "单号不能为空！" });
             }
             IList<OrderListDto> list = _bll.OrderLists(OrderNo);
+            if (list.Count > 0)
+                return JsonFormat(new ExtJson { success = true, code = 1000, msg = "查询成功！", jsonresult = list });
+            else
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "查询失败！" });
+        }
+        public ActionResult OrderListUsers()
+        {
+            string OrderListID = CommonManager.WebObj.Request("jlid", "");
+            if (string.IsNullOrEmpty(OrderListID))
+            {
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "单号不能为空！" });
+            }
+            IList<OrderListUserDto> list = _bll.OrderListUser(OrderListID);
             if (list.Count > 0)
                 return JsonFormat(new ExtJson { success = true, code = 1000, msg = "查询成功！", jsonresult = list });
             else

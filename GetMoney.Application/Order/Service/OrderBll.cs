@@ -146,5 +146,9 @@ namespace GetMoney.Application
             IList<OrderListDto> list = DataTableToList.ModelConvertHelper<OrderListDto>.ConvertToModel(_dal.OrderLists(No));
             return list;
         }
+        public IList<OrderListUserDto> OrderListUser(string OrderListID) {
+            IList<OrderListUserDto> list = DataTableToList.ModelConvertHelper<OrderListUserDto>.ConvertToModel(_dal.OrderListUser(OrderListID));
+            return list;
+        }
     }
 }
