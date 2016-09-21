@@ -50,7 +50,7 @@ namespace GetMoney.Dal
             dal.ExtProc(ProName, parameter, str, out list);
         }
         public DataTable OrderLists(string No) {
-            string sql = "select a.ID,a.OrderNo,a.MeetDate,a.Userid,b.TrueName,a.AccrualMoney,a.State from Order_Lists a left outer join TUsers b on a.Userid=b.id where a.OrderNo=@No";
+            string sql = "select a.ID,a.OrderNo,convert(varchar(10),a.MeetDate) MeetDate,a.Userid,b.TrueName,a.AccrualMoney,a.State from Order_Lists a left outer join TUsers b on a.Userid=b.id where a.OrderNo=@No";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@No",SqlDbType.NVarChar,50)

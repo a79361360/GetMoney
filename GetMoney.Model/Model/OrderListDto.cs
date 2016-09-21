@@ -27,7 +27,7 @@ namespace GetMoney.Model
         /// <summary>
         /// 开标日期
         /// </summary>
-        public DateTime MeetDate { get; set; }
+        public string MeetDate { get; set; }
         /// <summary>
         /// 当前月的状态(1结束,2未结束)
         /// </summary>
