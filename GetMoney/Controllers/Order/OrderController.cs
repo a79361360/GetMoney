@@ -121,7 +121,7 @@ namespace GetMoney.Controllers.Order
         }
         public ActionResult OrderListUsers()
         {
-            string OrderListID = CommonManager.WebObj.Request("jlid", "");
+            string OrderListID = CommonManager.WebObj.Request("listid", "");
             if (string.IsNullOrEmpty(OrderListID))
             {
                 return JsonFormat(new ExtJson { success = false, code = -1000, msg = "单号不能为空！" });
@@ -131,6 +131,63 @@ namespace GetMoney.Controllers.Order
                 return JsonFormat(new ExtJson { success = true, code = 1000, msg = "查询成功！", jsonresult = list });
             else
                 return JsonFormat(new ExtJson { success = false, code = -1000, msg = "查询失败！" });
+        }
+        public ActionResult UpdateOrderListState() { 
+            //更新互助单记录及状态
+            string OrderNo = CommonManager.WebObj.Request("orderno", "");
+            string OrderListID = CommonManager.WebObj.Request("listid", "");
+            if (string.IsNullOrEmpty(OrderNo) || string.IsNullOrEmpty(OrderListID))
+            {
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "参数不能为空！" });
+            }
+            OrderListDto dto = _bll.UpdateOrderListState(OrderNo, OrderListID);
+            if (dto !=null)
+                return JsonFormat(new ExtJson { success = true, code = 1000, msg = "查询成功！", jsonresult = dto });
+            else
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "查询失败！" });
+        }
+        public ActionResult UpdateOrderListUserMoney()
+        {
+            if (Session["uid"] == null)
+            {
+                return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "登入状态已失效！" });
+            }
+            //更新互助单记录及状态
+            string OrderNo = CommonManager.WebObj.Request("orderno", "");
+            string OrderListID = CommonManager.WebObj.Request("listid", "");
+            //string Userid = CommonManager.WebObj.Request("userid", "");
+            int Userid = Convert.ToInt32(Session["uid"]);               //当前登入的用户
+            string Money = CommonManager.WebObj.Request("money", "");
+            if (string.IsNullOrEmpty(OrderNo) || string.IsNullOrEmpty(OrderListID) || string.IsNullOrEmpty(Money))
+            {
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "参数不能为空！" });
+            }
+            int result = _bll.UpdateOrderListUserMoney(OrderNo, OrderListID, Userid, Convert.ToInt32(Money));
+            if (result == 1)
+                return JsonFormat(new ExtJson { success = true, code = 1000, msg = "更新成功！" });
+            else
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "更新失败！" });
+        }
+        /// <summary>
+        /// 取得当前用户上一次的标金金额
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetOrderListUserPrvMoney() {
+            if (Session["uid"] == null)
+            {
+                return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "登入状态已失效！" });
+            }
+            int Userid = Convert.ToInt32(Session["uid"]);               //当前登入的用户
+            string OrderListID = CommonManager.WebObj.Request("listid", "");
+            if (string.IsNullOrEmpty(OrderListID))
+            {
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "参数不能为空！" });
+            }
+            OrderListUserDto dto = _bll.GetOrderListUserPrvMoney(Userid, OrderListID);
+            if (dto != null)
+                return JsonFormat(new ExtJson { success = true, code = 1000, msg = "更新成功！" });
+            else
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "更新失败！" });
         }
     }
 }

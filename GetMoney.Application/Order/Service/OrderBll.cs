@@ -150,5 +150,18 @@ namespace GetMoney.Application
             IList<OrderListUserDto> list = DataTableToList.ModelConvertHelper<OrderListUserDto>.ConvertToModel(_dal.OrderListUser(OrderListID));
             return list;
         }
+        public OrderListDto UpdateOrderListState(string OrderNo, string OrderListID) {
+            OrderListDto dto = DataTableToList.ModelConvertHelper<OrderListDto>.ConvertToModel(_dal.UpdateOrderListState(OrderNo, OrderListID))[0];
+            return dto;
+        }
+        public int UpdateOrderListUserMoney(string OrderNo, string OrderListID, int Userid, int Money) {
+            int result = _dal.UpdateOrderListUserMoney(OrderNo, OrderListID, Userid, Money);
+            return result;
+        }
+        public OrderListUserDto GetOrderListUserPrvMoney(int Userid, string OrderListID)
+        {
+            OrderListUserDto dto = DataTableToList.ModelConvertHelper<OrderListUserDto>.ConvertToModel(_dal.GetOrderListUserPrvMoney(Userid, OrderListID))[0];
+            return dto;
+        }
     }
 }

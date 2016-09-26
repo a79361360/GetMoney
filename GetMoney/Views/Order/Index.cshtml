@@ -110,22 +110,42 @@
                 }
             });
         }
-        FindOrderUser = function (jlid, state) {
+        FindOrderUser = function (listid, state) {
             if (state == "1") {
-                $.getJSON("/Order/OrderListUsers", { jlid: jlid }, function (ret) {
+                $.getJSON("/Order/OrderListUsers", { listid: listid }, function (ret) {
                     if (ret.code == 1000) {
-                        var str = "<table class=\"tablelist\"><tr><th>真实姓名</th><th>标金金额</th></tr>";
+                        var str = "<table class=\"tablelist\"><tr><th>真实姓名</th><th>标金金额</th><th>最后提交时间</th></tr>";
                         $.each(ret.jsonresult, function (i, obj) {
-                            str += "<tr><td>" + obj.TrueName + "</td><td>" + obj.AccrualMoney + "</td></tr>";
+                            str += "<tr><td>" + obj.TrueName + "</td><td>" + obj.AccrualMoney + "</td><td>" + obj.Lastdate + "</td></tr>";
                         })
                         str += "</table>";
                         ds.dialog({ title: '会单明细', content: str, timeout: 0 });
                     }
                 });
             } if (state == "2") {
-
-                ds.dialog({ title: '会单明细', content: "再弹一个", timeout: 0 });
+                $.getJSON("/Order/GetOrderListUserPrvMoney", { listid: listid }, function (ret) {
+                    if (ret.code == 1000) {
+                        var str = "<table class=\"tablelist\"><tr><th>标金金额</th><th>最后提交时间</th><th>操作</th></tr>";
+                        $.each(ret.jsonresult, function (i, obj) {
+                            str += "<tr><td>" + obj.AccrualMoney + "</td><td>" + obj.Lastdate + "</td><td><button onclick=\"\" /></td></tr>";
+                        })
+                        str += "</table>";
+                        ds.dialog({ title: '会单明细', content: str, timeout: 0 });
+                    }
+                });
             }
+        }
+        UpdateUserMoney = function () {
+            $.getJSON("/Order/UpdateOrderListUserMoney", { listid: listid }, function (ret) {
+                if (ret.code == 1000) {
+                    var str = "<table class=\"tablelist\"><tr><th>标金金额</th><th>最后提交时间</th><th>操作</th></tr>";
+                    $.each(ret.jsonresult, function (i, obj) {
+                        str += "<tr><td>" + obj.AccrualMoney + "</td><td>" + obj.Lastdate + "</td><td><button onclick=\"\" /></td></tr>";
+                    })
+                    str += "</table>";
+                    ds.dialog({ title: '会单明细', content: str, timeout: 0 });
+                }
+            });
         }
     </script>
 </body>

@@ -59,11 +59,62 @@ namespace GetMoney.Dal
             return dal.ExtSql(sql, parameter);
         }
         public DataTable OrderListUser(string OrderListID) {
-            string sql = "select a.id,a.OrderNo,a.OrderListID,a.Userid,b.TrueName,a.AccrualMoney,a.Addtime,a.Lastdate from Order_ListUsers a left outer join TUsers b on a.Userid=b.id where a.OrderListID=@ListID";
+            string sql = "SP_PicthOrderList";
             SqlParameter[] parameter = new[]
             {
+                new SqlParameter("@CZType",SqlDbType.Int),
                 new SqlParameter("@ListID",SqlDbType.NVarChar,50)
             };
+            parameter[0].Value = 2;
+            parameter[1].Value = OrderListID;
+            return dal.ExtProc(sql, parameter);
+        }
+        public DataTable UpdateOrderListState(string OrderNo, string OrderListID)
+        {
+            string sql = "SP_PicthOrderList";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@CZType",SqlDbType.Int),
+                new SqlParameter("@OrderID",SqlDbType.VarChar,50),
+                new SqlParameter("@ListID",SqlDbType.Int),
+            };
+            parameter[0].Value = 3;
+            parameter[1].Value = OrderNo;
+            parameter[2].Value = OrderListID;
+            return dal.ExtProc(sql, parameter);
+        }
+        public int UpdateOrderListUserMoney(string OrderNo, string OrderListID, int Userid, int Money)
+        {
+            string sql = "SP_PicthOrderList";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@CZType",SqlDbType.Int),
+                new SqlParameter("@OrderID",SqlDbType.VarChar,50),
+                new SqlParameter("@ListID",SqlDbType.Int),
+                new SqlParameter("@Userid",SqlDbType.Int),
+                new SqlParameter("@Money",SqlDbType.Int),
+                new SqlParameter("@ReturnValue",SqlDbType.Int)
+            };
+            parameter[0].Value = 1;
+            parameter[1].Value = OrderNo;
+            parameter[2].Value = OrderListID;
+            parameter[3].Value = Userid;
+            parameter[4].Value = Money;
+            parameter[5].Direction = ParameterDirection.ReturnValue;
+            string[] str = new string[] { "@ReturnValue" };
+            Dictionary<string, object> list = new Dictionary<string, object>();
+            dal.ExtProc(sql, parameter, str, out list);
+            return Convert.ToInt32(list["@ReturnValue"]);
+        }
+        public DataTable GetOrderListUserPrvMoney(int Userid, string OrderListID)
+        {
+            string sql = "select Userid,AccrualMoney,Lastdate from Order_ListUsers where Userid=@Userid and OrderListID=@ListID";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@Userid",SqlDbType.Int),
+                new SqlParameter("@ListID",SqlDbType.VarChar,50)
+            };
+            parameter[0].Value = Userid;
             parameter[0].Value = OrderListID;
             return dal.ExtSql(sql, parameter);
         }
