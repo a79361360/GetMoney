@@ -185,7 +185,7 @@ namespace GetMoney.Controllers.Order
             }
             OrderListUserDto dto = _bll.GetOrderListUserPrvMoney(Userid, OrderListID);
             if (dto != null)
-                return JsonFormat(new ExtJson { success = true, code = 1000, msg = "更新成功！" });
+                return JsonFormat(new ExtJson { success = true, code = 1000, msg = "更新成功！", jsonresult = dto });
             else
                 return JsonFormat(new ExtJson { success = false, code = -1000, msg = "更新失败！" });
         }

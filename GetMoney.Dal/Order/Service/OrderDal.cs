@@ -108,14 +108,14 @@ namespace GetMoney.Dal
         }
         public DataTable GetOrderListUserPrvMoney(int Userid, string OrderListID)
         {
-            string sql = "select Userid,AccrualMoney,Lastdate from Order_ListUsers where Userid=@Userid and OrderListID=@ListID";
+            string sql = "select Userid,AccrualMoney,Convert(varchar(100),Lastdate,21) as Lastdate from Order_ListUsers where Userid=@Userid and OrderListID=@ListID";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@Userid",SqlDbType.Int),
                 new SqlParameter("@ListID",SqlDbType.VarChar,50)
             };
             parameter[0].Value = Userid;
-            parameter[0].Value = OrderListID;
+            parameter[1].Value = OrderListID;
             return dal.ExtSql(sql, parameter);
         }
     }

@@ -99,9 +99,9 @@
                     var objdata = data.jsonresult;
                     if (data.success) {
                         $.each(objdata, function (i, o) {
-                            var cztext = "填写标金"; if (o.State == "1") cztext = "展开明细";
+                            //var cztext = "填写标金"; if (o.State == "1") cztext = "展开明细";
                             //str += "<ul class=\"td\"><li>" + o.ID + "</li><li>" + o.MeetDate + "</li><li>" + o.TrueName + "</li><li>" + o.AccrualMoney + "</li><li>" + o.State + "</li><li class=\"last\" onclick=\"FindOrderUser(" + o.State + ")\">" + cztext + "</li></ul>";
-                            str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + o.TrueName + "</td><td>" + o.AccrualMoney + "</td><td>" + o.State + "</td><td onclick=\"FindOrderUser(" + o.ID + "," + o.State + ")\">" + cztext + "</td></tr>";
+                            str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + o.TrueName + "</td><td>" + o.AccrualMoney + "</td><td>" + o.State + "</td><td><button onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">标金</butoon><button onclick=\"FindOrderUser(" + o.ID + "," + o.State + ")\">明细</butoon><button onclick=\"UpdateOrderListState('" + No + "'," + o.ID + "," + o.State + ")\">更新结果</butoon></td></tr>";
                         })
                         str += "</table>";
                         //$(e).parent().parent().after(str);
@@ -110,7 +110,7 @@
                 }
             });
         }
-        FindOrderUser = function (listid, state) {
+        FindOrderUser = function (No, listid, state) {
             if (state == "1") {
                 $.getJSON("/Order/OrderListUsers", { listid: listid }, function (ret) {
                     if (ret.code == 1000) {
@@ -125,27 +125,33 @@
             } if (state == "2") {
                 $.getJSON("/Order/GetOrderListUserPrvMoney", { listid: listid }, function (ret) {
                     if (ret.code == 1000) {
+                        var data = ret.jsonresult;
                         var str = "<table class=\"tablelist\"><tr><th>标金金额</th><th>最后提交时间</th><th>操作</th></tr>";
-                        $.each(ret.jsonresult, function (i, obj) {
-                            str += "<tr><td>" + obj.AccrualMoney + "</td><td>" + obj.Lastdate + "</td><td><button onclick=\"\" /></td></tr>";
-                        })
+                        str += "<tr><td><input type=\"text\" style=\"text-align:center\" value=" + data.AccrualMoney + "></td><td>" + data.Lastdate + "</td><td><button onclick=\"UpdateUserMoney('" + No + "'," + listid + ",this)\">更新</butoon></td></tr>";
                         str += "</table>";
-                        ds.dialog({ title: '会单明细', content: str, timeout: 0 });
+                        ds.dialog({ title: '填写标金', content: str, timeout: 0 });
                     }
                 });
             }
         }
-        UpdateUserMoney = function () {
-            $.getJSON("/Order/UpdateOrderListUserMoney", { listid: listid }, function (ret) {
+        //提交标金
+        UpdateUserMoney = function (No, listid, e) {
+            var text = $(e).parent().parent().find("input").val();
+            $.getJSON("/Order/UpdateOrderListUserMoney", { orderno: No, listid: listid, money: text }, function (ret) {
                 if (ret.code == 1000) {
-                    var str = "<table class=\"tablelist\"><tr><th>标金金额</th><th>最后提交时间</th><th>操作</th></tr>";
-                    $.each(ret.jsonresult, function (i, obj) {
-                        str += "<tr><td>" + obj.AccrualMoney + "</td><td>" + obj.Lastdate + "</td><td><button onclick=\"\" /></td></tr>";
-                    })
-                    str += "</table>";
-                    ds.dialog({ title: '会单明细', content: str, timeout: 0 });
+                    console.log(ret.msg)
                 }
             });
+        }
+        //更新结果
+        UpdateOrderListState = function (No, listid, state) {
+            if (state == "2") {
+                $.getJSON("/Order/UpdateOrderListState", { orderno: No, listid: listid }, function (ret) {
+                    if (ret.code == 1000) {
+                        console.log(ret)
+                    }
+                });
+            }
         }
     </script>
 </body>

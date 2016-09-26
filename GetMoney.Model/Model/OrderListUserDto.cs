@@ -35,6 +35,6 @@ namespace GetMoney.Model
         /// <summary>
         /// 最后修改标金的时间
         /// </summary>
-        public DateTime Lastdate { get; set; }
+        public string Lastdate { get; set; }
     }
 }
