@@ -23,6 +23,14 @@ namespace GetMoney.Model
         /// </summary>
         public int PeoperMoney { get; set; }
         /// <summary>
+        /// 除首次和最后次外最低标金金额
+        /// </summary>
+        public int LowestMoney { get; set; }
+        /// <summary>
+        /// 会头UserID
+        /// </summary>
+        public int TouUserid { get; set; }
+        /// <summary>
         /// 会钱总额
         /// </summary>
         public int AllPeoperMoney

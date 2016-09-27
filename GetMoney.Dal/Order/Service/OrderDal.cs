@@ -18,7 +18,7 @@ namespace GetMoney.Dal
             DataTable dt = dal.PageResult(Param.TableName, Param.PrimaryKey, Param.Fields, Param.PageSize, Param.PageIndex, Param.Filter, Param.Group, Param.Order, ref Total);
             return dt;
         }
-        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, string MeetDate, string MeetTime, out Dictionary<string, object> list)
+        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int LowestMoney, int TouUserid, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, string MeetDate, string MeetTime, out Dictionary<string, object> list)
         {
             string ProName = "SP_AddNewOrder";
             SqlParameter[] parameter = new[]
@@ -27,6 +27,8 @@ namespace GetMoney.Dal
                 new SqlParameter("@PeoperNum",SqlDbType.Int),
                 new SqlParameter("@Peoper",SqlDbType.NVarChar,500),
                 new SqlParameter("@PeoperMoney",SqlDbType.Int),
+                new SqlParameter("@LowestMoney",SqlDbType.Int),
+                new SqlParameter("@TouUserid",SqlDbType.Int),
                 new SqlParameter("@MoneySendType",SqlDbType.Int),
                 new SqlParameter("@MeetType",SqlDbType.Int),
                 new SqlParameter("@MeetNum",SqlDbType.Int),
@@ -39,13 +41,15 @@ namespace GetMoney.Dal
             parameter[1].Value = PeoperNum;
             parameter[2].Value = UserIds;
             parameter[3].Value = PeoperMoney;
-            parameter[4].Value = MoneySendType;
-            parameter[5].Value = MeetType;
-            parameter[6].Value = MeetNum;
-            parameter[7].Value = FirstDate;
-            parameter[8].Value = MeetDate;
-            parameter[9].Value = MeetTime;
-            parameter[10].Direction = ParameterDirection.ReturnValue;
+            parameter[4].Value = LowestMoney;
+            parameter[5].Value = TouUserid;
+            parameter[6].Value = MoneySendType;
+            parameter[7].Value = MeetType;
+            parameter[8].Value = MeetNum;
+            parameter[9].Value = FirstDate;
+            parameter[10].Value = MeetDate;
+            parameter[11].Value = MeetTime;
+            parameter[12].Direction = ParameterDirection.ReturnValue;
             string[] str = new string[] { "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }

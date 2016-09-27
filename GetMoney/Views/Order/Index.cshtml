@@ -87,6 +87,7 @@
             if (v == 2) return '死会';
             if (v == 3) return '险会';
         }
+        //记录列表
         FindOrderLists = function (e, No) {
             $.ajax({
                 type: "GET",
@@ -112,6 +113,7 @@
         }
         FindOrderUser = function (No, listid, state) {
             if (state == "1") {
+                //明细
                 $.getJSON("/Order/OrderListUsers", { listid: listid }, function (ret) {
                     if (ret.code == 1000) {
                         var str = "<table class=\"tablelist\"><tr><th>真实姓名</th><th>标金金额</th><th>最后提交时间</th></tr>";
