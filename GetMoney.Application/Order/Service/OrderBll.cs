@@ -158,10 +158,14 @@ namespace GetMoney.Application
             int result = _dal.UpdateOrderListUserMoney(OrderNo, OrderListID, Userid, Money);
             return result;
         }
-        public OrderListUserDto GetOrderListUserPrvMoney(int Userid, string OrderListID)
+        public OrderListUserDto GetOrderListUserPrvMoney(int Userid, string OrderNo, string OrderListID)
         {
-            OrderListUserDto dto = DataTableToList.ModelConvertHelper<OrderListUserDto>.ConvertToModel(_dal.GetOrderListUserPrvMoney(Userid, OrderListID))[0];
+            OrderListUserDto dto = DataTableToList.ModelConvertHelper<OrderListUserDto>.ConvertToModel(_dal.GetOrderListUserPrvMoney(Userid, OrderNo, OrderListID))[0];
             return dto;
+        }
+        public int VerUserUpdateMoney(int Userid, string OrderNo, string OrderListID) {
+            int result = _dal.VerUserUpdateMoney(Userid, OrderNo, OrderListID);
+            return result;
         }
     }
 }

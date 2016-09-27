@@ -110,16 +110,40 @@ namespace GetMoney.Dal
             dal.ExtProc(sql, parameter, str, out list);
             return Convert.ToInt32(list["@ReturnValue"]);
         }
-        public DataTable GetOrderListUserPrvMoney(int Userid, string OrderListID)
+        public int VerUserUpdateMoney(int Userid,string OrderNo, string OrderListID)
         {
-            string sql = "select Userid,AccrualMoney,Convert(varchar(100),Lastdate,21) as Lastdate from Order_ListUsers where Userid=@Userid and OrderListID=@ListID";
+            //1为允许，-1为不允许
+            string sql = "SP_PicthOrderList";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@CZType",SqlDbType.Int),
+                new SqlParameter("@OrderID",SqlDbType.VarChar,50),
+                new SqlParameter("@ListID",SqlDbType.Int),
+                new SqlParameter("@Userid",SqlDbType.Int),
+            };
+            parameter[0].Value = 4;
+            parameter[1].Value = OrderNo;
+            parameter[2].Value = OrderListID;
+            parameter[3].Value = Userid;
+            DataTable dt = dal.ExtProc(sql, parameter);
+            int result = -1;
+            if (dt.Rows.Count > 0) {
+                result = Convert.ToInt32(dt.Rows[0]["result"]);
+            }
+            return result;
+        }
+        public DataTable GetOrderListUserPrvMoney(int Userid, string OrderNo, string OrderListID)
+        {
+            string sql = "select Userid,AccrualMoney,Convert(varchar(100),Lastdate,21) as Lastdate from Order_ListUsers where OrderNo=@OrderNo and OrderListID=@ListID and Userid=@Userid";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@Userid",SqlDbType.Int),
+                new SqlParameter("@OrderNo",SqlDbType.VarChar,50),
                 new SqlParameter("@ListID",SqlDbType.VarChar,50)
             };
             parameter[0].Value = Userid;
-            parameter[1].Value = OrderListID;
+            parameter[1].Value = OrderNo;
+            parameter[2].Value = OrderListID;
             return dal.ExtSql(sql, parameter);
         }
     }

@@ -186,16 +186,25 @@ namespace GetMoney.Controllers.Order
                 return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "登入状态已失效！" });
             }
             int Userid = Convert.ToInt32(Session["uid"]);               //当前登入的用户
+            string OrderNo = CommonManager.WebObj.Request("orderno", "");
             string OrderListID = CommonManager.WebObj.Request("listid", "");
             if (string.IsNullOrEmpty(OrderListID))
             {
                 return JsonFormat(new ExtJson { success = false, code = -1000, msg = "参数不能为空！" });
             }
-            OrderListUserDto dto = _bll.GetOrderListUserPrvMoney(Userid, OrderListID);
-            if (dto != null)
-                return JsonFormat(new ExtJson { success = true, code = 1000, msg = "更新成功！", jsonresult = dto });
-            else
-                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "更新失败！" });
+            //验证是否有权限去填写标金
+            int verresult = _bll.VerUserUpdateMoney(Userid, OrderNo, OrderListID);
+            if (verresult == 1)
+            {
+                OrderListUserDto dto = _bll.GetOrderListUserPrvMoney(Userid, OrderNo, OrderListID);
+                if (dto != null)
+                    return JsonFormat(new ExtJson { success = true, code = 1000, msg = "更新成功！", jsonresult = dto });
+                else
+                    return JsonFormat(new ExtJson { success = false, code = -1000, msg = "更新失败！" });
+            }
+            else {
+                return JsonFormat(new ExtJson { success = false, code = -1001, msg = "验证权限失败！" });
+            }
         }
     }
 }

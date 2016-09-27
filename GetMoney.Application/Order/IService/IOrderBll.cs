@@ -33,6 +33,14 @@ namespace GetMoney.Application
         /// <param name="Userid">用户ID</param>
         /// <param name="OrderListID">互助单记录ID</param>
         /// <returns></returns>
-        OrderListUserDto GetOrderListUserPrvMoney(int Userid, string OrderListID);
+        OrderListUserDto GetOrderListUserPrvMoney(int Userid, string OrderNo, string OrderListID);
+        /// <summary>
+        /// 验证当前用户是否有权限填写标金
+        /// </summary>
+        /// <param name="Userid"></param>
+        /// <param name="OrderNo"></param>
+        /// <param name="OrderListID"></param>
+        /// <returns></returns>
+        int VerUserUpdateMoney(int Userid, string OrderNo, string OrderListID);
     }
 }
