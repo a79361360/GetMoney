@@ -72,7 +72,7 @@
                                 var str = "<table class=\"tablelist\"><tr><th>序号</th><th>会单ID</th><th>会钱发放类型</th><th>开会日期</th><th>开会时间</th><th>会单人数</th><th>会单金额</th><th>会单总额</th><th>会单状态</th><th>操作</th></tr>";
                                 $.each(data.list, function (i, o) {
                                     //str += "<ul class=\"td\"><li>" + (i + 1) + "</li><li>" + o.OrderNo + "</li><li>" + o.MSType + "</li><li>" + o.MeetDate + "</li><li>" + o.MeetTime + "</li><li>" + o.PeoperNum + "</li><li>" + o.PeoperMoney + "</li><li>" + o.AllPeoperMoney + "</li><li>" + GetStateN(o.State) + "</li><li class=\"last\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">展开</li></ul>";
-                                    str += "<tr><td>" + (i + 1) + "</td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><a href='#' onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</a></td></tr>";
+                                    str += "<tr><td>" + (i + 1) + "</td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><button onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button></td></tr>";
                                 })
                                 str += "</table>";
                                 $("#tblist").html(str);
@@ -89,6 +89,16 @@
             if (v == 2) return '死会';
             if (v == 3) return '险会';
         }
+        //会单记录状态
+        GetStateL = function (v) {
+            if (v == 1) return '<span style=\"color:red\">已结束</span>';
+            if (v == 2) return '未结束';
+        }
+        //Null设置为空
+        GetNullEmpty = function (v) {
+            if (v == null) return '';
+            return v;
+        }
         var listtips;
         //记录列表
         FindOrderLists = function (e, No) {
@@ -99,13 +109,11 @@
                 dataType: 'json',
                 success: function (data) {
                     //var str = "<div id=\"jl" + No + "\"><ul class=\"th\"><li>记录ID</li><li>标会日期</li><li>真实姓名</li><li>标金金额</li><li>记录状态</li><li class=\"last\">操作</li></ul>";
-                    var str = "<table class=\"tablelist\" id=\"jl" + No + "\"><tr><th>记录ID</th><th>标会日期</th><th>真实姓名</th><th>标金金额</th><th>记录状态</th><th>操作</th></tr>";
+                    var str = "<table class=\"tablelist\" id=\"jl" + No + "\"><tr><th>记录ID</th><th>标会日期时间</th><th>真实姓名</th><th>标金金额</th><th>记录状态</th><th>操作</th></tr>";
                     var objdata = data.jsonresult;
                     if (data.success) {
                         $.each(objdata, function (i, o) {
-                            //var cztext = "填写标金"; if (o.State == "1") cztext = "展开明细";
-                            //str += "<ul class=\"td\"><li>" + o.ID + "</li><li>" + o.MeetDate + "</li><li>" + o.TrueName + "</li><li>" + o.AccrualMoney + "</li><li>" + o.State + "</li><li class=\"last\" onclick=\"FindOrderUser(" + o.State + ")\">" + cztext + "</li></ul>";
-                            str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + o.TrueName + "</td><td>" + o.AccrualMoney + "</td><td>" + o.State + "</td><td><button onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">标金</butoon><button onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">明细</butoon><button onclick=\"UpdateOrderListState('" + No + "'," + o.ID + "," + o.State + ")\">更新结果</butoon></td></tr>";
+                            str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + GetNullEmpty(o.TrueName) + "</td><td>" + o.AccrualMoney + "</td><td>" + GetStateL(o.State) + "</td><td><button onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">标金</butoon><button onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">明细</butoon><button onclick=\"UpdateOrderListState('" + No + "'," + o.ID + "," + o.State + ")\">更新结果</butoon></td></tr>";
                         })
                         str += "</table>";
                         //$(e).parent().parent().after(str);
