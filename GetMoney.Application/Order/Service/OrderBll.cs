@@ -144,6 +144,17 @@ namespace GetMoney.Application
         }
         public IList<OrderListDto> OrderLists(string No) {
             IList<OrderListDto> list = DataTableToList.ModelConvertHelper<OrderListDto>.ConvertToModel(_dal.OrderLists(No));
+            //存在已结束未更新结果的记录
+            int num = 0;
+            foreach (var item in list) {
+                if (item.State == "2" && (DateTime.Now > Convert.ToDateTime(item.MeetDate))) {
+                    UpdateOrderListState(No, item.ID.ToString());
+                    num++;
+                }
+            }
+            if (num > 0) {
+                list = DataTableToList.ModelConvertHelper<OrderListDto>.ConvertToModel(_dal.OrderLists(No));
+            }
             return list;
         }
         public IList<OrderListUserDto> OrderListUser(string OrderListID) {

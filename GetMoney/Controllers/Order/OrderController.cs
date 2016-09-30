@@ -51,6 +51,10 @@ namespace GetMoney.Controllers.Order
             else
                 return JsonFormat(new ExtJson { success = false, msg = "删除失败！" });
         }
+        /// <summary>
+        /// 会单列表(翻页)
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ListOrderPage()
         {
             int pageIndex = Convert.ToInt32(Request["pageIndex"]);
@@ -68,13 +72,14 @@ namespace GetMoney.Controllers.Order
                 return JsonFormat(new ExtJsonPage { success = true, code = 1000, msg = "查询成功！", total = Total, list = list });
             else
                 return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
-
-
-
         }
         public ActionResult OrderPortal() {
             return View();
         }
+        /// <summary>
+        /// 创建会单
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateOrder() {
             if (Session["uid"] == null)
             {
@@ -115,7 +120,10 @@ namespace GetMoney.Controllers.Order
                 return JsonFormat(new ExtJson { success = false, msg = "添加失败！" });
             }
         }
-
+        /// <summary>
+        /// 当前会单的记录列表
+        /// </summary>
+        /// <returns></returns>
         public ActionResult OrderLists() {
             string OrderNo = CommonManager.WebObj.Request("orderno", "");
             if (string.IsNullOrEmpty(OrderNo)) {
@@ -127,6 +135,10 @@ namespace GetMoney.Controllers.Order
             else
                 return JsonFormat(new ExtJson { success = false, code = -1000, msg = "查询失败！" });
         }
+        /// <summary>
+        /// 当前会单记录的用户明细
+        /// </summary>
+        /// <returns></returns>
         public ActionResult OrderListUsers()
         {
             string OrderListID = CommonManager.WebObj.Request("listid", "");
@@ -140,6 +152,10 @@ namespace GetMoney.Controllers.Order
             else
                 return JsonFormat(new ExtJson { success = false, code = -1000, msg = "查询失败！" });
         }
+        /// <summary>
+        /// 更新会单记录的最终竞标结果,并且更新状态(1为结束,2为未结束,3为异常)
+        /// </summary>
+        /// <returns></returns>
         public ActionResult UpdateOrderListState() { 
             //更新互助单记录及状态
             string OrderNo = CommonManager.WebObj.Request("orderno", "");
@@ -154,6 +170,10 @@ namespace GetMoney.Controllers.Order
             else
                 return JsonFormat(new ExtJson { success = false, code = -1000, msg = "查询失败！" });
         }
+        /// <summary>
+        /// 更新当前用户竞标金额
+        /// </summary>
+        /// <returns></returns>
         public ActionResult UpdateOrderListUserMoney()
         {
             if (Session["uid"] == null)

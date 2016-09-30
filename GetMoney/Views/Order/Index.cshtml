@@ -13,16 +13,22 @@
     <script src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
     <script src="~/Content/TestPage/mricode.pagination.js"></script>
     <script src="~/Content/TestPage/dsdialog.js"></script>
+    <script src="~/Content/TestPage/commonaction.js"></script>
     <style type="text/css">
-        .tablelist td
-        {
+        .tablelist td {
             text-align: center;
-            border:1px solid #d5d5d5;
+            border: 1px solid #d5d5d5;
+            height: 30px;
         }
-         .tablelist tr th
-        {
+        .tablelist tr th {
             text-align: center;
-            border:1px solid #d5d5d5;
+            border: 1px solid #d5d5d5;
+            height: 30px;
+        }
+        button {
+            width: 65px;
+            height: 24px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -69,13 +75,14 @@
                             console.log(data)
                             if (data.success) {
                                 //var str = "<div><ul class=\"th\"><li>序号</li><li>会单ID</li><li>会钱发放类型</li><li>开会日期</li><li>开会时间</li><li>会单人数</li><li>会单金额</li><li>会单总额</li><li>会单状态</li><li class=\"last\">操作</li></ul>";
-                                var str = "<table class=\"tablelist\"><tr><th>序号</th><th>会单ID</th><th>会钱发放类型</th><th>开会日期</th><th>开会时间</th><th>会单人数</th><th>会单金额</th><th>会单总额</th><th>会单状态</th><th>操作</th></tr>";
+                                var str = "<table class=\"tablelist\"><tr><th style=\"width:61px;\">序号</th><th style=\"width:200px;\">会单ID</th><th style=\"width:80px;\">会钱发放类型</th><th>开会日期</th><th style=\"width:80px;\">开会时间</th><th style=\"width:61px;\">会单人数</th><th style=\"width:61px;\">会单金额</th><th style=\"width:61px;\">会单总额</th><th style=\"width:61px;\">会单状态</th><th style=\"width:121px;\">操作</th></tr>";
                                 $.each(data.list, function (i, o) {
                                     //str += "<ul class=\"td\"><li>" + (i + 1) + "</li><li>" + o.OrderNo + "</li><li>" + o.MSType + "</li><li>" + o.MeetDate + "</li><li>" + o.MeetTime + "</li><li>" + o.PeoperNum + "</li><li>" + o.PeoperMoney + "</li><li>" + o.AllPeoperMoney + "</li><li>" + GetStateN(o.State) + "</li><li class=\"last\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">展开</li></ul>";
                                     str += "<tr><td>" + (i + 1) + "</td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><button onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button></td></tr>";
                                 })
                                 str += "</table>";
                                 $("#tblist").html(str);
+                                trchcolor(".tablelist tr");
                             }
                         },
                         totalName: 'total'              //指定返回数据的总数据量的字段名
@@ -91,8 +98,9 @@
         }
         //会单记录状态
         GetStateL = function (v) {
-            if (v == 1) return '<span style=\"color:red\">已结束</span>';
+            if (v == 1) return '<b>已结束</b>';
             if (v == 2) return '未结束';
+            if (v == 3) return '<span style=\"color:red\">异常</span>';
         }
         //Null设置为空
         GetNullEmpty = function (v) {
@@ -113,7 +121,10 @@
                     var objdata = data.jsonresult;
                     if (data.success) {
                         $.each(objdata, function (i, o) {
-                            str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + GetNullEmpty(o.TrueName) + "</td><td>" + o.AccrualMoney + "</td><td>" + GetStateL(o.State) + "</td><td><button onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">标金</butoon><button onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">明细</butoon><button onclick=\"UpdateOrderListState('" + No + "'," + o.ID + "," + o.State + ")\">更新结果</butoon></td></tr>";
+                            var czstr = "";
+                            if (o.State == "1") { czstr = "<button onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">查看明细</butoon>"; }
+                            if (o.State == "2") { czstr = "<button onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">填写标金</butoon>"; }
+                            str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + GetNullEmpty(o.TrueName) + "</td><td>" + o.AccrualMoney + "</td><td>" + GetStateL(o.State) + "</td><td>" + czstr + "<button onclick=\"UpdateOrderListState('" + No + "'," + o.ID + "," + o.State + ")\">更新结果</butoon></td></tr>";
                         })
                         str += "</table>";
                         //$(e).parent().parent().after(str);
@@ -124,7 +135,6 @@
         }
         FindOrderUser = function (No, listid, state) {
             if (state == "1") {
-                console.log(11111)
                 //明细
                 $.getJSON("/Order/OrderListUsers", { listid: listid }, function (ret) {
                     if (ret.code == 1000) {
@@ -144,8 +154,13 @@
                         str += "<tr><td><input type=\"text\" style=\"text-align:center\" value=" + data.AccrualMoney + "></td><td>" + data.Lastdate + "</td><td><button onclick=\"UpdateUserMoney('" + No + "'," + listid + ",this)\">更新</butoon></td></tr>";
                         str += "</table>";
                         ds.dialog({ title: '填写标金', content: str, timeout: 0 });
+                    } else {
+
                     }
                 });
+            }
+            if (state == "3") {
+                ds.dialog.tips("当前期无人参与竞标或者最高竞标金额少于最低竞标额!等待会头处理...", 2, true, true);
             }
         }
         //提交标金
