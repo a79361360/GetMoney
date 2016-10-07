@@ -134,7 +134,7 @@ namespace GetMoney.Controllers.TUser
             dto.IdentityNum = CommonManager.WebObj.RequestForm("IdentityNum", "");
             dto.Phone = CommonManager.WebObj.RequestForm("Phone", "");
             dto.RegIP = CommonManager.WebObj.GetWebClientIp();
-            dto.Phone = CommonManager.WebObj.RequestForm("TxUrl", "");
+            dto.TxUrl= CommonManager.WebObj.RequestForm("TxUrl", "");
             Dictionary<string, object> list = new Dictionary<string, object>();
             int result = -1;    //注册结果
             string msg = "注册成功!";

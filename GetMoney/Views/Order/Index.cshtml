@@ -117,7 +117,7 @@
                 dataType: 'json',
                 success: function (data) {
                     //var str = "<div id=\"jl" + No + "\"><ul class=\"th\"><li>记录ID</li><li>标会日期</li><li>真实姓名</li><li>标金金额</li><li>记录状态</li><li class=\"last\">操作</li></ul>";
-                    var str = "<table class=\"tablelist\" id=\"jl" + No + "\"><tr><th>记录ID</th><th>标会日期时间</th><th>真实姓名</th><th>标金金额</th><th>记录状态</th><th>操作</th></tr>";
+                    var str = "<table class=\"tablelist\" id=\"jl" + No + "\"><tr><th style=\"width:61px;\">记录ID</th><th style=\"width:160px;\">标会日期时间</th><th style=\"width:61px;\">得标人</th><th style=\"width:61px;\">得标金额</th><th style=\"width:61px;\">记录状态</th><th>操作</th></tr>";
                     var objdata = data.jsonresult;
                     if (data.success) {
                         $.each(objdata, function (i, o) {
@@ -138,7 +138,7 @@
                 //明细
                 $.getJSON("/Order/OrderListUsers", { listid: listid }, function (ret) {
                     if (ret.code == 1000) {
-                        var str = "<table class=\"tablelist\"><tr><th>真实姓名</th><th>标金金额</th><th>最后提交时间</th></tr>";
+                        var str = "<table class=\"tablelist\"><tr><th style=\"width:61px;\">竞标人</th><th style=\"width:61px;\">竞标金额</th><th style=\"width:160px;\">最后提交时间</th></tr>";
                         $.each(ret.jsonresult, function (i, obj) {
                             str += "<tr><td>" + obj.TrueName + "</td><td>" + obj.AccrualMoney + "</td><td>" + obj.Lastdate + "</td></tr>";
                         })
