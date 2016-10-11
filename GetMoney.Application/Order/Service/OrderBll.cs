@@ -34,8 +34,8 @@ namespace GetMoney.Application
                 (int)dto.MoneySendType,
                 dto.MeetType,
                 dto.MeetNum,
-                dto.MeetDate,
-                dto.MeetTime,
+                dto.FirstExtraDate,
+                dto.ExtraDate,
                 dto.InputDate,
                 dto.State,
                 dto.Remark
@@ -95,7 +95,7 @@ namespace GetMoney.Application
             SqlPageParam param = new SqlPageParam();
             param.TableName = "Orders";
             param.PrimaryKey = "id";
-            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,InputDate,Remark,MoneySendType,MeetType,MeetNum,MeetDate,MeetTime,State";
+            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,InputDate,Remark,MoneySendType,MeetType,MeetNum,FirstExtraDate,ExtraDate,State";
             param.PageSize = pageSize;
             param.PageIndex = pageIndex;
             param.Filter = "";
@@ -109,7 +109,7 @@ namespace GetMoney.Application
             SqlPageParam param = new SqlPageParam();
             param.TableName = "Orders";
             param.PrimaryKey = "id";
-            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,InputDate,Remark,MoneySendType,MeetType,MeetNum,MeetDate,MeetTime,State";
+            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,InputDate,Remark,MoneySendType,MeetType,MeetNum,LowestMoney,FirstExtraDate,ExtraDate,State";
             param.PageSize = pageSize;
             param.PageIndex = pageIndex;
             param.Filter = filter;
@@ -127,7 +127,7 @@ namespace GetMoney.Application
             dto.OrderNo = DateTime.Now.ToString("yyyyMMddHHmmssfffffff");    //互助单号
             Dictionary<string, object> dic;
             int result = 0;
-            _dal.CreateOrder(dto.OrderNo, dto.PeoperNum, dto.PeoperIds, dto.PeoperMoney, dto.LowestMoney, dto.TouUserid, (int)dto.MoneySendType, dto.MeetType, dto.MeetNum, dto.FirstDate, dto.MeetDate, dto.MeetTime, out dic);
+            _dal.CreateOrder(dto.OrderNo, dto.PeoperNum, dto.PeoperIds, dto.PeoperMoney, dto.LowestMoney, dto.TouUserid, (int)dto.MoneySendType, dto.MeetType, dto.MeetNum, dto.FirstDate, dto.FirstExtraDate, dto.ExtraDate, out dic);
             if (Convert.ToInt32(dic["@ReturnValue"]) == 1)
             {
                 result = 1;

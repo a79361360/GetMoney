@@ -15,9 +15,9 @@ namespace GetMoney.Dal.Configuration
             this.Property(p => p.OrderNo)
                 .IsRequired()
                 .HasMaxLength(50);
-            this.Property(p => p.MeetDate)
+            this.Property(p => p.ExtraDate)
                 .IsRequired()
-                .HasMaxLength(14);
+                .HasMaxLength(1000);
             this.Property(p => p.Remark)
             .HasMaxLength(250);
         }

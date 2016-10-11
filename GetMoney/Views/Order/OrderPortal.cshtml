@@ -27,18 +27,20 @@
                 var peomoney = $("#peomoney").val();        //会费金额
                 var lowestmoney = $("#lowestmoney").val();  //最低标会金额
                 var firstdate = $("#firstdate").val();      //首次标会日期
-                var firtextradate = $("#firstextradate").val(); //首次加标日期
+                var firstextradate = $("#firstextradate").val(); //首次加标日期
+                console.log(firstextradate)
                 var peonum = $("#peopernum").val();         //标会人数
                 var uids = JSON.stringify(friendids);       //会员列表
                 var data = {
-                    peonum: peonum,
-                    uids: uids,
-                    peomoney: peomoney,
-                    lowestmoney: lowestmoney,
                     moneystype: moneystype,
                     meettype: meettype,
                     meetnum: meetnum,
-                    firstdate: firstdate
+                    peomoney: peomoney,
+                    lowestmoney: lowestmoney,
+                    firstdate: firstdate,
+                    firstextradate: firstextradate,
+                    peonum: peonum,
+                    uids: uids,
                 };
                 $.ajax({
                     type: "POST",
@@ -112,6 +114,8 @@
         </tr>
         <tr><td colspan="2"><button id="orderbtn">提交</button></td></tr>
     </table>
-    @Html.Action("TUserFriend", "TUser")
+    <div style="position: absolute;right: 0;top: 0;">
+        @Html.Action("TUserFriend", "TUser")
+    </div>
 </body>
 </html>

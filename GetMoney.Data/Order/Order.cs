@@ -40,11 +40,11 @@ namespace GetMoney.Data.Order
         /// <summary>
         /// 每个月标会日期(以字符串形式奖5个标会日期分开,以逗号隔开Len(14)例如:01,10,15)
         /// </summary>
-        public string MeetDate { get; set; }
+        public DateTime FirstExtraDate { get; set; }
         /// <summary>
         /// 标会时间(具体的时间:例如晚上7点就是:    19:00)
         /// </summary>
-        public string MeetTime { get; set; }
+        public string ExtraDate { get; set; }
         //录入时间
         public DateTime InputDate { get; set; }
         //当前会的状态(1活会,2死会,3险会)

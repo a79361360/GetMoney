@@ -74,11 +74,9 @@
                             //$("#eventLog").append(' remote callback : ' + JSON.stringify(data) + '<br />');
                             console.log(data)
                             if (data.success) {
-                                //var str = "<div><ul class=\"th\"><li>序号</li><li>会单ID</li><li>会钱发放类型</li><li>开会日期</li><li>开会时间</li><li>会单人数</li><li>会单金额</li><li>会单总额</li><li>会单状态</li><li class=\"last\">操作</li></ul>";
-                                var str = "<table class=\"tablelist\"><tr><th style=\"width:61px;\">序号</th><th style=\"width:200px;\">会单ID</th><th style=\"width:80px;\">会钱发放类型</th><th>开会日期</th><th style=\"width:80px;\">开会时间</th><th style=\"width:61px;\">会单人数</th><th style=\"width:61px;\">会单金额</th><th style=\"width:61px;\">会单总额</th><th style=\"width:61px;\">会单状态</th><th style=\"width:121px;\">操作</th></tr>";
+                                var str = "<table class=\"tablelist\"><tr><th style=\"width:61px;\">序号</th><th style=\"width:200px;\">会单ID</th><th style=\"width:80px;\">会钱发放类型</th><th>标会类型</th><th style=\"width:80px;\">最低标会金额</th><th style=\"width:61px;\">会单人数</th><th style=\"width:61px;\">会单金额</th><th style=\"width:61px;\">会单总额</th><th style=\"width:61px;\">会单状态</th><th style=\"width:121px;\">操作</th></tr>";
                                 $.each(data.list, function (i, o) {
-                                    //str += "<ul class=\"td\"><li>" + (i + 1) + "</li><li>" + o.OrderNo + "</li><li>" + o.MSType + "</li><li>" + o.MeetDate + "</li><li>" + o.MeetTime + "</li><li>" + o.PeoperNum + "</li><li>" + o.PeoperMoney + "</li><li>" + o.AllPeoperMoney + "</li><li>" + GetStateN(o.State) + "</li><li class=\"last\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">展开</li></ul>";
-                                    str += "<tr><td>" + (i + 1) + "</td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetDate + "</td><td>" + o.MeetTime + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><button onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button></td></tr>";
+                                    str += "<tr><td>" + (i + 1) + "</td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetType + "</td><td>" + o.LowestMoney + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><button onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button></td></tr>";
                                 })
                                 str += "</table>";
                                 $("#tblist").html(str);

@@ -35,8 +35,8 @@ namespace GetMoney.Controllers.Order
             dto.MoneySendType = (MnSdTypeEnum)1;
             dto.MeetType = 1;
             dto.MeetNum = 1;
-            dto.MeetDate = "26";
-            dto.MeetTime = "19:00";
+            dto.FirstExtraDate = DateTime.Now;
+            dto.ExtraDate = "";
             dto.InputDate = DateTime.Now;
             dto.State = 1;
             dto.Remark = "测试";
@@ -94,10 +94,9 @@ namespace GetMoney.Controllers.Order
             string MeetType = Request.Form["meettype"];             //标会类型
             string MeetNum = Request.Form["meetnum"];               //每月标会次数
             string FirstDate = Request.Form["firstdate"];           //首次标会日期
-            //string MeetDate = Request.Form["meetdate"];           //标会日期
-            //string MeetTime = Request.Form["meettime"];           //标会时间
-            string MeetDate = "20";                                 //标会日期
-            string MeetTime = "19:00";                              //标会时间
+            string FirstExtraDate = CommonManager.WebObj.RequestForm("firstextradate", "");            //首次加标日期时间
+            string ExtraDate = CommonManager.WebObj.RequestForm("extradate", "");            //自定义加标日期列表
+
             OrderDto dto = new OrderDto();
             dto.PeoperNum = Convert.ToInt32(PeoperNum);
             IList<UListDto> list = SerializeJson<UListDto>.JSONStringToList(Peoper);    //会员列表
@@ -108,9 +107,14 @@ namespace GetMoney.Controllers.Order
             dto.MoneySendType = (MnSdTypeEnum)Convert.ToInt32(MoneySendType);
             dto.MeetType = Convert.ToInt32(MeetType);
             dto.MeetNum = Convert.ToInt32(MeetNum);
+            if (dto.MeetType == 1 || dto.MeetType == 2) {
+                dto.MeetNum = 1;
+            }
             dto.FirstDate = Convert.ToDateTime(FirstDate);
-            dto.MeetDate = MeetDate;
-            dto.MeetTime = MeetTime;
+            if (FirstExtraDate != "")
+            {
+                dto.FirstExtraDate = Convert.ToDateTime(FirstExtraDate);
+            }
             int result = _bll.CreateOrder(dto);
             if (result == 1)
             {

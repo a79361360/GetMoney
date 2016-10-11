@@ -18,7 +18,7 @@ namespace GetMoney.Dal
             DataTable dt = dal.PageResult(Param.TableName, Param.PrimaryKey, Param.Fields, Param.PageSize, Param.PageIndex, Param.Filter, Param.Group, Param.Order, ref Total);
             return dt;
         }
-        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int LowestMoney, int TouUserid, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, string MeetDate, string MeetTime, out Dictionary<string, object> list)
+        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int LowestMoney, int TouUserid, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, DateTime FirstExtraDate, string ExtraDate, out Dictionary<string, object> list)
         {
             string ProName = "SP_AddNewOrder";
             SqlParameter[] parameter = new[]
@@ -33,8 +33,8 @@ namespace GetMoney.Dal
                 new SqlParameter("@MeetType",SqlDbType.Int),
                 new SqlParameter("@MeetNum",SqlDbType.Int),
                 new SqlParameter("@FirstDate",SqlDbType.DateTime),
-                new SqlParameter("@MeetDate",SqlDbType.NVarChar,14),
-                new SqlParameter("@MeetTime",SqlDbType.NVarChar,30),
+                new SqlParameter("@FirstExtraDate",SqlDbType.DateTime),
+                new SqlParameter("@ExtraDate",SqlDbType.NVarChar,1000),
                 new SqlParameter("@ReturnValue",SqlDbType.Int)
             };
             parameter[0].Value = OrderNo;
@@ -47,8 +47,8 @@ namespace GetMoney.Dal
             parameter[7].Value = MeetType;
             parameter[8].Value = MeetNum;
             parameter[9].Value = FirstDate;
-            parameter[10].Value = MeetDate;
-            parameter[11].Value = MeetTime;
+            parameter[10].Value = FirstExtraDate;
+            parameter[11].Value = ExtraDate;
             parameter[12].Direction = ParameterDirection.ReturnValue;
             string[] str = new string[] { "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);

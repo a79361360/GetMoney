@@ -15,8 +15,8 @@ namespace GetMoney.Data.Order
             int MoneySendType,
             int MeetType,
             int MeetNum,
-            string MeetDate,
-            string MeetTime,
+            DateTime FirstExtraDate,
+            string ExtraDate,
             DateTime InputDate,
             int State,
             string Remark)
@@ -29,8 +29,8 @@ namespace GetMoney.Data.Order
                 MoneySendType = (MnSdTypeEnum)MoneySendType,
                 MeetType = MeetType,
                 MeetNum = MeetNum,
-                MeetDate = MeetDate,
-                MeetTime = MeetTime,
+                FirstExtraDate = FirstExtraDate,
+                ExtraDate = ExtraDate,
                 InputDate = InputDate,
                 State = State,
                 Remark = Remark
