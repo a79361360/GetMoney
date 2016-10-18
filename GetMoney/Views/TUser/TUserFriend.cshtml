@@ -55,7 +55,7 @@
             //清空friends
             $("#clear").click(function () {
                 friendids = [];
-                delebefore();
+                $(window.parent)[0].delebefore(friendids);
             })
         })
         var friendids = [];
@@ -78,8 +78,9 @@
                 csobj.text(parseInt(csobj.text()) - 1);
             }
             //如果这个方法存在就调用
-            if (typeof delebefore === 'function') {
-                delebefore();
+            //console.log($(window.parent)[0].delebefore)
+            if (typeof $(window.parent)[0].delebefore === 'function') {
+                $(window.parent)[0].delebefore(friendids);
             }
         }
     </script>

@@ -10,16 +10,15 @@
     <title>OrderPortal</title>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script type="text/javascript" src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
     <script src="~/Content/My97DatePicker/WdatePicker.js"></script>
-    <script src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
-        delebefore = function () {
+        delebefore = function (friendids) {
             var list = friendids;
             var str = "";
             $.each(list, function (i, o) {
-                str += "<li><span>" + parseInt(i + 1) + "</span><span>" + o.id + "</span><span>" + o.tname + "</span><span>" + o.phone + "</span></li>";
+                str += "<li class=\"list-group-item\"><span>" + parseInt(i + 1) + "</span><span>" + o.id + "</span><span>" + o.tname + "</span><span>" + o.phone + "</span></li>";
             })
             $("#ulist").html(str);
         }
@@ -63,21 +62,44 @@
             $("#meettype").change(function () {
                 var value = $(this).val();
                 if (value == 1) {
-                    $("#tr_num").hide();
-                    $("#firstextradate").val("");
-                    $("#meetnum option").eq(0).attr('selected', 'true');
+                    //加标日期
+                    $("#tr_num").hide(); $("#firstextradate").val("");
+                    //加标频率
+                    $("#tr_fre").hide(); $("#meetnum option").eq(0).prop('selected', 'true');
+                    //自定加标时间列表
                 }
                 else if (value == 2) {
                     $("#tr_num").show();
-                    $("#meetnum").hide();
-                    $("#meetnum option").eq(0).attr('selected', 'selected');
+                    $("#tr_fre").hide(); $("#meetnum option").eq(0).prop('selected', 'selected');
                 }
                 else if (value == 3) {
                     $("#tr_num").show();
-                    $("#meetnum").show();
+                    $("#tr_fre").show();
                 }
             })
+            //////////////////////////////////////////////////////////
+            $("#btn_firend").click(function () {
+                qiu_confirm("选择参会用户", $("#friendlist").clone().html());
+            })
         })
+
+        tips = function (content, timeout) {
+            var BootDialog = "<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">";
+            BootDialog += " <div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-body\">" + content + "</div></div></div></div>";
+            var obj = $(BootDialog); obj.modal('show');
+            setTimeout(function () { obj.modal('hide') }, timeout * 1000);
+        }
+        qiu_confirm = function (title, content) {
+            content="<iframe id=\"NoPermissioniframe\" width=\"100%\" src=\"/TUser/TUserFriend\" height=\"100%\" frameborder=\"0\"></iframe>"
+            var header = "<div class=\"modal-header\"><button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button><h4 class=\"modal-title\" id=\"myModalLabel\">" + title + "</h4></div>"
+            var footer = "<div class=\"modal-footer\"><button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">取消</button><button id=\"Tj\" type=\"button\" class=\"btn btn-primary\">确定</button></div>";
+            var BootDialog = "<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">";
+            BootDialog += " <div class=\"modal-dialog\"><div class=\"modal-content\">" + header + "<div class=\"modal-body\">" + content + "</div>" + footer + "</div></div></div>";
+            var obj = $(BootDialog);obj.modal('show');
+            obj.find("#Tj").click(function () {
+                console.log($(window.frames["NoPermissioniframe"])[0].test())
+            })
+        }
     </script>
 </head>
 <body>
@@ -95,10 +117,10 @@
                 <label class="col-sm-2 control-label">标会类型</label>
                 <div class="col-sm-10">
                     <select class="form-control" id="meettype">
-                            <option value="1">约定标会日期</option>
-                            <option value="2">每月都加标</option>
-                            <option value="3">每N月加标一次</option>
-                            <option value="4">自定义加标</option>
+                        <option value="1">约定标会日期</option>
+                        <option value="2">每月都加标</option>
+                        <option value="3">每N月加标一次</option>
+                        <option value="4">自定义加标</option>
                     </select>
                 </div>
             </div>
@@ -108,7 +130,7 @@
                     <input class="form-control" id="firstextradate" type="text" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readOnly: true })" />
                 </div>
             </div>
-            <div class="form-group" id="tr_num">
+            <div class="form-group" id="tr_fre">
                 <label class="col-sm-2 control-label">加标频率</label>
                 <div class="col-sm-10">
                     <select class="form-control" id="meetnum">
@@ -121,57 +143,43 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword" class="col-sm-2 control-label">
-                    禁用
-                </label>
+                <label class="col-sm-2 control-label">首次标会日期时间</label>
                 <div class="col-sm-10">
-                    <input class="form-control" id="disabledInput" type="text" placeholder="该输入框禁止输入..." disabled>
+                    <input class="form-control" id="firstdate" type="text" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readOnly: true })" />
                 </div>
             </div>
-            <fieldset disabled>
-                <div class="form-group">
-                    <label for="disabledTextInput" class="col-sm-2 control-label">
-                        禁用输入（Fieldset disabled）
-                    </label>
-                    <div class="col-sm-10">
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="禁止输入">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="disabledSelect" class="col-sm-2 control-label">
-                        禁用选择菜单（Fieldset disabled）
-                    </label>
-                    <div class="col-sm-10">
-                        <select id="disabledSelect" class="form-control">
-                            <option>禁止选择</option>
-                        </select>
-                    </div>
-                </div>
-            </fieldset>
-            <div class="form-group has-success">
-                <label class="col-sm-2 control-label" for="inputSuccess">
-                    输入成功
-                </label>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">会费金额</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputSuccess">
+                    <input class="form-control" id="peomoney" type="number" />
                 </div>
             </div>
-            <div class="form-group has-warning">
-                <label class="col-sm-2 control-label" for="inputWarning">
-                    输入警告
-                </label>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">最低标会金额</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputWarning">
+                    <input class="form-control" id="lowestmoney" type="number" />
                 </div>
             </div>
-            <div class="form-group has-error">
-                <label class="col-sm-2 control-label" for="inputError">
-                    输入错误
-                </label>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">会员人数</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputError">
+                    <input class="form-control" id="peopernum" type="number" disabled />
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">会员列表</label>
+                <div class="col-sm-10">
+                    <input id="btn_firend" type="button" class="btn btn-default" value="打开好友列表" />
+                    <ul id="ulist" class="list-group">
+                        <li class="list-group-item"><span>免费域名注册</span><span>免费域名注册</span><span>免费域名注册</span></li>
+                        <li class="list-group-item">免费 Window 空间托管</li>
+                        <li class="list-group-item">图像的数量</li>
+                        <li class="list-group-item">24*7 支持</li>
+                        <li class="list-group-item">每年更新成本</li>
+                    </ul>
+                </div>
+            </div>
+            <input id="orderbtn" class="btn btn-default col-sm-2 col-md-offset-2" value="提交" />
         </form>
     </div>
 
@@ -212,8 +220,9 @@
         </tr>
         <tr><td colspan="2"><button id="orderbtn">提交</button></td></tr>
     </table>
-    <div style="position: absolute;right: 0;top: 0; display:none">
+    <div id="friendlist">
         @Html.Action("TUserFriend", "TUser")
     </div>
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
