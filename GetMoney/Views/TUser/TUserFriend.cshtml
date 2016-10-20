@@ -30,8 +30,8 @@
             $("#search").click(function () {
                 var isInited = $("#gfriendpage").pagination();
                 if (isInited) $("#gfriendpage").pagination('destroy');
-                var text = $("#text").val();
-                var type = $("#sel").val();
+                var text = $("#fieldv").val();
+                var type = $("#field").attr("v_val");
                 $("#gfriendpage").pagination({
                     pageBtnCount:7,
                     prevBtnText: '上一页',
@@ -113,7 +113,7 @@
     </script>
 </head>
 <body>
-    <div class="container" style=" margin-left:0px; padding-left:0px">
+    <div class="container" style="margin-left:0px; padding-left:0px">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <form action="" class="bs-example bs-example-form" role="form">

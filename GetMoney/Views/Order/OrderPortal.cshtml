@@ -14,10 +14,10 @@
 
     <script src="~/Content/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript">
+        var _friendids = [];
         createidslist = function (friendids) {
-            var list = friendids;
             var str = "";
-            $.each(list, function (i, o) {
+            $.each(friendids, function (i, o) {
                 str += "<li class=\"list-group-item\"><span style=\"margin-right:10px;\">" + parseInt(i + 1) + "</span><span style=\"margin-right:10px;\">" + o.id + "</span><span style=\"margin-right:10px;\">" + o.tname + "</span><span style=\"margin-right:10px;\">" + o.phone + "</span></li>";
             })
             $("#ulist").html(str);
@@ -33,7 +33,7 @@
                 var firstextradate = $("#firstextradate").val(); //首次加标日期
                 console.log(firstextradate)
                 var peonum = $("#peopernum").val();         //标会人数
-                var uids = JSON.stringify(friendids);       //会员列表
+                var uids = JSON.stringify(_friendids);       //会员列表
                 var data = {
                     moneystype: moneystype,
                     meettype: meettype,
@@ -79,36 +79,34 @@
             })
             //////////////////////////////////////////////////////////
             $("#btn_firend").click(function () {
-                qiu_confirm("选择参会用户", $("#friendlist").clone().html());
+                var content = "<iframe id=\"NoPermissioniframe\" width=\"100%\" src=\"/TUser/TUserFriend\" height=\"100%\" frameborder=\"0\"></iframe>";
+                qiu_confirm("选择参会用户", content);
             })
         })
-
+        //弹于信息tips
         tips = function (content, timeout) {
             var BootDialog = "<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">";
             BootDialog += " <div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-body\">" + content + "</div></div></div></div>";
             var obj = $(BootDialog); obj.modal('show');
             setTimeout(function () { obj.modal('hide') }, timeout * 1000);
         }
+        //弹出窗体
         qiu_confirm = function (title, content) {
             var iframe = $("#myModal");
             if (iframe.length > 0) {
                 iframe.modal('show');
                 return;
             }
-            console.log(iframe.length)
-
-            content="<iframe id=\"NoPermissioniframe\" width=\"100%\" src=\"/TUser/TUserFriend\" height=\"100%\" frameborder=\"0\"></iframe>"
             var header = "<div class=\"modal-header\"><button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button><h4 class=\"modal-title\" id=\"myModalLabel\">" + title + "</h4></div>"
             var footer = "<div class=\"modal-footer\"><button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">取消</button><button id=\"Tj\" type=\"button\" class=\"btn btn-primary\">确定</button></div>";
             var BootDialog = "<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">";
             BootDialog += " <div class=\"modal-dialog\"><div class=\"modal-content\">" + header + "<div class=\"modal-body\" style=\"height:755px\">" + content + "</div>" + footer + "</div></div></div>";
             var obj = $(BootDialog);obj.modal('show');
             obj.find("#Tj").click(function () {
-                console.log($(window.frames["NoPermissioniframe"]))
-                var friendids = $(window.frames["NoPermissioniframe"])[0].contentWindow.friendids;    //取得ids数组
-                console.log(friendids)
-                createidslist(friendids);   //创建参会用户列表
+                _friendids = $(window.frames["NoPermissioniframe"])[0].contentWindow.friendids;    //取得ids数组
+                createidslist(_friendids);   //创建参会用户列表
                 obj.modal('hide');  //关闭弹窗
+                $("#peopernum").val(_friendids.length)
             })
         }
     </script>
@@ -135,13 +133,19 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group" id="tr_num">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">首次标会日期时间</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="firstdate" type="text" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readOnly: true })" />
+                </div>
+            </div>
+            <div class="form-group" id="tr_num" style="display:none">
                 <label class="col-sm-2 control-label">首次加标日期时间</label>
                 <div class="col-sm-10">
                     <input class="form-control" id="firstextradate" type="text" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readOnly: true })" />
                 </div>
             </div>
-            <div class="form-group" id="tr_fre">
+            <div class="form-group" id="tr_fre" style="display:none">
                 <label class="col-sm-2 control-label">加标频率</label>
                 <div class="col-sm-10">
                     <select class="form-control" id="meetnum">
@@ -151,12 +155,6 @@
                         <option value="4">每隔4个月加标一次</option>
                         <option value="5">每隔5个月加标一次</option>
                     </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">首次标会日期时间</label>
-                <div class="col-sm-10">
-                    <input class="form-control" id="firstdate" type="text" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readOnly: true })" />
                 </div>
             </div>
             <div class="form-group">
@@ -181,22 +179,19 @@
                 <label class="col-sm-2 control-label">会员列表</label>
                 <div class="col-sm-10">
                     <input id="btn_firend" type="button" class="btn btn-default" value="打开好友列表" />
-                    <ul id="ulist" class="list-group">
-                        <li class="list-group-item"><span>免费域名注册</span><span>免费域名注册</span><span>免费域名注册</span></li>
-                        <li class="list-group-item">免费 Window 空间托管</li>
-                        <li class="list-group-item">图像的数量</li>
-                        <li class="list-group-item">24*7 支持</li>
-                        <li class="list-group-item">每年更新成本</li>
-                    </ul>
+                    <ul id="ulist" class="list-group"></ul>
                 </div>
             </div>
-            <input id="orderbtn" class="btn btn-default col-sm-2 col-md-offset-2" value="提交" />
+            <div class="form-group">
+                <input id="orderbtn" class="btn btn-default col-sm-2 col-md-offset-2" value="提交" />
+            </div>
         </form>
     </div>
 
     <table style="display:none">
         <tr><td>放款类型</td><td><select id="moneysendtype"><option value="1">会款总额+利息</option></select></td></tr>
-        <tr><td>标会类型</td>
+        <tr>
+            <td>标会类型</td>
             <td>
                 <select id="meettype">
                     <option value="1">约定标会日期</option>
@@ -231,8 +226,5 @@
         </tr>
         <tr><td colspan="2"><button id="orderbtn">提交</button></td></tr>
     </table>
-    <div id="friendlist">
-        @Html.Action("TUserFriend", "TUser")
-    </div>
 </body>
 </html>

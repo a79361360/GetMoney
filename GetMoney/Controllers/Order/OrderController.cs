@@ -94,7 +94,7 @@ namespace GetMoney.Controllers.Order
             string MeetType = Request.Form["meettype"];             //标会类型
             string MeetNum = Request.Form["meetnum"];               //每月标会次数
             string FirstDate = Request.Form["firstdate"];           //首次标会日期
-            string FirstExtraDate = CommonManager.WebObj.RequestForm("firstextradate", "");            //首次加标日期时间
+            string FirstExtraDate = CommonManager.WebObj.RequestForm("firstextradate", DateTime.Now.ToString());            //首次加标日期时间
             string ExtraDate = CommonManager.WebObj.RequestForm("extradate", "");            //自定义加标日期列表
 
             OrderDto dto = new OrderDto();
@@ -111,7 +111,7 @@ namespace GetMoney.Controllers.Order
                 dto.MeetNum = 1;
             }
             dto.FirstDate = Convert.ToDateTime(FirstDate);
-            if (FirstExtraDate != "")
+            if (!string.IsNullOrEmpty(FirstExtraDate))
             {
                 dto.FirstExtraDate = Convert.ToDateTime(FirstExtraDate);
             }
