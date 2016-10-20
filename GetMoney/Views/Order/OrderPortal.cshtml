@@ -14,11 +14,11 @@
 
     <script src="~/Content/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript">
-        delebefore = function (friendids) {
+        createidslist = function (friendids) {
             var list = friendids;
             var str = "";
             $.each(list, function (i, o) {
-                str += "<li class=\"list-group-item\"><span>" + parseInt(i + 1) + "</span><span>" + o.id + "</span><span>" + o.tname + "</span><span>" + o.phone + "</span></li>";
+                str += "<li class=\"list-group-item\"><span style=\"margin-right:10px;\">" + parseInt(i + 1) + "</span><span style=\"margin-right:10px;\">" + o.id + "</span><span style=\"margin-right:10px;\">" + o.tname + "</span><span style=\"margin-right:10px;\">" + o.phone + "</span></li>";
             })
             $("#ulist").html(str);
         }
@@ -97,7 +97,11 @@
             BootDialog += " <div class=\"modal-dialog\"><div class=\"modal-content\">" + header + "<div class=\"modal-body\">" + content + "</div>" + footer + "</div></div></div>";
             var obj = $(BootDialog);obj.modal('show');
             obj.find("#Tj").click(function () {
-                console.log($(window.frames["NoPermissioniframe"])[0].test())
+                console.log($(window.frames["NoPermissioniframe"]))
+                var friendids = $(window.frames["NoPermissioniframe"])[0].contentWindow.friendids;    //取得ids数组
+                console.log(friendids)
+                createidslist(friendids);   //创建参会用户列表
+                obj.modal('hide');  //关闭弹窗
             })
         }
     </script>

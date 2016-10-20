@@ -77,11 +77,12 @@
                 friendids.splice(jQuery.inArray(o, friendids), 1);  //移除
                 csobj.text(parseInt(csobj.text()) - 1);
             }
+            console.log(friendids)
             //如果这个方法存在就调用
             //console.log($(window.parent)[0].delebefore)
-            if (typeof $(window.parent)[0].delebefore === 'function') {
-                $(window.parent)[0].delebefore(friendids);
-            }
+            //if (typeof $(window.parent)[0].delebefore === 'function') {
+            //    $(window.parent)[0].delebefore(friendids);
+            //}
         }
     </script>
 </head>
