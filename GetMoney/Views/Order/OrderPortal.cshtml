@@ -10,7 +10,7 @@
     <title>OrderPortal</title>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script type="text/javascript" src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src="~/Content/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript">
@@ -90,11 +90,18 @@
             setTimeout(function () { obj.modal('hide') }, timeout * 1000);
         }
         qiu_confirm = function (title, content) {
+            var iframe = $("#myModal");
+            if (iframe.length > 0) {
+                iframe.modal('show');
+                return;
+            }
+            console.log(iframe.length)
+
             content="<iframe id=\"NoPermissioniframe\" width=\"100%\" src=\"/TUser/TUserFriend\" height=\"100%\" frameborder=\"0\"></iframe>"
             var header = "<div class=\"modal-header\"><button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button><h4 class=\"modal-title\" id=\"myModalLabel\">" + title + "</h4></div>"
             var footer = "<div class=\"modal-footer\"><button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">取消</button><button id=\"Tj\" type=\"button\" class=\"btn btn-primary\">确定</button></div>";
             var BootDialog = "<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">";
-            BootDialog += " <div class=\"modal-dialog\"><div class=\"modal-content\">" + header + "<div class=\"modal-body\">" + content + "</div>" + footer + "</div></div></div>";
+            BootDialog += " <div class=\"modal-dialog\"><div class=\"modal-content\">" + header + "<div class=\"modal-body\" style=\"height:755px\">" + content + "</div>" + footer + "</div></div></div>";
             var obj = $(BootDialog);obj.modal('show');
             obj.find("#Tj").click(function () {
                 console.log($(window.frames["NoPermissioniframe"]))
@@ -227,6 +234,5 @@
     <div id="friendlist">
         @Html.Action("TUserFriend", "TUser")
     </div>
-    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

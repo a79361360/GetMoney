@@ -8,8 +8,10 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>TUserFriend</title>
-    <link href="~/Content/TestPage/mricode.pagination.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="~/Content/TestPage/mricode.pagination.css" rel="stylesheet" />
     <script src="~/Content/TestPage/mricode.pagination.js"></script>
     <style type="text/css">
         .tablelist td {
@@ -40,12 +42,13 @@
                         success: function (data) {
                             console.log(data.success)
                             if (data.success) {
-                                var str = "<table class=\"tablelist\"><tr><th>选中次数</th><th>好友ID</th><th>真实姓名</th><th>手机号码</th><th>操作</th></tr>";
+                                var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:50px;\">次数</th><th>用户ID</th><th>真实姓名</th><th>手机号码</th><th style=\"width:130px;\">操作</th></tr></thead>";
                                 $.each(data.list, function (i, o) {
-                                    str += "<tr><td>0</td><td>" + o.Pcid + "</td><td>" + o.TrueName + "</td><td>" + o.Phone + "</td><td><span onclick=\"pitchbtn(1,this)\">添加</span><span onclick=\"pitchbtn(2,this)\">减少</span></td></tr>";
+                                    str += "<tr><td>0</td><td>" + o.Pcid + "</td><td>" + o.TrueName + "</td><td>" + o.Phone + "</td><td><button class=\"btn btn-default\" onclick=\"pitchbtn(1,this)\">增加</button><button class=\"btn btn-default\" onclick=\"pitchbtn(2,this)\">减少</button></td></tr>";
                                 })
                                 str += "</table>";
                                 $("#gfriendtblist").html(str);
+                                anewcount($("#gfriendtblist tbody"));
                             }
                         },
                         totalName: 'total'              //指定返回数据的总数据量的字段名
@@ -56,6 +59,11 @@
             $("#clear").click(function () {
                 friendids = [];
                 $(window.parent)[0].delebefore(friendids);
+            })
+            $('.dropdown-menu a').click(function () {
+                var txt = $(this).text(); var val = $(this).attr("v_val");
+                var objdrop = $(this).parent().parent().siblings("button").eq(0);
+                objdrop.text(txt); objdrop.attr("v_val", val);
             })
         })
         var friendids = [];
@@ -73,9 +81,14 @@
                 console.log(csobj.text())
             }
             if (type == 2) {
-                o.id = v;o.tname = tname;o.phone = phone;   //对象
-                friendids.splice(jQuery.inArray(o, friendids), 1);  //移除
-                csobj.text(parseInt(csobj.text()) - 1);
+                o.id = v; o.tname = tname; o.phone = phone;   //对象
+                for (var i = 0; i < friendids.length; i++) {
+                    if (friendids[i].id == o.id && parseInt(csobj.text()) > 0) {
+                        friendids.splice(jQuery.inArray(friendids[i], friendids), 1);  //移除
+                        csobj.text(parseInt(csobj.text()) - 1);
+                        return;
+                    }
+                }
             }
             console.log(friendids)
             //如果这个方法存在就调用
@@ -84,23 +97,69 @@
             //    $(window.parent)[0].delebefore(friendids);
             //}
         }
+        //重新附值次数
+        anewcount = function (tb) {
+            tb.find("tr").each(function (i, e) {
+                var count = 0;
+                var uid = $(e).find("td").eq(1).html();
+                $.each(friendids, function (j, k) {
+                    if (k.id == uid) {
+                        count++;
+                    }
+                })
+                $(e).find("td").eq(0).html(count)
+            })
+        }
     </script>
 </head>
 <body>
-    <table>
-        <tr>
-            <td><input id="text" type="text"></td>
-            <td colspan="3">
-                <select id="sel">
-                    <option value="TrueName">真实姓名</option>
-                    <option value="Phone">手机号码</option>
-                </select>
-            </td>
-            <td><input id="search" type="button" style="width:80px; cursor:pointer" value="查询"></td>
-            <td><input id="clear" type="button" style="width:80px; cursor:pointer" value="清空"></td>
-        </tr>
-    </table>
+    <div class="container" style=" margin-left:0px; padding-left:0px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <form action="" class="bs-example bs-example-form" role="form">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-group" style="float:left;">
+                                <div class="btn-group" style="float: left;">
+                                    <button id="field" type="button" class="btn btn-default">默认</button>
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height: 34px;">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">切换下拉菜单</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#" v_val="">默认</a></li>
+                                        <li><a href="#" v_val="TrueName">真实姓名</a></li>
+                                        <li><a href="#" v_val="Phone">手机号码</a></li>
+                                    </ul>
+                                </div>
+                                <input id="fieldv" type="text" class="form-control" style="width: 220px;margin:0 5px" />
+                            </div><!-- /input-group -->
+                            <button id="search" type="button" style="float:left; margin-left:5px;" class="btn btn-default">查询</button>
+                        </div><!-- /.col-lg-6 -->
+                    </div><!-- /.row -->
+                </form>
+            </div>
+            <div class="panel-body">
+                <div id="gfriendtblist"></div>
+                <div id="gfriendpage" class="m-pagination"></div>
+            </div>
+        </div>
+    </div>
+
+@*    <table>
+            <tr>
+                <td><input id="text" type="text"></td>
+                <td colspan="3">
+                    <select id="sel">
+                        <option value="TrueName">真实姓名</option>
+                        <option value="Phone">手机号码</option>
+                    </select>
+                </td>
+                <td><input id="search" type="button" style="width:80px; cursor:pointer" value="查询"></td>
+                <td><input id="clear" type="button" style="width:80px; cursor:pointer" value="清空"></td>
+            </tr>
+        </table>
     <div id="gfriendtblist"></div>
-    <div id="gfriendpage" class="m-pagination"></div>
+        <div id="gfriendpage" class="m-pagination"></div>*@
 </body>
 </html>
