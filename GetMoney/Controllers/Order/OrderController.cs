@@ -62,7 +62,7 @@ namespace GetMoney.Controllers.Order
             string type = CommonManager.WebObj.Request("type", "");
             string text = CommonManager.WebObj.Request("text", "");
             string filter = "";
-            if (!string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(type) && !string.IsNullOrEmpty(text))
             {
                 filter = type + " like '%" + text + "%'";
             }

@@ -8,35 +8,51 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
-    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />  
     <link href="~/Content/TestPage/dialog.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    
     <link href="~/Content/TestPage/mricode.pagination.css" rel="stylesheet" />
-    <script src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="~/Content/TestPage/mricode.pagination.js"></script>
     <script src="~/Content/TestPage/dsdialog.js"></script>
     <script src="~/Content/TestPage/commonaction.js"></script>
-    <style type="text/css">
-        .tablelist td {
-            text-align: center;
-            border: 1px solid #d5d5d5;
-            height: 30px;
-        }
-        .tablelist tr th {
-            text-align: center;
-            border: 1px solid #d5d5d5;
-            height: 30px;
-        }
-        button {
-            width: 65px;
-            height: 24px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body>
-    <table>
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <form action="" class="bs-example bs-example-form" role="form">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group" style="float:left;">
+                            <div class="btn-group" style="float: left;">
+	                            <button id="field" type="button" class="btn btn-default">默认</button>
+	                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height: 34px;">
+		                            <span class="caret"></span>
+		                            <span class="sr-only">切换下拉菜单</span>
+	                            </button>
+	                            <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#" v_val="">默认</a></li>
+		                            <li><a href="#" v_val="OrderNo">会单号</a></li>
+	                            </ul>
+                            </div>
+                            <input id="fieldv" type="text" class="form-control" style="width: 220px;margin:0 5px" />
+                        </div><!-- /input-group -->
+                        <button id="search" type="button" style="float:left; margin-left:5px;" class="btn btn-default">查询</button>
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+            </form>
+        </div>
+        <div class="panel-body">
+            <div id="tblist"></div>
+            <div id="page" class="m-pagination"></div>
+        </div>
+    </div>
+</div>
+
+ @*   <table>
         <tr>
             <td><input id="text" type="text"></td>
             <td colspan="3">
@@ -49,14 +65,14 @@
     </table>
 
     <div id="tblist"></div>
-    <div id="page" class="m-pagination"></div>
+    <div id="page" class="m-pagination"></div>*@
     <script>
         $(function () {
             $("#search").click(function () {
                 var isInited = $("#page").pagination();
                 if (isInited) $("#page").pagination('destroy');
-                var text = $("#text").val();
-                var type = $("#sel").val();
+                var text = $("#fieldv").val();
+                var type = $("#field").attr("v_val");
                 $("#page").pagination({
                     firstBtnText: '首页',
                     lastBtnText: '尾页',
@@ -83,18 +99,25 @@
                                 caption += "</div></caption>";
 
                                 //var str = "<table class=\"tablelist\"><tr><th style=\"width:61px;\">序号</th><th style=\"width:200px;\">会单ID</th><th style=\"width:80px;\">会钱发放类型</th><th>标会类型</th><th style=\"width:80px;\">最低标会金额</th><th style=\"width:61px;\">会单人数</th><th style=\"width:61px;\">会单金额</th><th style=\"width:61px;\">会单总额</th><th style=\"width:61px;\">会单状态</th><th style=\"width:121px;\">操作</th></tr>";
-                                var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:6%;\"><label class=\"checkbox-inline\"><input id=\"allqx\" type=\"checkbox\" />全选</label></th><th style=\"width:119px;\">会单ID</th><th style=\"width:118px;\">会钱发放类型</th><th style=\"width:118px;\">标会类型</th><th style=\"width:118px;\">最低标会金额</th><th style=\"width:118px;\">会单人数</th><th style=\"width:118px;\">会单金额</th><th style=\"width:118px;\">会单总额</th><th style=\"width:61px;\">会单状态</th><th style=\"width:118px;\">操作</th></tr></thead>";
+                                var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:6%;\"><label class=\"checkbox-inline\"><input id=\"allqx\" type=\"checkbox\" />全选</label></th><th style=\"width:190px;\">会单ID</th><th style=\"width:80px;\">放款类型</th><th style=\"width:118px;\">标会类型</th><th style=\"width:118px;\">最低标会金额</th><th style=\"width:118px;\">会单人数</th><th style=\"width:118px;\">会单金额</th><th style=\"width:118px;\">会单总额</th><th style=\"width:80px;\">会单状态</th><th style=\"width:118px;\">操作</th></tr></thead>";
                                 $.each(data.list, function (i, o) {
                                     str += "<tr><td style=\"text-align:center\"><input type=\"checkbox\"></td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetType + "</td><td>" + o.LowestMoney + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><button onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button></td></tr>";
                                 })
                                 str += "</table>";
                                 $("#tblist").html(str);
                                 $("#allqx").click(function () { togglechg(); })
+                            } else {
+                                $("#tblist").html("");
                             }
                         },
                         totalName: 'total'              //指定返回数据的总数据量的字段名
                     }
                 });
+            })
+            $('.dropdown-menu a').click(function () {
+                var txt = $(this).text(); var val = $(this).attr("v_val");
+                var objdrop = $(this).parent().parent().siblings("button").eq(0);
+                objdrop.text(txt); objdrop.attr("v_val", val);
             })
         })
         //点击全选
