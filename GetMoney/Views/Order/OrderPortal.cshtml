@@ -29,6 +29,7 @@
                 var meetnum = $("#meetnum").val();          //每月标会次数
                 var peomoney = $("#peomoney").val();        //会费金额
                 var lowestmoney = $("#lowestmoney").val();  //最低标会金额
+                var remark = $("#Remark").val();            //备注
                 var firstdate = $("#firstdate").val();      //首次标会日期
                 var firstextradate = $("#firstextradate").val(); //首次加标日期
                 console.log(firstextradate)
@@ -41,6 +42,7 @@
                     meetnum: meetnum,
                     peomoney: peomoney,
                     lowestmoney: lowestmoney,
+                    remark: remark,
                     firstdate: firstdate,
                     firstextradate: firstextradate,
                     peonum: peonum,
@@ -168,6 +170,12 @@
                 <label class="col-sm-2 control-label">最低标会金额</label>
                 <div class="col-sm-10">
                     <input class="form-control" id="lowestmoney" type="number" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">备注</label>
+                <div class="col-sm-10">
+                    <textarea id="remark" class="form-control" rows="3"></textarea>
                 </div>
             </div>
             <div class="form-group">

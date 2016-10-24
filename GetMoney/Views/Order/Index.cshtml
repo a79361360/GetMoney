@@ -101,9 +101,9 @@
                                 caption += "</div></caption>";
 
                                 //var str = "<table class=\"tablelist\"><tr><th style=\"width:61px;\">序号</th><th style=\"width:200px;\">会单ID</th><th style=\"width:80px;\">会钱发放类型</th><th>标会类型</th><th style=\"width:80px;\">最低标息</th><th style=\"width:61px;\">会单人数</th><th style=\"width:61px;\">会单金额</th><th style=\"width:61px;\">会单总额</th><th style=\"width:61px;\">会单状态</th><th style=\"width:121px;\">操作</th></tr>";
-                                var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:6%;\"><label class=\"checkbox-inline\"><input id=\"allqx\" type=\"checkbox\" />全选</label></th><th style=\"width:190px;\">会单ID</th><th style=\"width:80px;\">放款类型</th><th style=\"width:118px;\">标会类型</th><th style=\"width:118px;\">标息</th><th style=\"width:118px;\">会单人数</th><th style=\"width:118px;\">会单金额</th><th style=\"width:118px;\">会单总额</th><th style=\"width:80px;\">会单状态</th><th style=\"width:118px;\">操作</th></tr></thead>";
+                                var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:6%;\"><label class=\"checkbox-inline\"><input id=\"allqx\" type=\"checkbox\" />全选</label></th><th style=\"width:190px;\">会单ID</th><th style=\"width:80px;\">放款类型</th><th style=\"width:118px;\">标会类型</th><th style=\"width:118px;\">标息</th><th style=\"width:118px;\">会单人数</th><th style=\"width:118px;\">会单金额</th><th style=\"width:118px;\">会单总额</th><th style=\"width:80px;\">会单状态</th><th style=\"width:130px;\">操作</th></tr></thead>";
                                 $.each(data.list, function (i, o) {
-                                    str += "<tr><td style=\"text-align:center\"><input type=\"checkbox\"></td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetType + "</td><td>" + o.LowestMoney + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><button class=\"btn btn-primary\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button></td></tr>";
+                                    str += "<tr><td style=\"text-align:center\"><input type=\"checkbox\"></td><td>" + o.OrderNo + "</td><td>" + o.MSType + "</td><td>" + o.MeetType + "</td><td>" + o.LowestMoney + "</td><td>" + o.PeoperNum + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + GetStateN(o.State) + "</td><td><button class=\"btn btn-primary\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button><button class=\"btn btn-primary\" onclick=\"openwin('" + o.OrderNo + "')\">预览</button></td></tr>";
                                 })
                                 str += "</table>";
                                 $("#tblist").html(str);
@@ -258,6 +258,9 @@
             BootDialog += " <div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-body\">" + content + "</div></div></div></div>";
             var obj = $(BootDialog); obj.modal('show');
             setTimeout(function () { obj.modal('hide') }, timeout * 1000);
+        }
+        openwin = function (orderno) {
+            window.location.href = "/Order/OrderListViewPortal?orderno" + orderno;
         }
     </script>
 </body>

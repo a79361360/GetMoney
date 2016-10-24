@@ -20,7 +20,9 @@ namespace GetMoney.Controllers.Order
         }
         //
         // GET: /Order/
-
+        public ActionResult OrderListViewPortal() {
+            return View();
+        }
         public ActionResult Index()
         {
             return View();
@@ -90,6 +92,7 @@ namespace GetMoney.Controllers.Order
             string Peoper = Request.Form["uids"];                   //会员列表
             string PeoperMoney = Request.Form["peomoney"];          //会费金额
             string LowestMoney = Request.Form["lowestmoney"];       //最低标会金额
+            string Remark = Request.Form["remark"];                 //备注
             string MoneySendType = Request.Form["moneystype"];      //会费发放方式
             string MeetType = Request.Form["meettype"];             //标会类型
             string MeetNum = Request.Form["meetnum"];               //每月标会次数
@@ -103,6 +106,7 @@ namespace GetMoney.Controllers.Order
             dto.PeoperIds = _bll.ListToString(list);    //会员ids
             dto.PeoperMoney = Convert.ToInt32(PeoperMoney);
             dto.LowestMoney = Convert.ToInt32(LowestMoney);
+            dto.Remark = Remark;
             dto.TouUserid = Convert.ToInt32(TouUserid);
             dto.MoneySendType = (MnSdTypeEnum)Convert.ToInt32(MoneySendType);
             dto.MeetType = Convert.ToInt32(MeetType);
