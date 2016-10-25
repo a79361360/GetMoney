@@ -18,7 +18,16 @@ namespace GetMoney.Dal
             DataTable dt = dal.PageResult(Param.TableName, Param.PrimaryKey, Param.Fields, Param.PageSize, Param.PageIndex, Param.Filter, Param.Group, Param.Order, ref Total);
             return dt;
         }
-        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int LowestMoney, int TouUserid, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, DateTime FirstExtraDate, string ExtraDate, out Dictionary<string, object> list)
+        public DataTable GetOrderByOrderID(string OrderID) {
+            string sql = "select a.[id],a.[OrderNo],a.[PeoperNum],a.[PeoperMoney],a.[MoneySendType],a.[MeetType],a.[MeetNum],a.[FirstDate],a.[InputDate],a.[State],a.[Remark],a.[LowestMoney],a.[TouUserid],a.[FirstExtraDate],a.[ExtraDate],b.TrueName from Orders a inner join TUsers b on a.TouUserid=b.id Where a.OrderNo=@No";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@No",SqlDbType.NVarChar,50)
+            };
+            parameter[0].Value = OrderID;
+            return dal.ExtSql(sql, parameter);
+        }
+        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int LowestMoney, int TouUserid, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, DateTime FirstExtraDate, string ExtraDate, string Remark, out Dictionary<string, object> list)
         {
             string ProName = "SP_AddNewOrder";
             SqlParameter[] parameter = new[]
@@ -35,6 +44,7 @@ namespace GetMoney.Dal
                 new SqlParameter("@FirstDate",SqlDbType.DateTime),
                 new SqlParameter("@FirstExtraDate",SqlDbType.DateTime),
                 new SqlParameter("@ExtraDate",SqlDbType.NVarChar,1000),
+                new SqlParameter("@Remark",SqlDbType.NVarChar,1000),
                 new SqlParameter("@ReturnValue",SqlDbType.Int)
             };
             parameter[0].Value = OrderNo;
@@ -49,7 +59,8 @@ namespace GetMoney.Dal
             parameter[9].Value = FirstDate;
             parameter[10].Value = FirstExtraDate;
             parameter[11].Value = ExtraDate;
-            parameter[12].Direction = ParameterDirection.ReturnValue;
+            parameter[12].Value = Remark;
+            parameter[13].Direction = ParameterDirection.ReturnValue;
             string[] str = new string[] { "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }

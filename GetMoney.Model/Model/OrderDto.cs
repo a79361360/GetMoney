@@ -31,6 +31,10 @@ namespace GetMoney.Model
         /// </summary>
         public int TouUserid { get; set; }
         /// <summary>
+        /// 会头TrueName
+        /// </summary>
+        public string TouTrueName { get; set; }
+        /// <summary>
         /// 首次加标日期
         /// </summary>
         public DateTime FirstExtraDate { get; set; }
@@ -71,5 +75,9 @@ namespace GetMoney.Model
         public int State { get; set; }
         //备注
         public string Remark { get; set; }
+        /// <summary>
+        /// 会单每期记录
+        /// </summary>
+        public IList<OrderListDto> List { get; set; }
     }
 }

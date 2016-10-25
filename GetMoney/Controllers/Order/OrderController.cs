@@ -21,7 +21,13 @@ namespace GetMoney.Controllers.Order
         //
         // GET: /Order/
         public ActionResult OrderListViewPortal() {
-            return View();
+            string OrderNo = CommonManager.WebObj.Request("orderno", "");
+            OrderDto dto = null;
+            if (!string.IsNullOrEmpty(OrderNo)) {
+                dto = _bll.GetOrderByOrderID(OrderNo);
+                dto.List = _bll.OrderLists(OrderNo);
+            }
+            return View(dto);
         }
         public ActionResult Index()
         {

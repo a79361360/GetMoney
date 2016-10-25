@@ -13,6 +13,7 @@ namespace GetMoney.Application
         bool RemoveOrder(string id);
         IList<OrderDto> ListOrderPage(ref int Total, int pageSize, int pageIndex);
         IList<OrderDto> ListOrderPage(ref int Total, int pageSize, int pageIndex, string filter);
+        OrderDto GetOrderByOrderID(string OrderID);
         int CreateOrder(OrderDto dto);
         string ListToString(IList<UListDto> list);
         IList<OrderListDto> OrderLists(string No);
