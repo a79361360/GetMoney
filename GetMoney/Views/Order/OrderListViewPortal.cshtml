@@ -238,9 +238,11 @@
                 <div class="panel-footer">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            会员列表：谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;
-                            谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;
-                            谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;
+                            会员列表：
+                            @foreach (var item in ViewData["listuser"] as List<GetMoney.Model.OrderListUserDto>)
+                            {
+                               <span>@item.TrueName &nbsp;</span>  
+                            }
                         </div>
                         <div class="panel-footer">
                             <span class="help-block">

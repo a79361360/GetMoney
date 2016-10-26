@@ -26,6 +26,7 @@ namespace GetMoney.Controllers.Order
             if (!string.IsNullOrEmpty(OrderNo)) {
                 dto = _bll.GetOrderByOrderID(OrderNo);
                 dto.List = _bll.OrderLists(OrderNo);
+                ViewData["listuser"] = _bll.OrderListUser(dto.List[0].ID.ToString());
             }
             return View(dto);
         }
