@@ -19,7 +19,7 @@ namespace GetMoney.Dal
             return dt;
         }
         public DataTable GetOrderByOrderID(string OrderID) {
-            string sql = "select a.[id],a.[OrderNo],a.[PeoperNum],a.[PeoperMoney],a.[MoneySendType],a.[MeetType],a.[MeetNum],a.[FirstDate],a.[InputDate],a.[State],a.[Remark],a.[LowestMoney],a.[TouUserid],a.[FirstExtraDate],a.[ExtraDate],b.TrueName from Orders a inner join TUsers b on a.TouUserid=b.id Where a.OrderNo=@No";
+            string sql = "select a.[id],a.[OrderNo],a.[PeoperNum],a.[PeoperMoney],a.[MoneySendType],a.[MeetType],a.[MeetNum],a.[FirstDate],a.[InputDate],a.[State],a.[Remark],a.[LowestMoney],a.[TouUserid],a.[FirstExtraDate],a.[ExtraDate],b.TrueName TouTrueName,b.Phone from Orders a inner join TUsers b on a.TouUserid=b.id Where a.OrderNo=@No";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@No",SqlDbType.NVarChar,50)

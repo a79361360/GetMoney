@@ -1,0 +1,434 @@
+﻿@{
+    @model GetMoney.Model.OrderDto
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OrderListViewPortal</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+</head>
+<body>
+    <script language="javascript" type="text/javascript">
+        function printpreview(e)
+        {
+            $(e).hide();
+            window.print();
+        }
+    </script>
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title text-center">
+                        互&nbsp;&nbsp;&nbsp;助&nbsp;&nbsp;&nbsp;会&nbsp;&nbsp;&nbsp;单
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered" style="margin-bottom:0px">
+                        <thead>
+                            <tr>
+                                <th style="width:45px">序号</th>
+                                <th style="width:160px">日期</th>
+                                <th>标息</th>
+                                <th>得标人</th>
+                                <th style="width:45px">序号</th>
+                                <th style="width:160px">日期</th>
+                                <th>标息</th>
+                                <th>得标人</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ 
+                                int i = 1;
+                                foreach (var item in Model.List)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@item.MeetDate</td>
+                                        <td>@item.AccrualMoney </td>
+                                        <td>@item.TrueName</td>
+
+                                        <td>@i</td>
+                                        <td>@item.MeetDate</td>
+                                        <td>@item.AccrualMoney </td>
+                                        <td>@item.TrueName</td>
+
+                                    </tr>
+                                    
+                                    i++;
+                                }
+                                }
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+
+                                <td>10</td>
+                                <td>2016-08-10 19:00:00</td>
+                                <td>500</td>
+                                <td>谢宗秋</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-footer">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            会员列表：谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;
+                            谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;
+                            谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;谢宗秋&nbsp;
+                        </div>
+                        <div class="panel-footer">
+                            <span class="help-block">
+                                备注：1.本会从 @Model.FirstDate.ToLongDateString() 起至 @Convert.ToDateTime(Model.List[i - 2].MeetDate).ToLongDateString() 止,共有会员 @Model.PeoperNum 名,每名每月会费(会款) @Model.PeoperMoney 元,总会费(会款)金额为 @Model.AllPeoperMoney 元整.请会员在每月标会前将会款交清,不得拖欠.
+                                2.本会以 @Model.MoneySendType 的形式举行,会头为 @Model.TouTrueName 电话为 @Model.Phone
+                                3.本会从2014年8月10日起至2016年4月10止,共有会员26名,每名每月会
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <style type="text/css">
+                table, th, td {
+                    text-align: center;
+                    vertical-align: middle!important;
+                }
+            </style>
+
+
+            @*<div class="view">
+                <table class="table table-bordered">
+                    <caption><h3 class="text-center">互&nbsp;&nbsp;&nbsp;助&nbsp;&nbsp;&nbsp;会&nbsp;&nbsp;&nbsp;单</h3></caption>
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>日期</th>
+                            <th>标息</th>
+                            <th>得标人</th>
+                            <th>状态</th>
+                            <th>序号</th>
+                            <th>日期</th>
+                            <th>标息</th>
+                            <th>得标人</th>
+                            <th>状态</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                        <tr>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>560001</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                            <td>Tanmay</td>
+                            <td>Bangalore</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>*@
+            <div class="view">
+                <button class="btn btn-primary" onclick="printpreview(this)">打印</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

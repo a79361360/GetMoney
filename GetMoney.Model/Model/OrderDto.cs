@@ -35,6 +35,10 @@ namespace GetMoney.Model
         /// </summary>
         public string TouTrueName { get; set; }
         /// <summary>
+        /// 会头Phone
+        /// </summary>
+        public string Phone { get; set; }
+        /// <summary>
         /// 首次加标日期
         /// </summary>
         public DateTime FirstExtraDate { get; set; }
