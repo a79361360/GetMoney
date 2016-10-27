@@ -32,9 +32,8 @@
                 var remark = $("#Remark").val();            //备注
                 var firstdate = $("#firstdate").val();      //首次标会日期
                 var firstextradate = $("#firstextradate").val(); //首次加标日期
-                console.log(firstextradate)
                 var peonum = $("#peopernum").val();         //标会人数
-                console.log(_friendids)
+                var address = $("#address").val();                 //标会地址
                 var uids = JSON.stringify(_friendids);       //会员列表
                 var data = {
                     moneystype: moneystype,
@@ -42,6 +41,7 @@
                     meetnum: meetnum,
                     peomoney: peomoney,
                     lowestmoney: lowestmoney,
+                    address:address,
                     remark: remark,
                     firstdate: firstdate,
                     firstextradate: firstextradate,
@@ -167,9 +167,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">最低标会金额</label>
+                <label class="col-sm-2 control-label">最低标息</label>
                 <div class="col-sm-10">
                     <input class="form-control" id="lowestmoney" type="number" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">标会地址</label>
+                <div class="col-sm-10">
+                    <input class="form-control" id="address" type="text" maxlength="250" />
                 </div>
             </div>
             <div class="form-group">

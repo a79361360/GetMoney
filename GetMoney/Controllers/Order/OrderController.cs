@@ -103,6 +103,7 @@ namespace GetMoney.Controllers.Order
             string MoneySendType = Request.Form["moneystype"];      //会费发放方式
             string MeetType = Request.Form["meettype"];             //标会类型
             string MeetNum = Request.Form["meetnum"];               //每月标会次数
+            string Address = Request.Form["address"];               //标会地址
             string FirstDate = Request.Form["firstdate"];           //首次标会日期
             string FirstExtraDate = CommonManager.WebObj.RequestForm("firstextradate", DateTime.Now.ToString());            //首次加标日期时间
             string ExtraDate = CommonManager.WebObj.RequestForm("extradate", "");            //自定义加标日期列表
@@ -121,6 +122,7 @@ namespace GetMoney.Controllers.Order
             if (dto.MeetType == 1 || dto.MeetType == 2) {
                 dto.MeetNum = 1;
             }
+            dto.Address = Address;
             dto.FirstDate = Convert.ToDateTime(FirstDate);
             if (!string.IsNullOrEmpty(FirstExtraDate))
             {
