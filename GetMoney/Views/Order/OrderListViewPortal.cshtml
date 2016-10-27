@@ -250,9 +250,11 @@
                         </div>
                         <div class="panel-footer">
                             <span class="help-block">
-                                备注：1.本会从 <span style="color:red">@Model.FirstDate.ToLongDateString()</span> 起至 <span style="color:red">@Convert.ToDateTime(Model.List[i - 2].MeetDate).ToLongDateString()</span> 止,共有会员 <span style="color:red">@Model.PeoperNum</span> 名,每名会员每月会费(会款) <span style="color:red">@Model.PeoperMoney</span> 元,总会费(会款)金额为 <span style="color:red">@Model.AllPeoperMoney</span> 元整.请会员在每月标会前将会款交清,不得拖欠.
+                                <span style="color: red; font-weight: bold;">说明</span>：1.本会从 <span style="color:red">@Model.FirstDate.ToLongDateString()</span> 起至 <span style="color:red">@Convert.ToDateTime(Model.List[i - 2].MeetDate).ToLongDateString()</span> 止,共有会员 <span style="color:red">@Model.PeoperNum</span> 名,每名会员每月会费(会款) <span style="color:red">@Model.PeoperMoney</span> 元,总会费(会款)金额为 <span style="color:red">@Model.AllPeoperMoney</span> 元整.请会员在每月标会前将会款交清,不得拖欠.
                                 2.本会以 <span style="color:red">@Model.MoneySendType</span> 的形式举行,最低标息为 <span style="color:red">@Model.LowestMoney</span> 元,会头为 <span style="color:red">@Model.TouTrueName</span> 电话为 <span style="color:red">@Model.Phone</span>
-                                3.本会标会地址为 <span style="color:red">@Model.Address</span>,正常标会时间为每月<span style="color:red">@Model.FirstDate.ToString("dd")</span>日<span style="color:red">@Model.FirstDate.ToString("HH:mm:ss")</span>开始标会,迟到者按弃权论.
+                                3.本会标会地址为 <span style="color:red">@Model.Address</span>,正常标会时间为每月<span style="color:red"> @Model.FirstDate.ToString("dd") </span>日<span style="color:red"> @Model.FirstDate.ToString("HH:mm:ss") </span>开始标会,迟到者按弃权论.
+                                @if (Model.MeetType == 2 || Model.MeetType == 3){ <span>4.加标标会时间为每月<span style="color:red"> @Model.FirstExtraDate.ToString("dd") </span>日<span style="color:red"> @Model.FirstExtraDate.ToString("HH:mm:ss") </span>开始标会,迟到者按弃权论.</span> }
+                                备注：@Model.Remark
                             </span>
                         </div>
                     </div>
