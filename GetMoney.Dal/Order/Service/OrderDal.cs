@@ -27,7 +27,7 @@ namespace GetMoney.Dal
             parameter[0].Value = OrderID;
             return dal.ExtSql(sql, parameter);
         }
-        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int LowestMoney, int TouUserid, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, DateTime FirstExtraDate, string ExtraDate, string Remark, out Dictionary<string, object> list)
+        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int LowestMoney, int TouUserid, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, DateTime FirstExtraDate, string ExtraDate,string Address, string Remark, out Dictionary<string, object> list)
         {
             string ProName = "SP_AddNewOrder";
             SqlParameter[] parameter = new[]
@@ -44,6 +44,7 @@ namespace GetMoney.Dal
                 new SqlParameter("@FirstDate",SqlDbType.DateTime),
                 new SqlParameter("@FirstExtraDate",SqlDbType.DateTime),
                 new SqlParameter("@ExtraDate",SqlDbType.NVarChar,1000),
+                new SqlParameter("@Address",SqlDbType.NVarChar,250),
                 new SqlParameter("@Remark",SqlDbType.NVarChar,1000),
                 new SqlParameter("@ReturnValue",SqlDbType.Int)
             };
@@ -59,8 +60,9 @@ namespace GetMoney.Dal
             parameter[9].Value = FirstDate;
             parameter[10].Value = FirstExtraDate;
             parameter[11].Value = ExtraDate;
-            parameter[12].Value = Remark;
-            parameter[13].Direction = ParameterDirection.ReturnValue;
+            parameter[12].Value = Address;
+            parameter[13].Value = Remark;
+            parameter[14].Direction = ParameterDirection.ReturnValue;
             string[] str = new string[] { "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }

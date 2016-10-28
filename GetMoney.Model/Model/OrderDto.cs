@@ -75,6 +75,10 @@ namespace GetMoney.Model
         public int MeetNum { get; set; }
         //录入时间
         public DateTime InputDate { get; set; }
+        /// <summary>
+        /// 标会地址
+        /// </summary>
+        public string Address { get; set; }
         //当前会的状态(1活会,2死会,3险会)
         public int State { get; set; }
         //备注

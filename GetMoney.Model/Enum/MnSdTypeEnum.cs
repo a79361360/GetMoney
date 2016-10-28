@@ -7,7 +7,7 @@ namespace GetMoney.Model
 {
     public enum MnSdTypeEnum
     {
-        全额发放 = 1,
-        减息后发放 = 2
+        会款总额加利息 = 1,
+        会款总额减利息 = 2
     }
 }
