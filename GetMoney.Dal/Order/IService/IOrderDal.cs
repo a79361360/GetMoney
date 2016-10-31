@@ -10,7 +10,7 @@ namespace GetMoney.Dal
     {
         DataTable ListOrderPage(ref int Total, SqlPageParam Param);
         DataTable GetOrderByOrderID(string OrderID);
-        void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int LowestMoney, int TouUserid, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, DateTime FirstExtraDate, string ExtraDate, string Address, string Remark, out Dictionary<string, object> list);
+        void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int LowestMoney, int TouUserid, int MoneySendType, int MeetType, int MeetNum, int Meetextnum, DateTime FirstDate, DateTime FirstExtraDate, string ExtraDate, string Address, string Remark, out Dictionary<string, object> list);
         DataTable OrderLists(string No);
         DataTable OrderListUser(string OrderListID);
         DataTable UpdateOrderListState(string OrderNo, string OrderListID);
@@ -24,5 +24,11 @@ namespace GetMoney.Dal
         /// <param name="OrderListID">互助单记录号</param>
         /// <returns></returns>
         int VerUserUpdateMoney(int Userid, string OrderNo, string OrderListID);
+        /// <summary>
+        /// 删除订单
+        /// </summary>
+        /// <param name="OrderNo"></param>
+        /// <returns></returns>
+        int DelOrder(string OrderNo);
     }
 }

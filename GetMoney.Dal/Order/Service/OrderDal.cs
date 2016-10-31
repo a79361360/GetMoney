@@ -19,7 +19,7 @@ namespace GetMoney.Dal
             return dt;
         }
         public DataTable GetOrderByOrderID(string OrderID) {
-            string sql = "select a.[id],a.[OrderNo],a.[PeoperNum],a.[PeoperMoney],a.[MoneySendType],a.[MeetType],a.[MeetNum],a.[FirstDate],a.[InputDate],a.[State],a.[Remark],a.[LowestMoney],a.[TouUserid],a.[FirstExtraDate],a.[ExtraDate],b.TrueName TouTrueName,b.Phone from Orders a inner join TUsers b on a.TouUserid=b.id Where a.OrderNo=@No";
+            string sql = "select a.[id],a.[OrderNo],a.[PeoperNum],a.[PeoperMoney],a.[MoneySendType],a.[MeetType],a.[MeetNum],a.[FirstDate],a.[InputDate],a.[Address],a.[State],a.[Remark],a.[LowestMoney],a.[TouUserid],a.[FirstExtraDate],a.[ExtraDate],b.TrueName TouTrueName,b.Phone from Orders a inner join TUsers b on a.TouUserid=b.id Where a.OrderNo=@No";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@No",SqlDbType.NVarChar,50)
@@ -27,7 +27,7 @@ namespace GetMoney.Dal
             parameter[0].Value = OrderID;
             return dal.ExtSql(sql, parameter);
         }
-        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int LowestMoney, int TouUserid, int MoneySendType, int MeetType, int MeetNum, DateTime FirstDate, DateTime FirstExtraDate, string ExtraDate,string Address, string Remark, out Dictionary<string, object> list)
+        public void CreateOrder(string OrderNo, int PeoperNum, string UserIds, int PeoperMoney, int LowestMoney, int TouUserid, int MoneySendType, int MeetType, int MeetNum, int Meetextnum, DateTime FirstDate, DateTime FirstExtraDate, string ExtraDate,string Address, string Remark, out Dictionary<string, object> list)
         {
             string ProName = "SP_AddNewOrder";
             SqlParameter[] parameter = new[]
@@ -41,6 +41,7 @@ namespace GetMoney.Dal
                 new SqlParameter("@MoneySendType",SqlDbType.Int),
                 new SqlParameter("@MeetType",SqlDbType.Int),
                 new SqlParameter("@MeetNum",SqlDbType.Int),
+                new SqlParameter("@MeetExtNum",SqlDbType.Int),
                 new SqlParameter("@FirstDate",SqlDbType.DateTime),
                 new SqlParameter("@FirstExtraDate",SqlDbType.DateTime),
                 new SqlParameter("@ExtraDate",SqlDbType.NVarChar,1000),
@@ -57,12 +58,13 @@ namespace GetMoney.Dal
             parameter[6].Value = MoneySendType;
             parameter[7].Value = MeetType;
             parameter[8].Value = MeetNum;
-            parameter[9].Value = FirstDate;
-            parameter[10].Value = FirstExtraDate;
-            parameter[11].Value = ExtraDate;
-            parameter[12].Value = Address;
-            parameter[13].Value = Remark;
-            parameter[14].Direction = ParameterDirection.ReturnValue;
+            parameter[9].Value = Meetextnum;
+            parameter[10].Value = FirstDate;
+            parameter[11].Value = FirstExtraDate;
+            parameter[12].Value = ExtraDate;
+            parameter[13].Value = Address;
+            parameter[14].Value = Remark;
+            parameter[15].Direction = ParameterDirection.ReturnValue;
             string[] str = new string[] { "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }
@@ -158,6 +160,23 @@ namespace GetMoney.Dal
             parameter[1].Value = OrderNo;
             parameter[2].Value = OrderListID;
             return dal.ExtSql(sql, parameter);
+        }
+        public int DelOrder(string OrderNo) {
+            string sql = "SP_PicthOrderList";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@CZType",SqlDbType.Int),
+                new SqlParameter("@OrderID",SqlDbType.VarChar,50)
+            };
+            parameter[0].Value = 5;
+            parameter[1].Value = OrderNo;
+            DataTable dt = dal.ExtProc(sql, parameter);
+            int result = -1;
+            if (dt.Rows.Count > 0)
+            {
+                result = Convert.ToInt32(dt.Rows[0]["result"]);
+            }
+            return result;
         }
     }
 }

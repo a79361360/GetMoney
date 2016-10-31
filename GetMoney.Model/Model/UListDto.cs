@@ -8,5 +8,6 @@ namespace GetMoney.Model
     public class UListDto
     {
         public int id { get; set; }
+        public string orderno { get; set; }
     }
 }

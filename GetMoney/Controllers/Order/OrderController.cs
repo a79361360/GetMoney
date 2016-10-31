@@ -102,7 +102,8 @@ namespace GetMoney.Controllers.Order
             string Remark = Request.Form["remark"];                 //备注
             string MoneySendType = Request.Form["moneystype"];      //会费发放方式
             string MeetType = Request.Form["meettype"];             //标会类型
-            string MeetNum = Request.Form["meetnum"];               //每月标会次数
+            string MeetNum = Request.Form["meetnum"];               //每N月标会次数
+            string Meetextnum = Request.Form["meetextnum"];         //每N月加标次数
             string Address = Request.Form["address"];               //标会地址
             string FirstDate = Request.Form["firstdate"];           //首次标会日期
             string FirstExtraDate = CommonManager.WebObj.RequestForm("firstextradate", DateTime.Now.ToString());            //首次加标日期时间
@@ -119,9 +120,10 @@ namespace GetMoney.Controllers.Order
             dto.MoneySendType = (MnSdTypeEnum)Convert.ToInt32(MoneySendType);
             dto.MeetType = Convert.ToInt32(MeetType);
             dto.MeetNum = Convert.ToInt32(MeetNum);
-            if (dto.MeetType == 1 || dto.MeetType == 2) {
-                dto.MeetNum = 1;
-            }
+            dto.Meetextnum = Convert.ToInt32(Meetextnum);
+            //if (dto.MeetType == 1 || dto.MeetType == 2) {
+            //    dto.MeetNum = 1;
+            //}
             dto.Address = Address;
             dto.FirstDate = Convert.ToDateTime(FirstDate);
             if (!string.IsNullOrEmpty(FirstExtraDate))
@@ -241,6 +243,32 @@ namespace GetMoney.Controllers.Order
             }
             else {
                 return JsonFormat(new ExtJson { success = false, code = -1001, msg = "验证权限失败！" });
+            }
+        }
+        public ActionResult RemoveOrder() {
+            string OrderNo = CommonManager.WebObj.Request("orderno", "");
+            string OrderNos = CommonManager.WebObj.Request("ordernos", "");
+            int result = -1;
+            if (!string.IsNullOrEmpty(OrderNo)) {
+                result = _bll.DelOrder(OrderNo);
+            }
+            if (!string.IsNullOrEmpty(OrderNos))
+            {
+                IList<UListDto> list = SerializeJson<UListDto>.JSONStringToList(OrderNos);    //会员列表
+                result = 0;
+                foreach (var item in list) {
+                    int temp = _bll.DelOrder(item.orderno);
+                    if (temp == 1) {
+                        result = result + temp;
+                    }
+                }
+            }
+            if (result > 0)
+            {
+                return JsonFormat(new ExtJson { success = true, msg = "删除成功！" });
+            }
+            else {
+                return JsonFormat(new ExtJson { success = false, msg = "删除失败！" });
             }
         }
     }

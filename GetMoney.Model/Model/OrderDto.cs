@@ -70,9 +70,13 @@ namespace GetMoney.Model
         /// </summary>
         public DateTime FirstDate { get; set; }
         /// <summary>
-        /// 指定每个月标会次数(暂定最多5次)
+        /// 每N月标会一次
         /// </summary>
         public int MeetNum { get; set; }
+        /// <summary>
+        /// 每N月加标一次
+        /// </summary>
+        public int Meetextnum { get; set; }
         //录入时间
         public DateTime InputDate { get; set; }
         /// <summary>

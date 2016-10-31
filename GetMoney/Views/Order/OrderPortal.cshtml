@@ -26,10 +26,11 @@
             $("#orderbtn").click(function () {
                 var moneystype = $("#moneysendtype").val(); //会款发放方式
                 var meettype = $("#meettype").val();        //标会类型
-                var meetnum = $("#meetnum").val();          //每月标会次数
+                var meetnum = $("#meetnum").val();          //每N月标会次数
+                var meetextnum = $("#meetextnum").val();          //每N月标会次数
                 var peomoney = $("#peomoney").val();        //会费金额
                 var lowestmoney = $("#lowestmoney").val();  //最低标会金额
-                var remark = $("#Remark").val();            //备注
+                var remark = $("#remark").val();            //备注
                 var firstdate = $("#firstdate").val();      //首次标会日期
                 var firstextradate = $("#firstextradate").val(); //首次加标日期
                 var peonum = $("#peopernum").val();         //标会人数
@@ -39,6 +40,7 @@
                     moneystype: moneystype,
                     meettype: meettype,
                     meetnum: meetnum,
+                    meetextnum:meetextnum,
                     peomoney: peomoney,
                     lowestmoney: lowestmoney,
                     address:address,
@@ -129,10 +131,23 @@
                 <label class="col-sm-2 control-label">标会类型</label>
                 <div class="col-sm-10">
                     <select class="form-control" id="meettype">
-                        <option value="1">约定标会日期</option>
+                        <option value="1">每N月标会一次</option>
                         <option value="2">每月都加标</option>
                         <option value="3">每N月加标一次</option>
                         <option value="4">自定义加标</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">标会频率</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="meetnum">
+                        <option value="1">1个月</option>
+                        <option value="2">2个月</option>
+                        <option value="3">3个月</option>
+                        <option value="4">4个月</option>
+                        <option value="5">5个月</option>
+                        <option value="6">6个月</option>
                     </select>
                 </div>
             </div>
@@ -151,12 +166,20 @@
             <div class="form-group" id="tr_fre" style="display:none">
                 <label class="col-sm-2 control-label">加标频率</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="meetnum">
+                    <select class="form-control" id="meetextnum">
                         <option value="1">每隔1个月加标一次</option>
                         <option value="2">每隔2个月加标一次</option>
                         <option value="3">每隔3个月加标一次</option>
                         <option value="4">每隔4个月加标一次</option>
                         <option value="5">每隔5个月加标一次</option>
+                        <option value="6">每隔6个月加标一次</option>
+                        <option value="7">每隔7个月加标一次</option>
+                        <option value="8">每隔8个月加标一次</option>
+                        <option value="9">每隔9个月加标一次</option>
+                        <option value="10">每隔10个月加标一次</option>
+                        <option value="11">每隔11个月加标一次</option>
+                        <option value="12">每隔12个月加标一次</option>
+
                     </select>
                 </div>
             </div>

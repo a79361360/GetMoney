@@ -130,7 +130,7 @@ namespace GetMoney.Application
             dto.OrderNo = DateTime.Now.ToString("yyyyMMddHHmmssfffffff");    //互助单号
             Dictionary<string, object> dic;
             int result = 0;
-            _dal.CreateOrder(dto.OrderNo, dto.PeoperNum, dto.PeoperIds, dto.PeoperMoney, dto.LowestMoney, dto.TouUserid, (int)dto.MoneySendType, dto.MeetType, dto.MeetNum, dto.FirstDate, dto.FirstExtraDate, dto.ExtraDate,dto.Address, dto.Remark, out dic);
+            _dal.CreateOrder(dto.OrderNo, dto.PeoperNum, dto.PeoperIds, dto.PeoperMoney, dto.LowestMoney, dto.TouUserid, (int)dto.MoneySendType, dto.MeetType, dto.MeetNum, dto.Meetextnum, dto.FirstDate, dto.FirstExtraDate, dto.ExtraDate,dto.Address, dto.Remark, out dic);
             if (Convert.ToInt32(dic["@ReturnValue"]) == 1)
             {
                 result = 1;
@@ -179,6 +179,10 @@ namespace GetMoney.Application
         }
         public int VerUserUpdateMoney(int Userid, string OrderNo, string OrderListID) {
             int result = _dal.VerUserUpdateMoney(Userid, OrderNo, OrderListID);
+            return result;
+        }
+        public int DelOrder(string OrderNo) {
+            int result = _dal.DelOrder(OrderNo);
             return result;
         }
     }

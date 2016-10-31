@@ -43,5 +43,11 @@ namespace GetMoney.Application
         /// <param name="OrderListID"></param>
         /// <returns></returns>
         int VerUserUpdateMoney(int Userid, string OrderNo, string OrderListID);
+        /// <summary>
+        /// 删除Order单
+        /// </summary>
+        /// <param name="OrderNo"></param>
+        /// <returns></returns>
+        int DelOrder(string OrderNo);
     }
 }
