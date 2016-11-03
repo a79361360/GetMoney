@@ -271,5 +271,9 @@ namespace GetMoney.Controllers.Order
                 return JsonFormat(new ExtJson { success = false, msg = "删除失败！" });
             }
         }
+
+        public ActionResult OrderPayMentPortal() {
+            return View();
+        }
     }
 }
