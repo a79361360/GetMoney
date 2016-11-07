@@ -36,5 +36,26 @@ namespace GetMoney.Model
         /// 最后修改标金的时间
         /// </summary>
         public string Lastdate { get; set; }
+        /// <summary>
+        /// 待支付会费金额
+        /// </summary>
+        public int StayPayNum { get; set; }
+        /// <summary>
+        /// 待支付标息金额
+        /// </summary>
+        public int StayPayTax { get; set; }
+        /// <summary>
+        /// 实际用户支付金额
+        /// </summary>
+        public int RealPayNum { get; set; }
+        /// <summary>
+        /// 实现支付时间
+        /// </summary>
+        public DateTime PayDate { get; set; }
+        /// <summary>
+        /// 支付状态0为未付,1为已付,2未全付
+        /// </summary>
+        public int PayState { get; set; }
+        
     }
 }
