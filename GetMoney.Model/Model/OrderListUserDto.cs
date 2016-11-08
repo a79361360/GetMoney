@@ -51,7 +51,7 @@ namespace GetMoney.Model
         /// <summary>
         /// 实现支付时间
         /// </summary>
-        public DateTime PayDate { get; set; }
+        public string PayDate { get; set; }
         /// <summary>
         /// 支付状态0为未付,1为已付,2未全付
         /// </summary>
