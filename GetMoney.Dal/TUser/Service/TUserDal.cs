@@ -85,7 +85,7 @@ namespace GetMoney.Dal
         /// <param name="UserName">用户账号</param>
         /// <param name="UserPwd">用户密码</param>
         /// <returns>存在true不存在false</returns>
-        public bool VerifyUserByUnamePwd(string UserName,string UserPwd) {
+        public int VerifyUserByUnamePwd(string UserName,string UserPwd) {
             string sql = "select id from TUsers where UserName=@username and UserPwd=@userpwd";
             SqlParameter[] parameter = new[]
             {
@@ -96,9 +96,9 @@ namespace GetMoney.Dal
             parameter[1].Value = UserPwd;
             DataTable dt = dal.ExtSql(sql, parameter);
             if (dt.Rows.Count > 0) {
-                return true;
+                return Convert.ToInt32(dt.Rows[0]["id"]);
             }
-            return false;
+            return -1;
         }
 
 

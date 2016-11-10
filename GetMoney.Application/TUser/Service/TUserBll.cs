@@ -157,8 +157,8 @@ namespace GetMoney.Application
             }
             return result;
         }
-        public bool VerifyTUsers(TUserDto dto) {
-            bool result = _dal.VerifyUserByUnamePwd(dto.UserName, dto.UserPwd);
+        public int VerifyTUsers(TUserDto dto) {
+            int result = _dal.VerifyUserByUnamePwd(dto.UserName, dto.UserPwd);
             return result;
         }
     }

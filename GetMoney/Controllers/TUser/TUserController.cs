@@ -263,5 +263,19 @@ namespace GetMoney.Controllers.TUser
                 return JsonFormat(new ExtJson { success = false, msg = "登入失败" });
             }
         }
+        public ActionResult TestLogin() {
+            string UserName = CommonManager.WebObj.RequestForm("username", "");
+            string Pwd = CommonManager.WebObj.RequestForm("userpwd", "");
+            if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(Pwd)) {
+                return JsonFormat(new ExtJson { success = false, msg = "账户和密码不能为空" });
+            }
+            TUserDto dto = new TUserDto();
+            dto.UserName = UserName; dto.UserPwd = Pwd;
+            int userid = _bll.VerifyTUsers(dto);
+            if (userid != -1) {
+                return JsonFormat(new ExtJson { success = true, msg = "登入成功" });
+            }
+            return JsonFormat(new ExtJson { success = false, msg = "登入失败" });
+        }
     }
 }
