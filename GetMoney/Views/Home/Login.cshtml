@@ -26,13 +26,19 @@
 <script type="text/javascript">
     $('#loginForm').form({
         url: 'TUser/TestLogin',
+        dataType: 'json',
         onSubmit: function () {
-            window.location.href = "/Order/Index";
+            //window.location.href = "/Order/Index";
             //进行表单验证 
             //如果返回false阻止提交  
         },
-        success: function (data) {
-            //alert(data)
+        success: function (ret) {
+            var data = JSON.parse(ret); //转换成JSON格式
+            if (data.success) {
+                window.location.href = "/Order/Index";
+            } else {
+                $.messager.alert('Warning', '用户名或密码错误，登录失败！');
+            }
         }
     });
     
