@@ -275,5 +275,25 @@ namespace GetMoney.Common
             else
                 page.ClientScript.RegisterClientScriptBlock(page.GetType(), new Random().Next(1000, 9999).ToString(), "<script type=\"text/javascript\" language=\"javascript\">" + js + "</script>");
         }
+
+        //添加cookie
+        public void AddCookie(string name, string value, int? timeout) {
+            HttpCookie cookie = new HttpCookie(name);
+            if (cookie == null)
+            {
+                cookie.Expires = DateTime.Now.AddMinutes(timeout == null || timeout.Value <= 0 ? 20 : timeout.Value);
+                cookie.Value = value;
+                HttpContext.Current.Response.Cookies.Add(cookie);
+            }
+            else {
+                UpdateCookie(name, value, timeout);
+            }
+        }
+        public void UpdateCookie(string name, string value, int? timeout)
+        {
+            HttpCookie cookie = new HttpCookie(name);
+            cookie.Expires = DateTime.Now.AddMinutes(timeout == null || timeout.Value <= 0 ? 20 : timeout.Value);
+            cookie.Value = value;
+        }
     }
 }

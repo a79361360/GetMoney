@@ -274,6 +274,9 @@ namespace GetMoney.Controllers.TUser
             int userid = _bll.VerifyTUsers(dto);
             if (userid != -1) {
                 Session["uid"] = userid;
+                //添加cookie,30天
+                CommonManager.WebObj.AddCookie("user", UserName, 60 * 24 * 30);
+                CommonManager.WebObj.AddCookie("pwd", Pwd, 60 * 24 * 30);
                 return JsonFormat(new ExtJson { success = true, msg = "登入成功" });
             }
             return JsonFormat(new ExtJson { success = false, msg = "登入失败" });
