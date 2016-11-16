@@ -275,5 +275,8 @@ namespace GetMoney.Controllers.Order
         public ActionResult OrderPayMentPortal() {
             return View();
         }
+        public ActionResult PIndex() {
+            return View();
+        }
     }
 }
