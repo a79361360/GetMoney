@@ -272,6 +272,8 @@ namespace GetMoney.Controllers.TUser
             TUserDto dto = new TUserDto();
             dto.UserName = UserName; dto.UserPwd = Pwd.MD5();
             int userid = _bll.VerifyTUsers(dto);
+            //CommonManager.WebObj.AddCookie("user", UserName, 1);
+            //CommonManager.WebObj.AddCookie("pwd", Pwd, 1);
             if (userid != -1) {
                 Session["uid"] = userid;
                 //添加cookie,30天

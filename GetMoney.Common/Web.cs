@@ -294,6 +294,10 @@ namespace GetMoney.Common
             HttpCookie cookie = new HttpCookie(name);
             cookie.Expires = DateTime.Now.AddMinutes(timeout == null || timeout.Value <= 0 ? 20 : timeout.Value);
             cookie.Value = value;
+            HttpContext.Current.Response.Cookies.Add(cookie);
+        }
+        public void RemoveCookie(string name) {
+            HttpContext.Current.Response.Cookies.Remove(name);
         }
     }
 }
