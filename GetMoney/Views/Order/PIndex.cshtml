@@ -11,6 +11,38 @@
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script type="text/javascript" src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    <script type="text/javascript">
+        $(function () {
+            findorder();
+        })
+        findorder = function () {
+            var pageIndex = 0;
+            var pageSize = 10;
+            $.ajax({
+                type: "GET",
+                url: '/Order/ListOrderPage',
+                data: { pageIndex: pageIndex, pageSize: pageSize },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data.list[0]);
+                    //var str = "<table class=\"table table-bordered table-hover\" id=\"jl" + No + "\"><thead><tr><th style=\"width:61px;\">记录ID</th><th style=\"width:160px;\">标会日期时间</th><th style=\"width:80px;\">得标人</th><th style=\"width:80px;\">标息</th><th style=\"width:80px;\">记录状态</th><th>操作</th></tr></thead>";
+                    //var objdata = data.jsonresult;
+                    //if (data.success) {
+                    //    $.each(objdata, function (i, o) {
+                    //        var czstr = "";
+                    //        if (o.State == "1") { czstr = "<button class=\"btn btn-primary btn-sm\" onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">查看明细</butoon>"; }
+                    //        if (o.State == "2") { czstr = "<button class=\"btn btn-primary btn-sm\" onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">填写标金</butoon>"; }
+                    //        str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + GetNullEmpty(o.TrueName) + "</td><td>" + o.AccrualMoney + "</td><td>" + GetStateL(o.State) + "</td><td>" + czstr + "</td></tr>";//<button class=\"btn btn-primary btn-sm\" onclick=\"UpdateOrderListState('" + No + "'," + o.ID + "," + o.State + ")\">更新结果</butoon>
+                    //    })
+                    //    str += "</table>";
+                    //    //$(e).parent().parent().after(str);
+                    //    //listtips = ds.dialog({ title: '会单记录', content: str, timeout: 0 });
+                    //    qiu_confirm("qin_orderlist", "会单记录列表", str, 700, 700);
+                    //}
+                }
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container" style="padding:0">
