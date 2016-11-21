@@ -107,9 +107,9 @@ namespace GetMoney.Application
         public IList<OrderDto> ListOrderPage(ref int Total, int pageSize, int pageIndex, string filter)
         {
             SqlPageParam param = new SqlPageParam();
-            param.TableName = "Orders";
+            param.TableName = "View_OrderUser";
             param.PrimaryKey = "id";
-            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,InputDate,Remark,MoneySendType,MeetType,MeetNum,LowestMoney,FirstExtraDate,ExtraDate,State";
+            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,MoneySendType,MeetType,MeetNum,FirstDate,InputDate,State,Remark,LowestMoney,TouUserid,TouTrueName,FirstExtraDate,ExtraDate,Address,MeetExtNum";
             param.PageSize = pageSize;
             param.PageIndex = pageIndex;
             param.Filter = filter;

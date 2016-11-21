@@ -24,23 +24,24 @@
                 data: { pageIndex: pageIndex, pageSize: pageSize },
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data.list[0]);
-                    //var str = "<table class=\"table table-bordered table-hover\" id=\"jl" + No + "\"><thead><tr><th style=\"width:61px;\">记录ID</th><th style=\"width:160px;\">标会日期时间</th><th style=\"width:80px;\">得标人</th><th style=\"width:80px;\">标息</th><th style=\"width:80px;\">记录状态</th><th>操作</th></tr></thead>";
-                    //var objdata = data.jsonresult;
-                    //if (data.success) {
-                    //    $.each(objdata, function (i, o) {
-                    //        var czstr = "";
-                    //        if (o.State == "1") { czstr = "<button class=\"btn btn-primary btn-sm\" onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">查看明细</butoon>"; }
-                    //        if (o.State == "2") { czstr = "<button class=\"btn btn-primary btn-sm\" onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">填写标金</butoon>"; }
-                    //        str += "<tr><td>" + o.ID + "</td><td>" + o.MeetDate + "</td><td>" + GetNullEmpty(o.TrueName) + "</td><td>" + o.AccrualMoney + "</td><td>" + GetStateL(o.State) + "</td><td>" + czstr + "</td></tr>";//<button class=\"btn btn-primary btn-sm\" onclick=\"UpdateOrderListState('" + No + "'," + o.ID + "," + o.State + ")\">更新结果</butoon>
-                    //    })
-                    //    str += "</table>";
-                    //    //$(e).parent().parent().after(str);
+                    var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th>标会时间</th><th>金额</th><th>总金额</th><th>会头</th></tr></thead>";
+                    var objdata = data.list;
+                    console.log(objdata)
+                    if (data.success) {
+                        $.each(objdata, function (i, o) {
+                            console.log(o)
+                            str += "<tr><td>" + o.FirstDate + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.TouTrueName + "</td></tr>";
+                        })
+                        str += "</table>";
+                        $("#home").html(str);
                     //    //listtips = ds.dialog({ title: '会单记录', content: str, timeout: 0 });
                     //    qiu_confirm("qin_orderlist", "会单记录列表", str, 700, 700);
-                    //}
+                    }
                 }
             });
+        }
+        newwindow = function (url) {
+            window.location.href = url;
         }
     </script>
 </head>
@@ -49,10 +50,11 @@
         <div class="panel panel-primary">
             <div class="panel-heading" style="overflow:auto">
                 <img onclick="window.history.back()" style="height:34px;width:34px;float:left" src="~/Content/Icon/CommonIcon/1186174.png" class="img-rounded">
-                <button class="btn btn-default" style="float:right" type="button">
+                <button class="btn btn-default" style="float:right;display:block;margin-left:10px" type="button">
                     <i class="glyphicon glyphicon-align-justify"></i>
-                    全
                 </button>
+                <img onclick="newwindow('/Order/OrderPortal')" style="height:34px;width:34px;float:right;margin-left:10px" src="~/Content/Icon/CommonIcon/1183388.png" class="img-rounded">
+                <img onclick="newwindow('/TUser/index')" style="height:34px;width:34px;float:right;margin-left:10px" src="~/Content/Icon/CommonIcon/1200704.png" class="img-rounded">
             </div>
             <div class="panel-body">
                 <ul id="myTab" class="nav nav-tabs">
