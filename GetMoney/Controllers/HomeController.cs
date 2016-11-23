@@ -42,5 +42,8 @@ namespace GetMoney.Controllers
         {
             return View();
         }
+        public ActionResult UserErr() {
+            return View();
+        }
     }
 }

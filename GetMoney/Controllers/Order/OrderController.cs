@@ -1,6 +1,7 @@
 ﻿using GetMoney.Application;
 using GetMoney.Common;
 using GetMoney.Common.SerializeObject;
+using GetMoney.Filters;
 using GetMoney.Framework;
 using GetMoney.Model;
 using System;
@@ -75,6 +76,27 @@ namespace GetMoney.Controllers.Order
             {
                 filter = type + " like '%" + text + "%'";
             }
+            int Total = 0;
+            IList<OrderDto> list = _bll.ListOrderPage(ref Total, pageSize, pageIndex, filter);
+            if (list.Count > 0)
+                return JsonFormat(new ExtJsonPage { success = true, code = 1000, msg = "查询成功！", total = Total, list = list });
+            else
+                return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
+        }
+        /// <summary>
+        /// 取得我的正在进行中/已经结束的会单信息
+        /// </summary>
+        /// <returns></returns>
+        [LoginFilter]
+        public ActionResult MyListOrderPage() {
+            int pageIndex = Convert.ToInt32(Request["pageIndex"]);  //页
+            int pageSize = Convert.ToInt32(Request["pageSize"]);    //每页条数
+            string type = CommonManager.WebObj.Request("type", ""); //1为正在进行中,2为已经结束的
+            int uid = Convert.ToInt32(Session["uid"]);              //登入的用户ID
+            string filter = "";
+            if (type == "1") filter = "State!=4 AND " + uid + " IN(SELECT DISTINCT Userid FROM dbo.Order_ListUsers WHERE OrderNo=dbo.Orders.OrderNo)";
+            else if (type == "2") filter = "State=4 AND " + uid + " IN(SELECT DISTINCT Userid FROM dbo.Order_ListUsers WHERE OrderNo=dbo.Orders.OrderNo)";
+
             int Total = 0;
             IList<OrderDto> list = _bll.ListOrderPage(ref Total, pageSize, pageIndex, filter);
             if (list.Count > 0)
@@ -245,6 +267,10 @@ namespace GetMoney.Controllers.Order
                 return JsonFormat(new ExtJson { success = false, code = -1001, msg = "验证权限失败！" });
             }
         }
+        /// <summary>
+        /// 移除会单
+        /// </summary>
+        /// <returns></returns>
         public ActionResult RemoveOrder() {
             string OrderNo = CommonManager.WebObj.Request("orderno", "");
             string OrderNos = CommonManager.WebObj.Request("ordernos", "");
@@ -271,10 +297,17 @@ namespace GetMoney.Controllers.Order
                 return JsonFormat(new ExtJson { success = false, msg = "删除失败！" });
             }
         }
-
+        /// <summary>
+        /// 会单记录的会钱缴付情况
+        /// </summary>
+        /// <returns></returns>
         public ActionResult OrderPayMentPortal() {
             return View();
         }
+        /// <summary>
+        /// 手机会单主页
+        /// </summary>
+        /// <returns></returns>
         public ActionResult PIndex() {
             return View();
         }

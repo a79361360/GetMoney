@@ -2,6 +2,7 @@
 using GetMoney.Common;
 using GetMoney.Common.Expand;
 using GetMoney.Common.SerializeObject;
+using GetMoney.Filters;
 using GetMoney.Framework;
 using GetMoney.Model;
 using System;
@@ -181,6 +182,26 @@ namespace GetMoney.Controllers.TUser
             {
                 filter = type + " like '%" + text + "%'";
             }
+            int Total = 0;
+            IList<TUserDto> list = _bll.ListTUserPage(ref Total, pageSize, pageIndex, filter);
+            if (list.Count > 0)
+                return JsonFormat(new ExtJsonPage { success = true, code = 1000, msg = "查询成功！", total = Total, list = list });
+            else
+                return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [LoginFilter]
+        public ActionResult MyListUserPage() {
+            int pageIndex = Convert.ToInt32(Request["pageIndex"]);
+            int pageSize = Convert.ToInt32(Request["pageSize"]);
+            string type = CommonManager.WebObj.Request("type", "");
+            int uid = Convert.ToInt32(Session["uid"]);              //登入的用户ID
+            string filter = "";
+            if (type == "1") filter = "Userid=" + uid + " AND State=1";
+            else if (type == "1") filter = "Userid=" + uid + " AND State=2";
             int Total = 0;
             IList<TUserDto> list = _bll.ListTUserPage(ref Total, pageSize, pageIndex, filter);
             if (list.Count > 0)
