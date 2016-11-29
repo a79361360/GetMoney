@@ -193,9 +193,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Card\CardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Mobile\MobileController.cs" />
     <Compile Include="Controllers\OnlyNameTest\OnlyNameTestController.cs" />
     <Compile Include="Controllers\Order\OrderController.cs" />
+    <Compile Include="Controllers\TUser\TUserController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Filters\LoginFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -934,6 +937,13 @@
     <Content Include="Content\EasyThemes\themes\ui-sunny\tree.css" />
     <Content Include="Content\EasyThemes\themes\ui-sunny\validatebox.css" />
     <Content Include="Content\EasyThemes\themes\ui-sunny\window.css" />
+    <Content Include="Content\Icon\CommonIcon\1183388.png" />
+    <Content Include="Content\Icon\CommonIcon\1186174.png" />
+    <Content Include="Content\Icon\CommonIcon\1200704.png" />
+    <Content Include="Content\Icon\CommonIcon\1200959.png" />
+    <Content Include="Content\Icon\CommonIcon\1204557.png" />
+    <Content Include="Content\Icon\CommonIcon\1204590.png" />
+    <Content Include="Content\Icon\CommonIcon\1204593.png" />
     <Content Include="Content\Icon\IconExtension.css" />
     <Content Include="Content\Icon\IconExtension.html" />
     <Content Include="Content\Icon\IconsExtension\01.png" />
@@ -2712,6 +2722,29 @@
     <Content Include="Content\Icon\IconsExtension\zoom_in.png" />
     <Content Include="Content\Icon\IconsExtension\zoom_out.png" />
     <Content Include="Content\img\tx.png" />
+    <Content Include="Content\My97DatePicker\calendar.js" />
+    <Content Include="Content\My97DatePicker\lang\en.js" />
+    <Content Include="Content\My97DatePicker\lang\zh-cn.js" />
+    <Content Include="Content\My97DatePicker\lang\zh-tw.js" />
+    <Content Include="Content\My97DatePicker\skin\datePicker.gif" />
+    <Content Include="Content\My97DatePicker\skin\default\datepicker.css" />
+    <Content Include="Content\My97DatePicker\skin\default\img.gif" />
+    <Content Include="Content\My97DatePicker\skin\WdatePicker.css" />
+    <Content Include="Content\My97DatePicker\skin\whyGreen\bg.jpg" />
+    <Content Include="Content\My97DatePicker\skin\whyGreen\datepicker.css" />
+    <Content Include="Content\My97DatePicker\skin\whyGreen\img.gif" />
+    <Content Include="Content\My97DatePicker\WdatePicker.js" />
+    <Content Include="Content\My97DatePicker\开发包\lang\en.js" />
+    <Content Include="Content\My97DatePicker\开发包\lang\zh-cn.js" />
+    <Content Include="Content\My97DatePicker\开发包\lang\zh-tw.js" />
+    <Content Include="Content\My97DatePicker\开发包\readme.txt" />
+    <Content Include="Content\My97DatePicker\开发包\skin\datePicker.gif" />
+    <Content Include="Content\My97DatePicker\开发包\skin\default\datepicker.css" />
+    <Content Include="Content\My97DatePicker\开发包\skin\default\img.gif" />
+    <Content Include="Content\My97DatePicker\开发包\skin\WdatePicker.css" />
+    <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
+    <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
+    <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\img.gif" />
     <Content Include="Content\TestPage\jquery-2.1.4.min.js" />
     <Content Include="Content\TestPage\mricode.pagination.css" />
     <Content Include="Content\TestPage\mricode.pagination.js" />
@@ -2773,6 +2806,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\easyloader.js" />
+    <Content Include="Scripts\iscroll.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.easyui.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jscommon.js" />
@@ -2831,19 +2866,28 @@
     <Content Include="Views\Card\Test.cshtml" />
     <Content Include="Views\Card\AddCard.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\TUser\Index.cshtml" />
+    <Content Include="Views\TUser\TUserFriend.cshtml" />
+    <Content Include="Views\TUser\TUserSearch.cshtml" />
+    <Content Include="Views\TUser\Login.cshtml" />
+    <Content Include="Views\TUser\RegTUser.cshtml" />
+    <Content Include="Views\Order\OrderPortal.cshtml" />
+    <Content Include="Views\OnlyNameTest\Index.cshtml" />
+    <Content Include="Views\Mobile\Index.cshtml" />
+    <Content Include="Views\Order\OrderListViewPortal.cshtml" />
+    <Content Include="Views\Order\OrderPayMentPortal.cshtml" />
+    <Content Include="Views\Home\Default.cshtml" />
+    <Content Include="Views\Order\PIndex.cshtml" />
+    <Content Include="Views\OnlyNameTest\TTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Application\GetMoney.Application.csproj">
       <Project>{3503c854-8edd-4f8d-8c5c-14655c771e95}</Project>
       <Name>GetMoney.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GetMoney.Dal\GetMoney.Dal.csproj">
-      <Project>{b68c2fdf-aa00-40c9-bdec-8a9aa7da3e6c}</Project>
-      <Name>GetMoney.Dal</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GetMoney.Data\GetMoney.Data.csproj">
-      <Project>{61bce72c-0e38-4f36-b200-605f92d3f437}</Project>
-      <Name>GetMoney.Data</Name>
+    <ProjectReference Include="..\GetMoney.Common\GetMoney.Common.csproj">
+      <Project>{3b284068-357d-4f66-b070-1f8e5cfbefb2}</Project>
+      <Name>GetMoney.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\GetMoney.Framework\GetMoney.Framework.csproj">
       <Project>{e9150ce1-ac11-4fdb-a51b-944c5ae204c8}</Project>
