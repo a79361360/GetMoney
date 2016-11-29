@@ -31,5 +31,8 @@ namespace GetMoney.Controllers.OnlyNameTest
             //Db.SaveChanges();
 
         }
+        public ActionResult Test() {
+            return View();
+        }
     }
 }
