@@ -18,9 +18,9 @@ namespace GetMoney.Controllers.Nsoup
             return View();
         }
         public void GetImgByUrl() {
-            string url = "https://www.zhihu.com/explore";
+            string url = "http://c2.1024mx.org/pw/thread.php?fid=14&page=2";
             NsoupHandle handle = new NsoupHandle();
-            handle.Test(url);
+            handle.TestT(url);
             
         }
     }
