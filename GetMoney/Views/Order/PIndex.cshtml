@@ -11,103 +11,127 @@
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script type="text/javascript" src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="~/Scripts/iscroll.js"></script>
-    <script>
+    <script src="~/Scripts/iscroll-probe.js"></script>
+    <script type="text/javascript">
 
+        var myScroll;
+        var pullDownEl, pullDownL;
+        var pullUpEl, pullUpL;
+        var Downcount = 0, Upcount = 0;
+        var loadingStep = 0;//加载状态0默认，1显示加载状态，2执行加载数据，只有当为0时才能再次加载，这是防止过快拉动刷新
 
-        var myScroll,
-            pullDownEl, pullDownOffset,
-            pullUpEl, pullUpOffset,
-            generatedCount = 0;
-
-        function pullDownAction() {
-            setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
-                var el, li, i;
-                el = document.getElementById('thelist');
-
-                for (i = 0; i < 3; i++) {
-                    li = document.createElement('li');
-                    li.innerText = 'Generated row ' + (++generatedCount);
-                    el.insertBefore(li, el.childNodes[0]);
-                }
-
-                myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-            }, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
-        }
-
-        function pullUpAction() {
-            setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
-                var el, li, i;
-                el = document.getElementById('thelist');
-
-                for (i = 0; i < 3; i++) {
-                    li = document.createElement('li');
-                    li.innerText = 'Generated row ' + (++generatedCount);
-                    el.appendChild(li, el.childNodes[0]);
-                }
-
-                myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-            }, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
-        }
+        //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+        document.addEventListener('DOMContentLoaded', loaded, false);
 
         function loaded() {
-            pullDownEl = document.getElementById('pullDown');
-            pullDownOffset = pullDownEl.offsetHeight;
-            pullUpEl = document.getElementById('pullUp');
-            pullUpOffset = pullUpEl.offsetHeight;
+            pullDownEl = $('#pullDown');
+            pullDownL = pullDownEl.find('.pullDownLabel');
+            pullDownEl['class'] = pullDownEl.attr('class');
+            pullDownEl.attr('class', '').hide();
 
-            myScroll = new iScroll('wrapper', {
-                useTransition: true,
-                topOffset: pullDownOffset,
-                onRefresh: function () {
-                    if (pullDownEl.className.match('loading')) {
-                        pullDownEl.className = '';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
-                    } else if (pullUpEl.className.match('loading')) {
-                        pullUpEl.className = '';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
-                    }
-                },
-                onScrollMove: function () {
-                    if (this.y > 5 && !pullDownEl.className.match('flip')) {
-                        pullDownEl.className = 'flip';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
-                        this.minScrollY = 0;
-                    } else if (this.y < 5 && pullDownEl.className.match('flip')) {
-                        pullDownEl.className = '';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
-                        this.minScrollY = -pullDownOffset;
-                    } else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
-                        pullUpEl.className = 'flip';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
-                        this.maxScrollY = this.maxScrollY;
-                    } else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
-                        pullUpEl.className = '';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
-                        this.maxScrollY = pullUpOffset;
-                    }
-                },
-                onScrollEnd: function () {
-                    if (pullDownEl.className.match('flip')) {
-                        pullDownEl.className = 'loading';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';
-                        pullDownAction();	// Execute custom function (ajax call?)
-                    } else if (pullUpEl.className.match('flip')) {
-                        pullUpEl.className = 'loading';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';
-                        pullUpAction();	// Execute custom function (ajax call?)
+            pullUpEl = $('#pullUp');
+            pullUpL = pullUpEl.find('.pullUpLabel');
+            pullUpEl['class'] = pullUpEl.attr('class');
+            pullUpEl.attr('class', '').hide();
+
+            myScroll = new IScroll('#wrapper', {
+                probeType: 2,//probeType：1对性能没有影响。在滚动事件被触发时，滚动轴是不是忙着做它的东西。probeType：2总执行滚动，除了势头，反弹过程中的事件。这类似于原生的onscroll事件。probeType：3发出的滚动事件与到的像素精度。注意，滚动被迫requestAnimationFrame（即：useTransition：假）。
+                scrollbars: false,//有滚动条
+                mouseWheel: false,//允许滑轮滚动
+                fadeScrollbars: true,//滚动时显示滚动条，默认影藏，并且是淡出淡入效果
+                bounce: true,//边界反弹
+                interactiveScrollbars: true,//滚动条可以拖动
+                shrinkScrollbars: 'scale',// 当滚动边界之外的滚动条是由少量的收缩。'clip' or 'scale'.
+                click: true,// 允许点击事件
+                keyBindings: true,//允许使用按键控制
+                momentum: true// 允许有惯性滑动
+            });
+            //滚动时
+            myScroll.on('scroll', function () {
+                //
+                if (loadingStep == 0 && !pullDownEl.attr('class').match('flip|loading') && !pullUpEl.attr('class').match('flip|loading')) {
+                    console.log(this);
+                    console.log("this.y" + this.y)
+                    //console.log(pullUpEl['class'])
+                    //console.log("this.maxScrollY - 5" + (this.maxScrollY - 5))
+                    if (this.y > 5) {
+                        //下拉刷新效果
+                        pullDownEl.attr('class', pullUpEl['class'])
+                        pullDownEl.show();
+                        myScroll.refresh();
+                        pullDownEl.addClass('flip');
+                        //pullDownL.html('准备刷新...');
+                        loadingStep = 1;
+                    } else if (this.y < (this.maxScrollY - 5)) {
+                        //上拉刷新效果
+                        pullUpEl.attr('class', pullUpEl['class'])
+                        pullUpEl.show();
+                        myScroll.refresh();
+                        pullUpEl.addClass('flip');
+                        pullUpL.html('准备刷新...');
+                        loadingStep = 1;
                     }
                 }
             });
-
-            setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
+            //滚动完毕
+            myScroll.on('scrollEnd', function () {
+                //console.log(loadingStep)
+                //console.log("this.Y" + this.y)
+                //console.log("this.maxScrollY" + this.maxScrollY)
+                if (loadingStep == 1) {
+                    console.log(pullUpEl)
+                    if (pullUpEl.attr('class').match('flip|loading')) {
+                        pullUpEl.removeClass('flip').addClass('loading');
+                        pullUpL.html('Loading...');
+                        loadingStep = 2;
+                        pullUpAction();
+                    } else if (pullDownEl.attr('class').match('flip|loading')) {
+                        pullDownEl.removeClass('flip').addClass('loading');
+                        pullDownL.html('Loading...');
+                        loadingStep = 2;
+                        pullDownAction();
+                    }
+                }
+            });
         }
-
-        document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-
-        document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
-
+        function pullDownAction() {//下拉事件
+            setTimeout(function () {
+                var el, li, i;
+                el = $('#scroller ul');
+                for (i = 0; i < 3; i++) {
+                    li = $("<li></li>");
+                    Downcount++;
+                    li.text('new Add ' + Downcount + " ！");
+                    el.prepend(li);
+                }
+                pullDownEl.removeClass('loading');
+                pullDownL.html('下拉显示更多...');
+                pullDownEl['class'] = pullDownEl.attr('class');
+                pullDownEl.attr('class', '').hide();
+                myScroll.refresh();
+                loadingStep = 0;
+            }, 1000); //1秒
+        }
+        function pullUpAction() {//上拉事件
+            setTimeout(function () {
+                var el, li, i;
+                el = $('#scroller ul');
+                for (i = 0; i < 3; i++) {
+                    li = $("<li></li>");
+                    Upcount++;
+                    li.text('new Add ' + Upcount + " ！");
+                    el.append(li);
+                }
+                pullUpEl.removeClass('loading');
+                pullUpL.html('上拉显示更多...');
+                pullUpEl['class'] = pullUpEl.attr('class');
+                pullUpEl.attr('class', '').hide();
+                myScroll.refresh();
+                loadingStep = 0;
+            }, 1000);
+        }
     </script>
+
     <script type="text/javascript">
         $(function () {
             findorder();
@@ -141,6 +165,101 @@
             window.location.href = url;
         }
     </script>
+    <style>
+        #wrapper {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #ccc;
+            overflow: hidden;
+        }
+        #scroller {
+            position: absolute;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            width: 100%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+        #scroller ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            text-align: left;
+        }
+
+        #scroller li {
+            padding: 0 10px;
+            height: 40px;
+            line-height: 40px;
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #fff;
+            background-color: #fafafa;
+            font-size: 14px;
+        }
+        #pullDown, #pullUp {
+            height: 40px;
+            line-height: 40px;
+            /*padding: 5px 10px;*/
+            font-weight: bold;
+            font-size: 14px;
+            color: #888;
+        }
+        #pullDown .pullDownIcon, #pullUp .pullUpIcon {
+            display: block;
+            float: left;
+            width: 40px;
+            height: 40px;
+            background: url(../Content/img/pull-icon@2x.png) 0 0 no-repeat;
+            -webkit-background-size: 40px 40px;
+            background-size: 40px 40px;
+            -webkit-transition-property: -webkit-transform;
+            -webkit-transition-duration: 250ms;
+        }
+        #pullDown .pullDownIcon {
+            -webkit-transform: rotate(0deg) translateZ(0);
+        }
+
+        #pullUp .pullUpIcon {
+            -webkit-transform: rotate(-180deg) translateZ(0);
+        }
+
+        #pullDown.flip .pullDownIcon {
+            -webkit-transform: rotate(-180deg) translateZ(0);
+        }
+
+        #pullUp.flip .pullUpIcon {
+            -webkit-transform: rotate(0deg) translateZ(0);
+        }
+
+        #pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+            background-position: 0 100%;
+            -webkit-transform: rotate(0deg) translateZ(0);
+            -webkit-transition-duration: 0ms;
+            -webkit-animation-name: loading;
+            -webkit-animation-duration: 2s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-timing-function: linear;
+        }
+    </style>
+
 </head>
 <body>
     <div class="container" style="padding:0">
@@ -237,103 +356,32 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="ios">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>名称</th>
-                                    <th>城市</th>
-                                    <th>密码</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Tanmay</td>
-                                    <td>Bangalore</td>
-                                    <td>560001</td>
-                                </tr>
-                                <tr>
-                                    <td>Sachin</td>
-                                    <td>Mumbai</td>
-                                    <td>400003</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                                <tr>
-                                    <td>Uma</td>
-                                    <td>Pune</td>
-                                    <td>411027</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="tab-pane fade" id="ios" style="position: relative; height: 400px;">
+                        <div id="wrapper">
+                            <div id="scroller" style="min-height:100.25%">
+                                <div id="pullDown" class="ub ub-pc c-gra">
+                                    <div class="pullDownIcon"></div>
+                                    <div class="pullDownLabel">下拉刷新</div>
+                                </div>
+                                <ul>
+                                    <li>Pretty row 1</li>
+                                    <li>Pretty row 2</li>
+                                    <li>Pretty row 3</li>
+                                    <li>Pretty row 4</li>
+                                    <li>Pretty row 5</li>
+                                    <li>Pretty row 6</li>
+                                    <li>Pretty row 7</li>
+                                    <li>Pretty row 8</li>
+                                    <li>Pretty row 9</li>
+                                    <li>Pretty row 10</li>
+                                    <li>Pretty row 11</li>
+                                </ul>
+                                <div id="pullUp" class="ub ub-pc c-gra">
+                                    <div class="pullUpIcon"></div>
+                                    <div class="pullUpLabel">上拉显示更多...</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="jmeter">
                         <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>

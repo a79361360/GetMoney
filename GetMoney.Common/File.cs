@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using System.IO;
 using System.Net;
+using System.Drawing;
 
 namespace GetMoney.Common
 {
@@ -47,7 +48,6 @@ namespace GetMoney.Common
 
             return System.IO.File.Exists(GetPhysicalPath(virtualPath));
         }
-
         /// <summary>
         /// 删除文件
         /// </summary>
@@ -165,7 +165,45 @@ namespace GetMoney.Common
             // 返回数据流(源码)
             return sr.ReadToEnd();
         }
+        /// <summary>
+        /// 通过URL采集到图片并保存到本地地址上,如果name为空,随机生成图片名称
+        /// </summary>
+        /// <param name="url">采集的地址</param>
+        /// <param name="path">本地的虚拟地址</param>
+        /// <param name="name">生成图片的名称</param>
+        /// <returns></returns>
+        public Bitmap DowdLoad_ImgByUrl(string url,string path,string name)
+        {
+            Bitmap img = null;
+            HttpWebRequest req;
+            HttpWebResponse res = null;
+            path = GetPhysicalPath(path);    //将虚拟地址转为物理地址
+            string imgpath = "";
+            try
+            {
+                System.Uri httpUrl = new System.Uri(url);
+                req = (HttpWebRequest)(WebRequest.Create(httpUrl));
+                req.Timeout = 180000; //设置超时值10秒
+                req.Method = "GET";
+                res = (HttpWebResponse)(req.GetResponse());
+                img = new Bitmap(res.GetResponseStream());//获取图片流
+                string suffix = "." + httpUrl.LocalPath.Split('.')[1];  //后缀名
+                if (string.IsNullOrEmpty(name)) {
+                    name = DateTime.Now.ToFileTime().ToString();
+                }
+                imgpath = @"" + path + "/" + name + suffix;
+                img.Save(imgpath);//随机名
+            }
 
-
+            catch (Exception ex)
+            {
+                string aa = ex.Message;
+            }
+            finally
+            {
+                res.Close();
+            }
+            return img;
+        }
     }
 }
