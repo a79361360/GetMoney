@@ -194,6 +194,7 @@
     <Compile Include="Controllers\Card\CardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Mobile\MobileController.cs" />
+    <Compile Include="Controllers\Nsoup\NsoupController.cs" />
     <Compile Include="Controllers\OnlyNameTest\OnlyNameTestController.cs" />
     <Compile Include="Controllers\Order\OrderController.cs" />
     <Compile Include="Controllers\TUser\TUserController.cs" />
@@ -2721,6 +2722,8 @@
     <Content Include="Content\Icon\IconsExtension\zoom.png" />
     <Content Include="Content\Icon\IconsExtension\zoom_in.png" />
     <Content Include="Content\Icon\IconsExtension\zoom_out.png" />
+    <Content Include="Content\img\124213.png" />
+    <Content Include="Content\img\pull-icon%402x.png" />
     <Content Include="Content\img\tx.png" />
     <Content Include="Content\My97DatePicker\calendar.js" />
     <Content Include="Content\My97DatePicker\lang\en.js" />
@@ -2806,6 +2809,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\easyloader.js" />
+    <Content Include="Scripts\iscroll-probe.js" />
     <Content Include="Scripts\iscroll.js" />
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.easyui.min.js" />
@@ -2879,6 +2883,8 @@
     <Content Include="Views\Home\Default.cshtml" />
     <Content Include="Views\Order\PIndex.cshtml" />
     <Content Include="Views\OnlyNameTest\TTest.cshtml" />
+    <Content Include="Views\OnlyNameTest\Test.cshtml" />
+    <Content Include="Views\Nsoup\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Application\GetMoney.Application.csproj">

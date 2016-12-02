@@ -43,10 +43,15 @@
     <Compile Include="Model\CardDto.cs" />
     <Compile Include="Model\Bank.cs" />
     <Compile Include="Model\BankTypeEnum.cs" />
+    <Compile Include="Model\FriendDto.cs" />
     <Compile Include="Model\OnlyNameTestDto.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\OrderDto.cs" />
+    <Compile Include="Model\OrderListDto.cs" />
+    <Compile Include="Model\OrderListUserDto.cs" />
+    <Compile Include="Model\TUserDto.cs" />
+    <Compile Include="Model\UListDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

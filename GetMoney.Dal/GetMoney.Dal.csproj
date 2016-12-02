@@ -54,7 +54,9 @@
     <Compile Include="Configuration\CardConfiguration.cs" />
     <Compile Include="Configuration\OnlyNameTestConfiguration.cs" />
     <Compile Include="Configuration\OrderConfiguration.cs" />
+    <Compile Include="Configuration\TUserConfiguration.cs" />
     <Compile Include="DBContextOfUnitWork.cs" />
+    <Compile Include="Nsoup\NsoupDal.cs" />
     <Compile Include="OnlyNameTest\OnlyNameTestRepository.cs" />
     <Compile Include="Order\IService\IOrderDal.cs" />
     <Compile Include="Order\OrderRepository.cs" />
@@ -62,6 +64,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="SqlPageParam.cs" />
+    <Compile Include="TUser\IService\ITUserDal.cs" />
+    <Compile Include="TUser\Service\TUserDal.cs" />
+    <Compile Include="TUser\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Data\GetMoney.Data.csproj">
