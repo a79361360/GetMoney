@@ -58,7 +58,13 @@
     <Compile Include="Order\Order.cs" />
     <Compile Include="Order\OrderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlDal\IDalInterFace.cs" />
+    <Compile Include="SqlDal\SqlConn.cs" />
+    <Compile Include="SqlDal\SqlDal.cs" />
     <Compile Include="SQLHelper.cs" />
+    <Compile Include="TUser\ITUserRepository.cs" />
+    <Compile Include="TUser\TUser.cs" />
+    <Compile Include="TUser\TUserFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

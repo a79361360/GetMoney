@@ -10,20 +10,27 @@ namespace GetMoney.Application.Nsoup
 {
     public class NsoupHandle
     {
-        public void Test(string url)
-        {
-            Elements links = null;
-            MyWebClient webClient = new MyWebClient();
-            String HtmlString = GetHtmlString(webClient, url);
-            NSoup.Nodes.Document doc = NSoup.NSoupClient.Parse(HtmlString);
-            links = doc.Select("#read_tpc img");
-            foreach (var item in links) {
-                string imguri = item.Attr("src");
-                if (!string.IsNullOrEmpty(imguri))
-                    CommonManager.FileObj.DowdLoad_ImgByUrl(imguri, "/DownLoad/Img", "");
-            }
-        }
-        public void TestT(string url) {
+        int ExecuteNum = 0;     //执行次数
+        //public void Test(string url)
+        //{
+        //    Elements links = null;
+        //    MyWebClient webClient = new MyWebClient();
+        //    String HtmlString = GetHtmlString(webClient, url);
+        //    NSoup.Nodes.Document doc = NSoup.NSoupClient.Parse(HtmlString);
+        //    links = doc.Select("#read_tpc img");
+        //    foreach (var item in links) {
+        //        string imguri = item.Attr("src");
+        //        if (!string.IsNullOrEmpty(imguri))
+        //            CommonManager.FileObj.DowdLoad_ImgByUrl(imguri, "/DownLoad/Img", "");
+        //    }
+        //}
+        /// <summary>
+        /// 根据抓取地址,取得里面的下级地址,再保存到指定下载地址
+        /// </summary>
+        /// <param name="url">抓取地址</param>
+        /// <param name="downpath">保存地址</param>
+        /// <param name="hosturi">网址使用虚拟地址的时候取得HOST进行拼接,生成完整http访问地址</param>
+        public void CatchUriByPUri(string url,string downpath,string hosturi) {
             Elements links = null;
             MyWebClient webClient = new MyWebClient();
             String HtmlString = GetHtmlString(webClient, url);
@@ -35,26 +42,31 @@ namespace GetMoney.Application.Nsoup
             links = doc.Select(".t_one h3 a");
             foreach (var item in links)
             {
-                string uri = item.Attr("href");
-                string text = FilterFloder(item.Text());
-                //if (!string.IsNullOrEmpty(uri))
-                //    Test("http://c2.1024mx.org/pw/" + uri);
+                string uri = hosturi + item.Attr("href");               //抓取图片的URI
+                string text = FilterFloder(item.Text());                //将Title做为名称创建成文件夹,是否合法
+                string path = downpath + text;                          //存放图片的文件夹
+                if (!string.IsNullOrEmpty(text) && !string.IsNullOrEmpty(path)) {
+                    CatchImgPutPath(uri, path);
+                }
             }
         }
         /// <summary>
-        /// 
+        /// 创建文件夹,并保存图片到此文件夹
         /// </summary>
+        /// <param name="url">抓取图片的URI</param>
+        /// <param name="path">保存图片的PATH</param>
         public void CatchImgPutPath(string url,string path) {
-            CommonManager.FolderObj.CreateFolder(path);
+            CreateFloder(path);     //创建文件夹
             Elements links = null;
             MyWebClient webClient = new MyWebClient();
+            ExecuteNum = 0;     //将重连次数清零
             String HtmlString = GetHtmlString(webClient, url);
             NSoup.Nodes.Document doc = NSoup.NSoupClient.Parse(HtmlString);
             links = doc.Select("#read_tpc img");
             foreach (var item in links) {
                 string imguri = item.Attr("src");
                 if (!string.IsNullOrEmpty(imguri))
-                    CommonManager.FileObj.DowdLoad_ImgByUrl(imguri, "/DownLoad/Img", "");
+                    CommonManager.FileObj.DowdLoad_ImgByUrl(imguri, path, "");
             }
         }
         /// <summary>
@@ -66,7 +78,6 @@ namespace GetMoney.Application.Nsoup
         private string GetHtmlString(MyWebClient webClient,string url)
         {
             string result = "";
-            int ExecuteNum = 0;     //执行次数
             try
             {
                 result = Encoding.GetEncoding("utf-8").GetString(webClient.DownloadData(url));
@@ -92,6 +103,14 @@ namespace GetMoney.Application.Nsoup
                 floder = floder.Replace(c.ToString(), "");
             }
             return floder;
+        }
+        /// <summary>
+        /// 创建文件夹
+        /// </summary>
+        /// <param name="path"></param>
+        private void CreateFloder(string path) {
+            path = CommonManager.FileObj.GetPhysicalPath(path);
+            CommonManager.FolderObj.CreateFolder(path);
         }
 
     }

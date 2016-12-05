@@ -201,7 +201,7 @@ namespace GetMoney.Common
             }
             finally
             {
-                res.Close();
+                if (res != null) res.Close();
             }
             return img;
         }
