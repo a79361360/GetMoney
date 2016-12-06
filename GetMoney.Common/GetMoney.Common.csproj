@@ -58,6 +58,7 @@
     <Compile Include="File.cs" />
     <Compile Include="Folder.cs" />
     <Compile Include="IDalInterFace.cs" />
+    <Compile Include="IDeleteGate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerializeObject\SerializeJson.cs" />
     <Compile Include="Txt.cs" />

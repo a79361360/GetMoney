@@ -1,4 +1,5 @@
 ﻿using GetMoney.Common;
+using GetMoney.Dal.Nsoup;
 using NSoup.Select;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace GetMoney.Application.Nsoup
     public class NsoupHandle
     {
         int ExecuteNum = 0;     //执行次数
+        NsoupDal dal = new NsoupDal();
         //public void Test(string url)
         //{
         //    Elements links = null;
@@ -46,7 +48,8 @@ namespace GetMoney.Application.Nsoup
                 string text = FilterFloder(item.Text());                //将Title做为名称创建成文件夹,是否合法
                 string path = downpath + text;                          //存放图片的文件夹
                 if (!string.IsNullOrEmpty(text) && !string.IsNullOrEmpty(path)) {
-                    CatchImgPutPath(uri, path);
+                    int titleid = dal.CreateTitle(101, text);        //添加类型到数据库
+                    CatchImgPutPath(uri, path,titleid);
                 }
             }
         }
@@ -55,7 +58,7 @@ namespace GetMoney.Application.Nsoup
         /// </summary>
         /// <param name="url">抓取图片的URI</param>
         /// <param name="path">保存图片的PATH</param>
-        public void CatchImgPutPath(string url,string path) {
+        public void CatchImgPutPath(string url,string path,int titleid) {
             CreateFloder(path);     //创建文件夹
             Elements links = null;
             MyWebClient webClient = new MyWebClient();
@@ -66,7 +69,16 @@ namespace GetMoney.Application.Nsoup
             foreach (var item in links) {
                 string imguri = item.Attr("src");
                 if (!string.IsNullOrEmpty(imguri))
-                    CommonManager.FileObj.DowdLoad_ImgByUrl(imguri, path, "");
+                {
+                    int count = 0;
+                    string imgpath = CommonManager.FileObj.DowdLoad_ImgByUrl(imguri, path, "", ref count);
+                    if (string.IsNullOrEmpty(imgpath) && count < 3) {
+                        imgpath = CommonManager.FileObj.DowdLoad_ImgByUrl(imguri, path, "", ref count);
+                    }
+                    if (!string.IsNullOrEmpty(imgpath)) {
+                        dal.AddTitleDetail(101, titleid, imgpath);
+                    }
+                }
             }
         }
         /// <summary>
@@ -111,6 +123,23 @@ namespace GetMoney.Application.Nsoup
         private void CreateFloder(string path) {
             path = CommonManager.FileObj.GetPhysicalPath(path);
             CommonManager.FolderObj.CreateFolder(path);
+        }
+        /// <summary>
+        /// 抓取图片的名细插入数据库
+        /// </summary>
+        /// <param name="type">100无码101唯美</param>
+        /// <param name="titleid">标题ID</param>
+        /// <param name="imgurl">图片地址</param>
+        /// <returns></returns>
+        public bool CreateTitleDetail(int type, int titleid, string imgurl)
+        {
+            return dal.AddTitleDetail(type, titleid, imgurl);
+        }
+
+
+        public void SaveImg(string url) {
+            //NSoup.IConnection ic = NSoup.NSoupClient.Connect(url);
+            //System.Uri httpuri = new System.Uri(url);
         }
 
     }

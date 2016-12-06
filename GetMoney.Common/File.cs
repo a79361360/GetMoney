@@ -171,13 +171,13 @@ namespace GetMoney.Common
         /// <param name="url">采集的地址</param>
         /// <param name="path">本地的虚拟地址</param>
         /// <param name="name">生成图片的名称</param>
-        /// <returns></returns>
+        /// <returns>图片Bitmap对象</returns>
         public Bitmap DowdLoad_ImgByUrl(string url,string path,string name)
         {
             Bitmap img = null;
             HttpWebRequest req;
             HttpWebResponse res = null;
-            path = GetPhysicalPath(path);    //将虚拟地址转为物理地址
+            string phypath = GetPhysicalPath(path);    //将虚拟地址转为物理地址
             string imgpath = "";
             try
             {
@@ -191,7 +191,7 @@ namespace GetMoney.Common
                 if (string.IsNullOrEmpty(name)) {
                     name = DateTime.Now.ToFileTime().ToString();
                 }
-                imgpath = @"" + path + "/" + name + suffix;
+                imgpath = @"" + phypath + "/" + name + suffix;
                 img.Save(imgpath);//随机名
             }
 
@@ -204,6 +204,63 @@ namespace GetMoney.Common
                 if (res != null) res.Close();
             }
             return img;
+        }
+        /// <summary>
+        /// 通过URL采集到图片并保存到本地地址上,如果name为空,随机生成图片名称
+        /// </summary>
+        /// <param name="url">采集的地址</param>
+        /// <param name="path">本地的虚拟地址</param>
+        /// <param name="name">生成图片的名称</param>
+        /// <returns>保存图片的虚拟URL地址</returns>
+        public string DowdLoad_ImgByUrl(string url, string path, string name,ref int count)
+        {
+            Bitmap img = null;
+            HttpWebRequest req;
+            HttpWebResponse res = null;
+            string phypath = GetPhysicalPath(path);     //将虚拟地址转为物理地址
+            string imgpath = "";                        //包含图片的虚拟地址
+            try
+            {
+                System.GC.Collect();        //回收一下
+                System.Uri httpUrl = new System.Uri(url);
+                req = (HttpWebRequest)(WebRequest.Create(httpUrl));
+                req.Timeout = 180000; //设置超时值10秒
+                req.Method = "GET";
+                bool ll = req.KeepAlive;
+                res = (HttpWebResponse)(req.GetResponse());
+                Stream stream = res.GetResponseStream();
+
+                img = new Bitmap(stream);//获取图片流
+                string suffix = "." + httpUrl.LocalPath.Split('.')[1];  //后缀名
+                if (string.IsNullOrEmpty(name))
+                {
+                    name = DateTime.Now.ToFileTime().ToString();
+                }
+                phypath = @"" + phypath + "/" + name + suffix;  //物理地址
+                imgpath = @"" + path + "/" + name + suffix;     //虚拟地址
+                img.Save(phypath);//随机名
+
+                if (req != null)
+                {
+                    req.Abort();
+                    req = null;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                CommonManager.TxtObj.WriteLogs("/Logs/CatchImg_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "注册日志：" + ex.Message);
+                count++;
+            }
+            finally
+            {
+                if (res != null)
+                {
+                    res.Close();
+                    res = null;
+                }
+            }
+            return imgpath;
         }
     }
 }

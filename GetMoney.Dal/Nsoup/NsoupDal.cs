@@ -65,7 +65,7 @@ namespace GetMoney.Dal.Nsoup
             {
                 new SqlParameter("@Type",SqlDbType.Int),
                 new SqlParameter("@TitleId",SqlDbType.Int),
-                new SqlParameter("@ImgUrl",SqlDbType.Int)
+                new SqlParameter("@ImgUrl",SqlDbType.NVarChar,250)
             };
             parameter[0].Value = type;
             parameter[1].Value = titleid;
