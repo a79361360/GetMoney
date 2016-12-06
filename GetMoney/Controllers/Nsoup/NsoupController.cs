@@ -18,7 +18,7 @@ namespace GetMoney.Controllers.Nsoup
             return View();
         }
         public void GetImgByUrl() {
-            string url = "http://c2.1024mx.org/pw/thread.php?fid=14&page=2";
+            string url = "http://c2.1024mx.org/pw/thread.php?fid=14&page=1";
             System.Uri httpUrl = new System.Uri(url);
             string hosturl = httpUrl.AbsoluteUri.Substring(0, httpUrl.AbsoluteUri.LastIndexOf('/') + 1);
             NsoupHandle handle = new NsoupHandle();

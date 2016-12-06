@@ -262,5 +262,60 @@ namespace GetMoney.Common
             }
             return imgpath;
         }
+
+
+        public string TestStream(string url, string path, string name, ref int count)
+        {
+            //Bitmap img = null;
+            HttpWebRequest req;
+            HttpWebResponse res = null;
+            string phypath = GetPhysicalPath(path);     //将虚拟地址转为物理地址
+            string imgpath = "";                        //包含图片的虚拟地址
+            try
+            {
+                System.GC.Collect();        //回收一下
+                System.Uri httpUrl = new System.Uri(url);
+                req = (HttpWebRequest)(WebRequest.Create(httpUrl));
+                req.Timeout = 180000; //设置超时值10秒
+                req.Method = "GET";
+                bool ll = req.KeepAlive;
+                res = (HttpWebResponse)(req.GetResponse());
+                Stream stream = res.GetResponseStream();
+
+                System.Drawing.Image ResourceImage = System.Drawing.Image.FromStream(stream);
+                
+                //img = new Bitmap(stream);//获取图片流
+
+                string suffix = "." + httpUrl.LocalPath.Split('.')[1];  //后缀名
+                if (string.IsNullOrEmpty(name))
+                {
+                    name = DateTime.Now.ToFileTime().ToString();
+                }
+                phypath = @"" + phypath + "/" + name + suffix;  //物理地址
+                imgpath = @"" + path + "/" + name + suffix;     //虚拟地址
+                //img.Save(phypath);//随机名
+                ResourceImage.Save(phypath);
+                if (req != null)
+                {
+                    req.Abort();
+                    req = null;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                CommonManager.TxtObj.WriteLogs("/Logs/CatchImg_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "注册日志：" + ex.Message);
+                count++;
+            }
+            finally
+            {
+                if (res != null)
+                {
+                    res.Close();
+                    res = null;
+                }
+            }
+            return imgpath;
+        }
     }
 }

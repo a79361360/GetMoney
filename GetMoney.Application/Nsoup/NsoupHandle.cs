@@ -71,9 +71,10 @@ namespace GetMoney.Application.Nsoup
                 if (!string.IsNullOrEmpty(imguri))
                 {
                     int count = 0;
-                    string imgpath = CommonManager.FileObj.DowdLoad_ImgByUrl(imguri, path, "", ref count);
-                    if (string.IsNullOrEmpty(imgpath) && count < 3) {
-                        imgpath = CommonManager.FileObj.DowdLoad_ImgByUrl(imguri, path, "", ref count);
+                    string imgpath = CommonManager.FileObj.TestStream(imguri, path, "", ref count);
+                    while (string.IsNullOrEmpty(imgpath) && count < 3)
+                    {
+                        imgpath = CommonManager.FileObj.TestStream(imguri, path, "", ref count);
                     }
                     if (!string.IsNullOrEmpty(imgpath)) {
                         dal.AddTitleDetail(101, titleid, imgpath);
