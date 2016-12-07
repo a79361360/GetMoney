@@ -18,11 +18,12 @@ namespace GetMoney.Controllers.Nsoup
             return View();
         }
         public void GetImgByUrl() {
-            string url = "http://c2.1024mx.org/pw/thread.php?fid=14&page=1";
+            string url = "http://c2.1024mx.org/pw/thread.php?fid=49&page=1";
             System.Uri httpUrl = new System.Uri(url);
             string hosturl = httpUrl.AbsoluteUri.Substring(0, httpUrl.AbsoluteUri.LastIndexOf('/') + 1);
             NsoupHandle handle = new NsoupHandle();
-            handle.CatchUriByPUri(url, "/DownLoad/Img/", hosturl);
+            //handle.CatchUriByPUri(url, "/DownLoad/Img/", hosturl);
+            handle.CatchUriByPUri(url, "/DownLoad/OriginalImg/", hosturl);
         }
     }
 }
