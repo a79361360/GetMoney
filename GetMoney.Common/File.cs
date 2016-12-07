@@ -282,10 +282,9 @@ namespace GetMoney.Common
                 res = (HttpWebResponse)(req.GetResponse());
                 Stream stream = res.GetResponseStream();
 
-                System.Drawing.Image ResourceImage = System.Drawing.Image.FromStream(stream);
-                
-                //img = new Bitmap(stream);//获取图片流
+                MemoryStream m = TestStreamForMemoryStream(stream);
 
+                //img = new Bitmap(stream);//获取图片流
                 string suffix = "." + httpUrl.LocalPath.Split('.')[1];  //后缀名
                 if (string.IsNullOrEmpty(name))
                 {
@@ -294,7 +293,13 @@ namespace GetMoney.Common
                 phypath = @"" + phypath + "/" + name + suffix;  //物理地址
                 imgpath = @"" + path + "/" + name + suffix;     //虚拟地址
                 //img.Save(phypath);//随机名
-                ResourceImage.Save(phypath);
+
+                FileStream fs = new FileStream(phypath, FileMode.OpenOrCreate);
+                BinaryWriter w = new BinaryWriter(fs);
+                w.Write(m.ToArray());
+                fs.Close();
+                m.Close();
+
                 if (req != null)
                 {
                     req.Abort();
@@ -317,5 +322,25 @@ namespace GetMoney.Common
             }
             return imgpath;
         }
+
+        /// <summary>
+        /// 返回内存流
+        /// </summary>
+        /// <param name="inStream"></param>
+        /// <returns></returns>
+        public MemoryStream TestStreamForMemoryStream(Stream inStream)
+        {
+            MemoryStream ms = new MemoryStream();
+            byte[] buffer = new byte[1024];
+
+            while (true)
+            {
+                int sz = inStream.Read(buffer, 0, 1024);
+                if (sz == 0) break;
+                ms.Write(buffer, 0, sz);
+            }
+            ms.Position = 0;
+            return ms;
+        } 
     }
 }

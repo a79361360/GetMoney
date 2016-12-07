@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace GetMoney.Application.Nsoup
@@ -51,6 +52,7 @@ namespace GetMoney.Application.Nsoup
                     int titleid = dal.CreateTitle(101, text);        //添加类型到数据库
                     CatchImgPutPath(uri, path,titleid);
                 }
+                //return; //调试阶段不用执行那么多次
             }
         }
         /// <summary>
@@ -71,10 +73,10 @@ namespace GetMoney.Application.Nsoup
                 if (!string.IsNullOrEmpty(imguri))
                 {
                     int count = 0;
-                    string imgpath = CommonManager.FileObj.TestStream(imguri, path, "", ref count);
+                    string imgpath = TestStream(imguri, path, "", ref count);
                     while (string.IsNullOrEmpty(imgpath) && count < 3)
                     {
-                        imgpath = CommonManager.FileObj.TestStream(imguri, path, "", ref count);
+                        imgpath = TestStream(imguri, path, "", ref count);
                     }
                     if (!string.IsNullOrEmpty(imgpath)) {
                         dal.AddTitleDetail(101, titleid, imgpath);
@@ -137,11 +139,84 @@ namespace GetMoney.Application.Nsoup
             return dal.AddTitleDetail(type, titleid, imgurl);
         }
 
+        public string TestStream(string url, string path, string name, ref int count)
+        {
+            //Bitmap img = null;
+            HttpWebRequest req;
+            HttpWebResponse res = null;
+            string phypath = CommonManager.FileObj.GetPhysicalPath(path);     //将虚拟地址转为物理地址
+            string imgpath = "";                        //包含图片的虚拟地址
+            try
+            {
+                System.GC.Collect();        //回收一下
+                System.Uri httpUrl = new System.Uri(url);
+                req = (HttpWebRequest)(WebRequest.Create(httpUrl));
+                req.Timeout = 180000; //设置超时值10秒
+                req.Method = "GET";
+                res = (HttpWebResponse)(req.GetResponse());
+                Stream stream = res.GetResponseStream();
 
-        public void SaveImg(string url) {
-            //NSoup.IConnection ic = NSoup.NSoupClient.Connect(url);
-            //System.Uri httpuri = new System.Uri(url);
+                CommonManager.TxtObj.WriteLogs("/Logs/CatchImg_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "开始转换成内存流：" + path);
+                MemoryStream m = TestStreamForMemoryStream(stream);     //保存到内存流
+                CommonManager.TxtObj.WriteLogs("/Logs/CatchImg_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "转换成内存流结束：" + path);
+                string suffix = "." + httpUrl.LocalPath.Split('.')[1];  //后缀名
+                if (string.IsNullOrEmpty(name))
+                {
+                    name = DateTime.Now.ToFileTime().ToString();
+                }
+                phypath = @"" + phypath + "/" + name + suffix;  //物理地址
+                imgpath = @"" + path + "/" + name + suffix;     //虚拟地址
+
+                CommonManager.TxtObj.WriteLogs("/Logs/CatchImg_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "开始创建成文件流：" + path);
+                FileStream fs = new FileStream(phypath, FileMode.OpenOrCreate);
+                CommonManager.TxtObj.WriteLogs("/Logs/CatchImg_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "创建文件流结束：" + path);
+                BinaryWriter w = new BinaryWriter(fs);
+                CommonManager.TxtObj.WriteLogs("/Logs/CatchImg_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "写入文件内容结束：" + path);
+                w.Write(m.ToArray());
+                fs.Close();
+                m.Close();
+
+                if (req != null)
+                {
+                    req.Abort();
+                    req = null;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                CommonManager.TxtObj.WriteLogs("/Logs/CatchImg_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "绝对值地址：" + path + "Exception：" + ex.Message);
+                count++;
+            }
+            finally
+            {
+                if (res != null)
+                {
+                    res.Close();
+                    res = null;
+                }
+            }
+            return imgpath;
         }
 
+        /// <summary>
+        /// 返回内存流
+        /// </summary>
+        /// <param name="inStream"></param>
+        /// <returns></returns>
+        public MemoryStream TestStreamForMemoryStream(Stream inStream)
+        {
+            MemoryStream ms = new MemoryStream();
+            byte[] buffer = new byte[1024];
+
+            while (true)
+            {
+                int sz = inStream.Read(buffer, 0, 1024);
+                if (sz == 0) break;
+                ms.Write(buffer, 0, sz);
+            }
+            ms.Position = 0;
+            return ms;
+        } 
     }
 }
