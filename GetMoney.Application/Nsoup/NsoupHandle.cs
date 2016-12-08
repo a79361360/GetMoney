@@ -72,14 +72,14 @@ namespace GetMoney.Application.Nsoup
                 string imguri = item.Attr("src");
                 if (!string.IsNullOrEmpty(imguri))
                 {
-                    int count = 0;
-                    string imgpath = TestStream(imguri, path, "", ref count);
+                    int count = 0; string filename = "";
+                    string imgpath = TestStream(imguri, path,ref filename, ref count);
                     while (string.IsNullOrEmpty(imgpath) && count < 3)
                     {
-                        imgpath = TestStream(imguri, path, "", ref count);
+                        imgpath = TestStream(imguri, path, ref filename, ref count);
                     }
                     if (!string.IsNullOrEmpty(imgpath)) {
-                        dal.AddTitleDetail(101, titleid, imgpath);
+                        dal.AddTitleDetail(101, titleid, filename, imgpath);
                     }
                 }
             }
@@ -127,19 +127,8 @@ namespace GetMoney.Application.Nsoup
             path = CommonManager.FileObj.GetPhysicalPath(path);
             CommonManager.FolderObj.CreateFolder(path);
         }
-        /// <summary>
-        /// 抓取图片的名细插入数据库
-        /// </summary>
-        /// <param name="type">100无码101唯美</param>
-        /// <param name="titleid">标题ID</param>
-        /// <param name="imgurl">图片地址</param>
-        /// <returns></returns>
-        public bool CreateTitleDetail(int type, int titleid, string imgurl)
-        {
-            return dal.AddTitleDetail(type, titleid, imgurl);
-        }
 
-        public string TestStream(string url, string path, string name, ref int count)
+        public string TestStream(string url, string path, ref string name, ref int count)
         {
             //Bitmap img = null;
             HttpWebRequest req;

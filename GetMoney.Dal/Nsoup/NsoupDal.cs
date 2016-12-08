@@ -59,21 +59,29 @@ namespace GetMoney.Dal.Nsoup
         /// <param name="titleid">标题ID</param>
         /// <param name="imgurl">图片地址</param>
         /// <returns></returns>
-        public bool AddTitleDetail(int type,int titleid,string imgurl) {
-            string sql = "INSERT INTO Nsoup_ImgDetail(Type,TitleId,ImgUrl)VALUES(@Type,@TitleId,@ImgUrl)";
+        public bool AddTitleDetail(int type,int titleid,string imgname,string imgurl) {
+            string sql = "INSERT INTO Nsoup_ImgDetail(Type,TitleId,ImgName,ImgUrl)VALUES(@Type,@TitleId,@ImgName,@ImgUrl)";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@Type",SqlDbType.Int),
                 new SqlParameter("@TitleId",SqlDbType.Int),
-                new SqlParameter("@ImgUrl",SqlDbType.NVarChar,250)
+                new SqlParameter("@ImgUrl",SqlDbType.NVarChar,250),
+                new SqlParameter("@ImgName",SqlDbType.NVarChar,50)
             };
             parameter[0].Value = type;
             parameter[1].Value = titleid;
-            parameter[2].Value = imgurl;
+            parameter[2].Value = imgname;
+            parameter[3].Value = imgurl;
             int result = dal.IntExtSql(sql, parameter);
             if (result > 0)
             { return true; }
             else { return false; }
+        }
+
+        public DataTable ListDetailPage(ref int Total, SqlPageParam param)
+        {
+            DataTable dt = dal.PageResult(param.TableName, param.PrimaryKey, param.Fields, param.PageSize, param.PageIndex, param.Filter, param.Group, param.Order, ref Total);
+            return dt;
         }
     }
 }
