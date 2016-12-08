@@ -1,5 +1,7 @@
 ﻿using GetMoney.Common;
+using GetMoney.Dal;
 using GetMoney.Dal.Nsoup;
+using GetMoney.Model;
 using NSoup.Select;
 using System;
 using System.Collections.Generic;
@@ -206,6 +208,25 @@ namespace GetMoney.Application.Nsoup
             }
             ms.Position = 0;
             return ms;
-        } 
+        }
+
+
+
+
+
+        public IList<Nsoup_ImgDetailDto> ListTUserPage(ref int Total, int pageSize, int pageIndex, string filter)
+        {
+            SqlPageParam param = new SqlPageParam();
+            param.TableName = "TUsers";
+            param.PrimaryKey = "id";
+            param.Fields = "id,UserName,NickName,TrueName,UserJb,IdentityNum,Phone,TxUrl,State,Addtime";
+            param.PageSize = pageSize;
+            param.PageIndex = pageIndex;
+            param.Filter = filter;
+            param.Group = "";
+            param.Order = "id";
+            IList<Nsoup_ImgDetailDto> list = DataTableToList.ModelConvertHelper<Nsoup_ImgDetailDto>.ConvertToModel(dal.ListDetailPage(ref Total, param));
+            return list;
+        }
     }
 }

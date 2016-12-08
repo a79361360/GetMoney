@@ -44,6 +44,7 @@
     <Compile Include="Model\Bank.cs" />
     <Compile Include="Model\BankTypeEnum.cs" />
     <Compile Include="Model\FriendDto.cs" />
+    <Compile Include="Model\Nsoup\Nsoup_ImgDetailDto.cs" />
     <Compile Include="Model\OnlyNameTestDto.cs">
       <SubType>Code</SubType>
     </Compile>
