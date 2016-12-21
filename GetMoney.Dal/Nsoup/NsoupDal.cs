@@ -65,8 +65,8 @@ namespace GetMoney.Dal.Nsoup
             {
                 new SqlParameter("@Type",SqlDbType.Int),
                 new SqlParameter("@TitleId",SqlDbType.Int),
-                new SqlParameter("@ImgUrl",SqlDbType.NVarChar,250),
-                new SqlParameter("@ImgName",SqlDbType.NVarChar,50)
+                new SqlParameter("@ImgName",SqlDbType.NVarChar,50),
+                new SqlParameter("@ImgUrl",SqlDbType.NVarChar,250)
             };
             parameter[0].Value = type;
             parameter[1].Value = titleid;
@@ -77,7 +77,24 @@ namespace GetMoney.Dal.Nsoup
             { return true; }
             else { return false; }
         }
-
+        /// <summary>
+        /// 根据titleid返回列表
+        /// </summary>
+        /// <param name="type">图片类型</param>
+        /// <param name="titleid">titleid</param>
+        /// <returns></returns>
+        public DataTable ListDetailTitle(int type,int titleid) {
+            string sql = "select id,TitleName,ImgUrl from V_NsoupImg where Type=@type and TitleId=@titleid";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@type",SqlDbType.Int),
+                new SqlParameter("@titleid",SqlDbType.Int)
+            };
+            parameter[0].Value = type;
+            parameter[1].Value = titleid;
+            DataTable dt = dal.ExtSql(sql, parameter);
+            return dt;
+        }
         public DataTable ListDetailPage(ref int Total, SqlPageParam param)
         {
             DataTable dt = dal.PageResult(param.TableName, param.PrimaryKey, param.Fields, param.PageSize, param.PageIndex, param.Filter, param.Group, param.Order, ref Total);

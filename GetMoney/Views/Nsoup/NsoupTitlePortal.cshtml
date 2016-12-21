@@ -1,0 +1,106 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>NsoupTitlePortal</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="~/Content/TestPage/mricode.pagination.css" rel="stylesheet" />
+    <script src="~/Content/TestPage/mricode.pagination.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <form action="" class="bs-example bs-example-form" role="form">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-group" style="float:left;">
+                                <div class="btn-group" style="float: left;">
+                                    <button id="field" type="button" class="btn btn-default">默认</button>
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height: 34px;">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">切换下拉菜单</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#" v_val="">默认</a></li>
+                                        <li><a href="#" v_val="Title">类型名称</a></li>
+                                    </ul>
+                                </div>
+                                <input id="fieldv" type="text" class="form-control" style="width: 220px;margin:0 5px" />
+                            </div><!-- /input-group -->
+                            <button id="search" type="button" style="float:left; margin-left:5px;" class="btn btn-default">查询</button>
+                        </div><!-- /.col-lg-6 -->
+                    </div><!-- /.row -->
+                </form>
+            </div>
+            <div class="panel-body">
+                <div id="tblist"></div>
+                <div id="page" class="m-pagination"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(function () {
+        $("#search").click(function () {
+            var isInited = $("#page").pagination();
+            if (isInited) $("#page").pagination('destroy');
+            var text = $("#fieldv").val();
+            var type = $("#field").attr("v_val");
+            $("#page").pagination({
+                firstBtnText: '首页',
+                lastBtnText: '尾页',
+                prevBtnText: '上一页',
+                nextBtnText: '下一页',
+                showInfo: true,
+                showJump: true,
+                jumpBtnText: '跳转',
+                showPageSizes: true,
+                infoFormat: '{start} ~ {end}条，共{total}条',
+                debug: true,
+                pageElementSort: ['$page', '$size', '$jump', '$info'],
+                remote: {
+                    url: '/Nsoup/ListImgTitle',  //请求地址
+                    params: { text: text, type: type },       //自定义请求参数
+                    success: function (data) {
+                        if (data.success) {
+                            var caption = "<caption><div class=\"btn-toolbar\" role=\"toolbar\">";
+                            caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"neworder()\">新增</button></div>";
+                            caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\">编辑</button></div>";
+                            caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"RemoveByNo(null)\">删除</button></div>";
+                            caption += "</div></caption>";
+
+                            var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:6%;\"><label class=\"checkbox-inline\"><input id=\"allqx\" type=\"checkbox\" />全选</label></th><th style=\"width:130px;\">图片类型</th><th style=\"width:130px;\">图片标题</th><th style=\"width:130px;\">操作</th></tr></thead>";
+                            $.each(data.list, function (i, o) {
+                                str += "<tr><td style=\"text-align:center\"><input type=\"checkbox\" value=\"" + o.id + "\"></td><td>" + o.Type + "</td><td>" + o.TitleName + "</td><td><button class=\"btn btn-primary\" onclick=\"FindImgByImgUrl(this,'" + o.Type + "','" + o.id + "')\">查看</button></td></tr>";
+                            })
+                            str += "</table>";
+                            $("#tblist").html(str);
+                        } else {
+                            var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:6%;\"><label class=\"checkbox-inline\"><input id=\"allqx\" type=\"checkbox\" />全选</label></th><th style=\"width:130px;\">图片类型</th><th style=\"width:130px;\">图片标题</th><th style=\"width:130px;\">操作</th></tr></thead>";
+                            str += "</table>";
+                            $("#tblist").html("");
+                        }
+                    },
+                    totalName: 'total'              //指定返回数据的总数据量的字段名
+                }
+            });
+        })
+        $('.dropdown-menu a').click(function () {
+            var txt = $(this).text(); var val = $(this).attr("v_val");
+            var objdrop = $(this).parent().parent().siblings("button").eq(0);
+            objdrop.text(txt); objdrop.attr("v_val", val);
+        })
+    })
+    FindImgByImgUrl = function (o,type, titleid) {
+        window.open("/Nsoup/ShowImg?type=2&imgtype=" + type + "&titleid=" + titleid);
+    }
+    </script>
+</body>
+</html>

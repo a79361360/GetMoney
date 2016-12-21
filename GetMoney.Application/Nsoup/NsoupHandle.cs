@@ -49,12 +49,13 @@ namespace GetMoney.Application.Nsoup
             {
                 string uri = hosturi + item.Attr("href");               //抓取图片的URI
                 string text = FilterFloder(item.Text());                //将Title做为名称创建成文件夹,是否合法
-                string path = downpath + text;                          //存放图片的文件夹
+                int titleid = dal.CreateTitle(101, text);               //添加类型到数据库
+                string path = downpath + titleid;                       //存放图片的文件夹
                 if (!string.IsNullOrEmpty(text) && !string.IsNullOrEmpty(path)) {
-                    int titleid = dal.CreateTitle(101, text);        //添加类型到数据库
+                    //int titleid = dal.CreateTitle(101, text);        //添加类型到数据库
                     CatchImgPutPath(uri, path,titleid);
                 }
-                //return; //调试阶段不用执行那么多次
+                return; //调试阶段不用执行那么多次
             }
         }
         /// <summary>
@@ -210,21 +211,40 @@ namespace GetMoney.Application.Nsoup
             return ms;
         }
 
-
-
-
-
-        public IList<Nsoup_ImgDetailDto> ListTUserPage(ref int Total, int pageSize, int pageIndex, string filter)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type">图片类型</param>
+        /// <param name="TitleId">Titleid</param>
+        /// <returns></returns>
+        public IList<Nsoup_ImgDetailDto> ListImgByTid(int type,int TitleId) {
+            IList<Nsoup_ImgDetailDto> list = DataTableToList.ModelConvertHelper<Nsoup_ImgDetailDto>.ConvertToModel(dal.ListDetailTitle(type, TitleId));
+            return list;
+        }
+        public IList<Nsoup_ImgDetailDto> ListImgPage(ref int Total, int pageSize, int pageIndex, string filter)
         {
             SqlPageParam param = new SqlPageParam();
-            param.TableName = "TUsers";
+            param.TableName = "V_NsoupImg";
             param.PrimaryKey = "id";
-            param.Fields = "id,UserName,NickName,TrueName,UserJb,IdentityNum,Phone,TxUrl,State,Addtime";
+            param.Fields = "[id],[Type],[TitleId],TitleName,[ImgUrl],Convert(varchar(19),[AddTime],12) AddTime,[ImgName]";
             param.PageSize = pageSize;
             param.PageIndex = pageIndex;
             param.Filter = filter;
             param.Group = "";
-            param.Order = "id";
+            param.Order = "id desc";
+            IList<Nsoup_ImgDetailDto> list = DataTableToList.ModelConvertHelper<Nsoup_ImgDetailDto>.ConvertToModel(dal.ListDetailPage(ref Total, param));
+            return list;
+        }
+        public IList<Nsoup_ImgDetailDto> ListImgTitlePage(ref int Total, int pageSize, int pageIndex, string filter) {
+            SqlPageParam param = new SqlPageParam();
+            param.TableName = "Nsoup_ImgTitle";
+            param.PrimaryKey = "id";
+            param.Fields = "[id],[Type],[Title] TitleName";
+            param.PageSize = pageSize;
+            param.PageIndex = pageIndex;
+            param.Filter = filter;
+            param.Group = "";
+            param.Order = "id desc";
             IList<Nsoup_ImgDetailDto> list = DataTableToList.ModelConvertHelper<Nsoup_ImgDetailDto>.ConvertToModel(dal.ListDetailPage(ref Total, param));
             return list;
         }

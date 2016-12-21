@@ -1,0 +1,19 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowImg</title>
+</head>
+<body>
+    <div>
+        @foreach (var item in ViewBag.ListImg) {
+            <img src="@item.ImgUrl" /><br />
+        }
+    </div>
+</body>
+</html>

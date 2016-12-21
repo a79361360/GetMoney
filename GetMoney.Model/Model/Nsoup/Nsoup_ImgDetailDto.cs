@@ -9,7 +9,9 @@ namespace GetMoney.Model
     {
         public int id { get; set; }
         public int Type { get; set; }
+        public string TypeName { get; set; }
         public int TitleId { get; set; }
+        public string TitleName { get; set; }
         public string ImgName { get; set; }
         public string ImgUrl { get; set; }
         public string AddTime { get; set; }
