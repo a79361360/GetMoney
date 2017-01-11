@@ -28,24 +28,6 @@ namespace GetMoney.Controllers.TUser
             RegTUser();
             return View();
         }
-        public ActionResult AddTUser()
-        {
-            TUserDto dto = new TUserDto();
-            dto.UserName = "3333";
-            dto.UserPwd = "123123";
-            dto.BankPwd = "123123";
-            dto.NickName = "123";
-            dto.UserJb = 100;
-            dto.TrueName = "中文";
-            dto.IdentityNum = "111111111111111111";
-            dto.Phone = "18020637512";
-            dto.RegIP = CommonManager.WebObj.GetWebClientIp();
-            dto.TxUrl = "";
-            dto.State = 1;
-            dto.Addtime = DateTime.Now;
-            _bll.AddTUser(dto);
-            return JsonFormat(new ExtJson { success = true, msg = "添加成功！" });
-        }
         public ActionResult RegTUser() {
             return View();
         }
@@ -162,6 +144,10 @@ namespace GetMoney.Controllers.TUser
             else
                 return JsonFormat(new ExtJson { success = false, msg = msg });
         }
+        /// <summary>
+        /// 删除用户信息
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Remove()
         {
             string id = "1";
@@ -227,6 +213,10 @@ namespace GetMoney.Controllers.TUser
         {
             return View();
         }
+        /// <summary>
+        /// 添加好友,
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateFriend() {
             string data = CommonManager.WebObj.RequestForm("data", ""); //参数字符串
             string userid = "0";
@@ -309,6 +299,9 @@ namespace GetMoney.Controllers.TUser
                 CommonManager.WebObj.AddCookie("pwd", Pwd, 60 * 24 * 30);
                 return JsonFormat(new ExtJson { success = true, msg = "登入成功" });
             }
+            return JsonFormat(new ExtJson { success = false, msg = "登入失败" });
+        }
+        public ActionResult WaterFall() {
             return JsonFormat(new ExtJson { success = false, msg = "登入失败" });
         }
     }

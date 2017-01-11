@@ -80,11 +80,11 @@ namespace GetMoney.Dal
             //return result;
         }
         /// <summary>
-        /// 根据UserName和UserPwd判断用户是否存在
+        /// 根据UserName和UserPwd判断用户是否存在,存在返回-用户的ID,不存在返回-1
         /// </summary>
         /// <param name="UserName">用户账号</param>
         /// <param name="UserPwd">用户密码</param>
-        /// <returns>存在true不存在false</returns>
+        /// <returns>存在用户的ID不存在-1</returns>
         public int VerifyUserByUnamePwd(string UserName,string UserPwd) {
             string sql = "select id from TUsers where UserName=@username and UserPwd=@userpwd";
             SqlParameter[] parameter = new[]

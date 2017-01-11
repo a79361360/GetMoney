@@ -55,7 +55,7 @@ namespace GetMoney.Application.Nsoup
                     //int titleid = dal.CreateTitle(101, text);        //添加类型到数据库
                     CatchImgPutPath(uri, path,titleid);
                 }
-                return; //调试阶段不用执行那么多次
+                //return; //调试阶段不用执行那么多次
             }
         }
         /// <summary>

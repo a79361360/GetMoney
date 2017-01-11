@@ -157,6 +157,11 @@ namespace GetMoney.Application
             }
             return result;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         public int VerifyTUsers(TUserDto dto) {
             int result = _dal.VerifyUserByUnamePwd(dto.UserName, dto.UserPwd);
             return result;
