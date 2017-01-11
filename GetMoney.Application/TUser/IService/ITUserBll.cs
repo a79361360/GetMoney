@@ -40,7 +40,11 @@ namespace GetMoney.Application
         /// <returns></returns>
         IList<FriendDto> ListFriendPage(ref int Total, int pageSize, int pageIndex, string filter);
         int AddTUserFriend(int userid, IList<UListDto> list);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         int VerifyTUsers(TUserDto dto);
     }
 }
