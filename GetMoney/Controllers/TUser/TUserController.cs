@@ -25,10 +25,21 @@ namespace GetMoney.Controllers.TUser
 
         public ActionResult Index()
         {
-            RegTUser();
+            return View();
+        }
+        public ActionResult Login()
+        {
             return View();
         }
         public ActionResult RegTUser() {
+            return View();
+        }
+        public ActionResult TUserFriend()
+        {
+            return View();
+        }
+        public ActionResult TUserSearch()
+        {
             return View();
         }
         /// <summary>
@@ -145,18 +156,23 @@ namespace GetMoney.Controllers.TUser
                 return JsonFormat(new ExtJson { success = false, msg = msg });
         }
         /// <summary>
-        /// 删除用户信息
+        /// 批量删除用户信息(ids数组)
         /// </summary>
         /// <returns></returns>
         public ActionResult Remove()
         {
-            string id = "1";
-            bool result = _bll.RemoveTUser(id);
+            string data = CommonManager.WebObj.RequestForm("ids", "");  //用户的IDS数组
+            string[] ids = data.Split(',');
+            bool result = _bll.RemoveTUsers(ids);
             if (result)
                 return JsonFormat(new ExtJson { success = true, msg = "删除成功！" });
             else
                 return JsonFormat(new ExtJson { success = false, msg = "删除失败！" });
         }
+        /// <summary>
+        /// 用户列表查询
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ListTUserPage()
         {
             int pageIndex = Convert.ToInt32(Request["pageIndex"]);
@@ -202,19 +218,8 @@ namespace GetMoney.Controllers.TUser
             else
                 return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
         }
-        public ActionResult TUserSearch() {
-            return View();
-        }
         /// <summary>
-        /// 批量添加好友
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult TUserFriend()
-        {
-            return View();
-        }
-        /// <summary>
-        /// 添加好友,
+        /// 批量添加好友,好友的id数组列表
         /// </summary>
         /// <returns></returns>
         public ActionResult CreateFriend() {
@@ -266,33 +271,23 @@ namespace GetMoney.Controllers.TUser
             else
                 return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
         }
-        public ActionResult Login() {
-            return View();
-        }
+        /// <summary>
+        /// Web用户登入(用户名,密码),生成用户ID的Session并且生成Cookie
+        /// </summary>
+        /// <returns></returns>
         public ActionResult WebLogin()
         {
-            string uid = CommonManager.WebObj.RequestForm("uid", "");
-            if (uid != "")
-            {
-                Session["uid"] = uid;
-                return JsonFormat(new ExtJson { success = true, msg = "登入成功" });
-            }
-            else {
-                return JsonFormat(new ExtJson { success = false, msg = "登入失败" });
-            }
-        }
-        public ActionResult TestLogin() {
             string UserName = CommonManager.WebObj.RequestForm("login", "");
             string Pwd = CommonManager.WebObj.RequestForm("password", "");
-            if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(Pwd)) {
+            if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(Pwd))
+            {
                 return JsonFormat(new ExtJson { success = false, msg = "账户和密码不能为空" });
             }
             TUserDto dto = new TUserDto();
             dto.UserName = UserName; dto.UserPwd = Pwd.MD5();
             int userid = _bll.VerifyTUsers(dto);
-            //CommonManager.WebObj.AddCookie("user", UserName, 1);
-            //CommonManager.WebObj.AddCookie("pwd", Pwd, 1);
-            if (userid != -1) {
+            if (userid != -1)
+            {
                 Session["uid"] = userid;
                 //添加cookie,30天
                 CommonManager.WebObj.AddCookie("user", UserName, 60 * 24 * 30);
@@ -300,6 +295,22 @@ namespace GetMoney.Controllers.TUser
                 return JsonFormat(new ExtJson { success = true, msg = "登入成功" });
             }
             return JsonFormat(new ExtJson { success = false, msg = "登入失败" });
+        }
+        /// <summary>
+        /// 方便不知道用户,密码的情况下临时使用
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult TestLogin() {
+            string uid = CommonManager.WebObj.RequestForm("uid", "");
+            if (uid != "")
+            {
+                Session["uid"] = uid;
+                return JsonFormat(new ExtJson { success = true, msg = "登入成功" });
+            }
+            else
+            {
+                return JsonFormat(new ExtJson { success = false, msg = "登入失败" });
+            }
         }
         public ActionResult WaterFall() {
             return JsonFormat(new ExtJson { success = false, msg = "登入失败" });

@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
+    <title>只是为了方便快速登入</title>
     <script src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
         $(function () {
@@ -16,7 +16,7 @@
                 var data = { uid: uid };
                 $.ajax({
                     type: "POST",
-                    url: "/TUser/WebLogin",
+                    url: "/TUser/TestLogin",
                     dataType: 'json',
                     data: data,
                     success: function (data) {

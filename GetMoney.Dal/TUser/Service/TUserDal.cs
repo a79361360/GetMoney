@@ -19,7 +19,19 @@ namespace GetMoney.Dal
             return dt;
         }
 
-
+        /// <summary>
+        /// 注册用户
+        /// </summary>
+        /// <param name="UserName">用户账号</param>
+        /// <param name="Pwd">密码</param>
+        /// <param name="BankPwd">银行密码</param>
+        /// <param name="NickName">呢称</param>
+        /// <param name="TrueName">真实姓名</param>
+        /// <param name="IdentityNum">身份证号码</param>
+        /// <param name="Phone">手机号码</param>
+        /// <param name="RegIp">注册IP</param>
+        /// <param name="TxUrl">头像URI</param>
+        /// <param name="list">注册结果返回</param>
         public void AddTUserByProce(string UserName, string Pwd, string BankPwd,string NickName,string TrueName,string IdentityNum,string Phone, string RegIp,string TxUrl, out Dictionary<string, object> list)
         {
             string ProName="SP_AddNewUser";
@@ -53,12 +65,12 @@ namespace GetMoney.Dal
         }
 
         /// <summary>
-        /// 
+        /// 好友操作,添加好友,拉黑,删除好友.
         /// </summary>
-        /// <param name="userid"></param>
-        /// <param name="pcid"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
+        /// <param name="userid">当前登入的用户ID</param>
+        /// <param name="pcid">好友用户ID</param>
+        /// <param name="type">操作类型1添加好友,2黑名单,3删除好友</param>
+        /// <returns>通过list外围获得操作结果,成功为1</returns>
         public void MakeTUserFriend(int userid, int pcid, int type, out Dictionary<string, object> list)
         {
             string ProName = "SP_FriendUser";
@@ -75,9 +87,6 @@ namespace GetMoney.Dal
             parameter[3].Direction = ParameterDirection.ReturnValue;
             string[] str = new string[] { "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
-            //string sql = "insert into TUserFriends(Userid,Pcid)values(" + userid + "," + pcid + ")";
-            //int result = dal.IntExtSql(sql);
-            //return result;
         }
         /// <summary>
         /// 根据UserName和UserPwd判断用户是否存在,存在返回-用户的ID,不存在返回-1

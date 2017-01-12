@@ -18,6 +18,10 @@ namespace GetMoney.Application
             _repostory = repostory;
             _dal = dal;
         }
+        /// <summary>
+        /// 使用EF来进行用户信息添加,现在基本没有使用这个方法来进行注册用户
+        /// </summary>
+        /// <param name="dto"></param>
         public void AddTUser(TUserDto dto)
         {
             if (dto == null)
@@ -40,25 +44,23 @@ namespace GetMoney.Application
             _repostory.Add(_build);
             _unitOfWork.Commit();
         }
+        /// <summary>
+        /// 注册用户
+        /// </summary>
+        /// <param name="dto">用户信息对象</param>
+        /// <param name="list">返回结果</param>
         public void RegTUser(TUserDto dto, out Dictionary<string, object> list)
         {
             _dal.AddTUserByProce(dto.UserName, dto.UserPwd, dto.BankPwd, dto.NickName, dto.TrueName, dto.IdentityNum, dto.Phone, dto.RegIP, dto.TxUrl, out list);
         }
-
-        public IList<TUserDto> ListTUserPage(ref int Total, int pageSize, int pageIndex)
-        {
-            SqlPageParam param = new SqlPageParam();
-            param.TableName = "TUsers";
-            param.PrimaryKey = "Userid";
-            param.Fields = "id,UserName,NickName,UserJb,IdentityNum,Phone,TxUrl,State,Addtime";
-            param.PageSize = pageSize;
-            param.PageIndex = pageIndex;
-            param.Filter = "";
-            param.Group = "";
-            param.Order = "Userid";
-            IList<TUserDto> list = DataTableToList.ModelConvertHelper<TUserDto>.ConvertToModel(_dal.ListUserPage(ref Total, param));
-            return list;
-        }
+        /// <summary>
+        /// 翻页查询用户信息
+        /// </summary>
+        /// <param name="Total">总条数</param>
+        /// <param name="pageSize">一页大小</param>
+        /// <param name="pageIndex">当前页索引,首页为0</param>
+        /// <param name="filter">条件</param>
+        /// <returns></returns>
         public IList<TUserDto> ListTUserPage(ref int Total, int pageSize, int pageIndex,string filter)
         {
             SqlPageParam param = new SqlPageParam();
@@ -78,7 +80,7 @@ namespace GetMoney.Application
         /// </summary>
         /// <param name="Total">总条数</param>
         /// <param name="pageSize">一页大小</param>
-        /// <param name="pageIndex">当前页索引</param>
+        /// <param name="pageIndex">当前页索引,首页为0</param>
         /// <param name="filter">条件</param>
         /// <returns></returns>
         public IList<FriendDto> ListFriendPage(ref int Total, int pageSize, int pageIndex, string filter)
@@ -95,7 +97,11 @@ namespace GetMoney.Application
             IList<FriendDto> list = DataTableToList.ModelConvertHelper<FriendDto>.ConvertToModel(_dal.ListUserPage(ref Total, param));
             return list;
         }
-
+        /// <summary>
+        /// 单个移除用户信息(用户ID)
+        /// </summary>
+        /// <param name="id">用户ID</param>
+        /// <returns></returns>
         public bool RemoveTUser(string id)
         {
             bool result = false;
@@ -113,7 +119,11 @@ namespace GetMoney.Application
             }
             return result;
         }
-
+        /// <summary>
+        /// 批量移出用户信息(用户ID列表)
+        /// </summary>
+        /// <param name="ids">用户ID列表</param>
+        /// <returns></returns>
         public bool RemoveTUsers(string[] ids)
         {
             bool result = false;
@@ -142,7 +152,12 @@ namespace GetMoney.Application
             }
             return result;
         }
-
+        /// <summary>
+        /// 添加好友,(用户ID,好友id列表)
+        /// </summary>
+        /// <param name="userid">用户ID</param>
+        /// <param name="list">好友列表对象</param>
+        /// <returns>完成好友添加数量</returns>
         public int AddTUserFriend(int userid, IList<UListDto> list)
         {
             Dictionary<string, object> dic;
@@ -158,10 +173,10 @@ namespace GetMoney.Application
             return result;
         }
         /// <summary>
-        /// 
+        /// 通过账号和密码判断用户ID是否存在,存在返回用户ID,失败返回-1
         /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
+        /// <param name="dto">用户对象</param>
+        /// <returns>成功返回用户ID,失败返回-1</returns>
         public int VerifyTUsers(TUserDto dto) {
             int result = _dal.VerifyUserByUnamePwd(dto.UserName, dto.UserPwd);
             return result;
