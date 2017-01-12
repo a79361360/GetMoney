@@ -180,7 +180,7 @@ namespace GetMoney.Controllers.TUser
             string type = CommonManager.WebObj.Request("type", "");
             string text = CommonManager.WebObj.Request("text", "");
             string filter = "";
-            if (!string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(text)&& !string.IsNullOrEmpty(type))
             {
                 filter = type + " like '%" + text + "%'";
             }

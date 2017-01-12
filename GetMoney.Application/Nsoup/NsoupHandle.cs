@@ -16,19 +16,6 @@ namespace GetMoney.Application.Nsoup
     {
         int ExecuteNum = 0;     //执行次数
         NsoupDal dal = new NsoupDal();
-        //public void Test(string url)
-        //{
-        //    Elements links = null;
-        //    MyWebClient webClient = new MyWebClient();
-        //    String HtmlString = GetHtmlString(webClient, url);
-        //    NSoup.Nodes.Document doc = NSoup.NSoupClient.Parse(HtmlString);
-        //    links = doc.Select("#read_tpc img");
-        //    foreach (var item in links) {
-        //        string imguri = item.Attr("src");
-        //        if (!string.IsNullOrEmpty(imguri))
-        //            CommonManager.FileObj.DowdLoad_ImgByUrl(imguri, "/DownLoad/Img", "");
-        //    }
-        //}
         /// <summary>
         /// 根据抓取地址,取得里面的下级地址,再保存到指定下载地址
         /// </summary>
