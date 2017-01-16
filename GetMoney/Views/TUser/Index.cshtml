@@ -40,15 +40,15 @@
                             var caption = "<caption><div class=\"btn-toolbar\" role=\"toolbar\">";
                             caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"neworder()\">新增</button></div>";
                             caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\">编辑</button></div>";
-                            caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"RemoveByNo(null)\">删除</button></div>";
+                            caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"RemoveById()\">删除</button></div>";
                             caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"takefinds()\">加为好友</button></div>";
                             caption += "</div></caption>";
 
                             var str = "<table class=\"table table-bordered table-hover\"><thead><tr>";
                             str += "<th style=\"width:6%;\"><label class=\"checkbox-inline\"><input id=\"allqx\" type=\"checkbox\" />全选</label></th>";
-                            str += "<th style=\"width:190px;\">用户ID</th><th style=\"width:130px;\">用户账号</th><th style=\"width:118px;\">用户昵称</th><th style=\"width:60px;\">真实姓名</th>";
-                            str += "<th style=\"width:80px;\">身份证号</th><th style=\"width:118px;\">手机号码</th><th style=\"width:118px;\">会员状态</th>";
-                            str += "<th style=\"width:130px;\">操作</th></tr></thead>" + caption;
+                            str += "<th style=\"width:60px;\">用户ID</th><th style=\"width:100px;\">用户账号</th><th style=\"width:120px;\">用户昵称</th><th style=\"width:80px;\">真实姓名</th>";
+                            str += "<th style=\"width:170px;\">身份证号</th><th style=\"width:118px;\">手机号码</th><th style=\"width:60px;\">会员状态</th>";
+                            str += "<th style=\"width:60px;\">操作</th></tr></thead>" + caption;
                             
                             $.each(data.list, function (i, o) {
                                 str += "<tr><td style=\"text-align:center\"><input type=\"checkbox\" value=\"" + o.id + "\"></td><td onclick=\"addatr(this)\">" + o.id + "</td><td>" + o.UserName + "</td><td>" + o.NickName + "</td><td>" + o.TrueName + "</td><td>" + o.IdentityNum + "</td><td>" + o.Phone + "</td><td>" + o.State + "</td></tr>";
@@ -76,6 +76,33 @@
                     var eachobj = $(e).children("td").eq(0).find(":checkbox");
                     if (qx.prop("checked")) eachobj.prop("checked", true); else eachobj.prop("checked", false);
                 })
+            }
+            //删除用户
+            RemoveById = function () {
+                var list = [];      //数组对象，将
+                var data;           //元素对象
+                var tr = $("#tblist tbody tr");
+                $.each(tr, function (i, e) {
+                    var eachobj = $(e).children("td").eq(0).find(":checkbox");
+                    if (eachobj.prop("checked")) {
+                        data = new Object();    //元素对象实例
+                        data.id = eachobj.val();
+                        list.push(data);
+                    }
+                })
+                $.ajax({
+                    type: "POST",
+                    url: '/TUser/Remove',
+                    data: { data: JSON.stringify(list) },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                            tips(data.msg, 2);
+                        } else {
+                            tips(data.msg, 2);
+                        }
+                    }
+                });
             }
             //读取用户ID，添加到好友
             takefinds = function () {

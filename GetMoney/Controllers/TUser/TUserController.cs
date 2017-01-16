@@ -22,6 +22,10 @@ namespace GetMoney.Controllers.TUser
         }
         //
         // GET: /TUser/
+        public ActionResult UserMenuPortal()
+        {
+            return View();
+        }
 
         public ActionResult Index()
         {
@@ -161,9 +165,10 @@ namespace GetMoney.Controllers.TUser
         /// <returns></returns>
         public ActionResult Remove()
         {
-            string data = CommonManager.WebObj.RequestForm("ids", "");  //用户的IDS数组
-            string[] ids = data.Split(',');
-            bool result = _bll.RemoveTUsers(ids);
+            string data = CommonManager.WebObj.RequestForm("data", "");  //用户的IDS数组
+            IList<UListDto> list = SerializeJson<UListDto>.JSONStringToList(data);
+            bool result = _bll.RemoveTUsers(list);
+            //bool result = false;
             if (result)
                 return JsonFormat(new ExtJson { success = true, msg = "删除成功！" });
             else
