@@ -124,10 +124,10 @@ namespace GetMoney.Application
         /// </summary>
         /// <param name="ids">用户ID列表</param>
         /// <returns></returns>
-        public bool RemoveTUsers(string[] ids)
+        public bool RemoveTUsers(IList<UListDto> ids)
         {
             bool result = false;
-            if (ids.Length == 0)
+            if (ids.Count == 0)
             {
                 throw new ArgumentNullException();
             }
@@ -135,12 +135,12 @@ namespace GetMoney.Application
             {
                 try
                 {
-                    foreach (var id in ids)
+                    foreach (UListDto item in ids)
                     {
-                        int gid = id.ToInt32();
-                        var _dto = _repostory.Get(gid);
-                        _repostory.Remove(_dto);
-                        _repostory.UnitOfWork.Commit();
+                        int gid = item.id.ToInt32();        //用户ID
+                        var _dto = _repostory.Get(gid);     //取得用户对象
+                        _repostory.Remove(_dto);            //移除
+                        _repostory.UnitOfWork.Commit();     //提交
                     }
                     result = true;
                 }

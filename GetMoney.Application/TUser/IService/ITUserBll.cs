@@ -24,7 +24,7 @@ namespace GetMoney.Application
         /// </summary>
         /// <param name="ids">用户ID列表</param>
         /// <returns></returns>
-        bool RemoveTUsers(string[] ids);
+        bool RemoveTUsers(IList<UListDto> ids);
         /// <summary>
         /// 单个移除用户信息(用户ID)
         /// </summary>
