@@ -2748,6 +2748,8 @@
     <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
     <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
     <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\img.gif" />
+    <Content Include="Content\TestPage\bootstrap.min.css" />
+    <Content Include="Content\TestPage\bootstrap.min.js" />
     <Content Include="Content\TestPage\jquery-2.1.4.min.js" />
     <Content Include="Content\TestPage\mricode.pagination.css" />
     <Content Include="Content\TestPage\mricode.pagination.js" />
@@ -2885,6 +2887,9 @@
     <Content Include="Views\OnlyNameTest\TTest.cshtml" />
     <Content Include="Views\OnlyNameTest\Test.cshtml" />
     <Content Include="Views\Nsoup\Index.cshtml" />
+    <Content Include="Views\Nsoup\NsoupImgIndex.cshtml" />
+    <Content Include="Views\Nsoup\ShowImg.cshtml" />
+    <Content Include="Views\Nsoup\NsoupTitlePortal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Application\GetMoney.Application.csproj">
