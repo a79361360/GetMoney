@@ -109,7 +109,21 @@ namespace GetMoney.Dal
             }
             return -1;
         }
-
-
+        /// <summary>
+        /// 通过ID查询返回TUser对象
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DataTable FindUserById(int id)
+        {
+            string sql = "SELECT [id],[UserName],[UserPwd],[BankPwd],[NickName],[UserJb],[TrueName],[IdentityNum],[Phone],[RegIP],[TxUrl],[State],[Addtime] FROM [TUsers] where id=@id";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@id",SqlDbType.Int)
+            };
+            parameter[0].Value = id;
+            DataTable dt = dal.ExtSql(sql, parameter);
+            return dt;
+        }
     }
 }
