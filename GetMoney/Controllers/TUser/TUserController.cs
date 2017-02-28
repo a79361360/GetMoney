@@ -38,6 +38,10 @@ namespace GetMoney.Controllers.TUser
         public ActionResult RegTUser() {
             return View();
         }
+        public ActionResult EditTUser(int id) {
+            TUserDto dto = _bll.FindUserById(id);
+            return View(dto);
+        }
         public ActionResult TUserFriend()
         {
             return View();

@@ -97,6 +97,13 @@ namespace GetMoney.Application
             IList<FriendDto> list = DataTableToList.ModelConvertHelper<FriendDto>.ConvertToModel(_dal.ListUserPage(ref Total, param));
             return list;
         }
+        public TUserDto FindUserById(int id) {
+            IList<TUserDto> list = DataTableToList.ModelConvertHelper<TUserDto>.ConvertToModel(_dal.FindUserById(id));
+            if (list.Count > 0) {
+                return list[0];
+            }
+            return null;
+        }
         /// <summary>
         /// 单个移除用户信息(用户ID)
         /// </summary>

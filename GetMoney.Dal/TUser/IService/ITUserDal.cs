@@ -39,5 +39,11 @@ namespace GetMoney.Dal
         /// <param name="UserPwd">用户密码</param>
         /// <returns>存在用户的ID不存在-1</returns>
         int VerifyUserByUnamePwd(string UserName, string UserPwd);
+        /// <summary>
+        /// 根据ID取得用户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        DataTable FindUserById(int id);
     }
 }
