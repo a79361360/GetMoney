@@ -289,6 +289,7 @@ namespace GetMoney.Common
                 UpdateCookie(name, value, timeout);
             }
         }
+        //更新cookie失效时间
         public void UpdateCookie(string name, string value, int? timeout)
         {
             HttpCookie cookie = new HttpCookie(name);
@@ -296,6 +297,7 @@ namespace GetMoney.Common
             cookie.Value = value;
             HttpContext.Current.Response.Cookies.Add(cookie);
         }
+        //移除cookie
         public void RemoveCookie(string name) {
             HttpContext.Current.Response.Cookies.Remove(name);
         }
