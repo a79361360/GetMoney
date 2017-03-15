@@ -63,7 +63,27 @@ namespace GetMoney.Dal
             string[] str = new string[] { "@Userid", "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }
-
+        public bool EditTUser(int id, string username, string nickname, string truename, string identitynum, string phone, string txurl) {
+            string sql = "Update TUsers set NickName=@NickName,TrueName=@TrueName,IdentityNum=@IdentityNum,Phone=@Phone,TxUrl=@TxUrl where id=@id";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@NickName",SqlDbType.NVarChar,20),
+                new SqlParameter("@TrueName",SqlDbType.NVarChar,20),
+                new SqlParameter("@IdentityNum",SqlDbType.NVarChar,20),
+                new SqlParameter("@Phone",SqlDbType.NVarChar,12),
+                new SqlParameter("@TxUrl",SqlDbType.NVarChar,100),
+                new SqlParameter("@id",SqlDbType.Int)
+            };
+            parameter[0].Value = nickname;
+            parameter[1].Value = truename;
+            parameter[2].Value = identitynum;
+            parameter[3].Value = phone;
+            parameter[4].Value = txurl;
+            parameter[5].Value = id;
+            int result = dal.IntExtSql(sql, parameter);
+            if (result > 0) return true;
+            else return false;
+        }
         /// <summary>
         /// 好友操作,添加好友,拉黑,删除好友.
         /// </summary>

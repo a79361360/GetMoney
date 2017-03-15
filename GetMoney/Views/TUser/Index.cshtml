@@ -13,6 +13,13 @@
     <script src="~/Content/TestPage/bootstrap.min.js"></script>
     <link href="~/Content/TestPage/mricode.pagination.css" rel="stylesheet" />
     <script src="~/Content/TestPage/mricode.pagination.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td,
+        .table > thead > tr > th{
+            vertical-align:middle;
+            text-align:center;
+        }
+    </style>
     <script type="text/javascript">
         $(function () {
             //点击查询
@@ -38,8 +45,8 @@
                         params: { text: text, type: type },         //自定义请求参数
                         success: function (data) {
                             var caption = "<caption><div class=\"btn-toolbar\" role=\"toolbar\">";
-                            caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"neworder()\">新增</button></div>";
-                            caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\">编辑</button></div>";
+                            caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"CreateNew()\">新增</button></div>";
+                            caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"EditById()\">编辑</button></div>";
                             caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"RemoveById()\">删除</button></div>";
                             caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"takefinds()\">加为好友</button></div>";
                             caption += "</div></caption>";
@@ -51,7 +58,7 @@
                             str += "<th style=\"width:60px;\">操作</th></tr></thead>" + caption;
                             
                             $.each(data.list, function (i, o) {
-                                str += "<tr><td style=\"text-align:center\"><input type=\"checkbox\" value=\"" + o.id + "\"></td><td onclick=\"addatr(this)\">" + o.id + "</td><td>" + o.UserName + "</td><td>" + o.NickName + "</td><td>" + o.TrueName + "</td><td>" + o.IdentityNum + "</td><td>" + o.Phone + "</td><td>" + o.State + "</td></tr>";
+                                str += "<tr><td style=\"text-align:center\"><input type=\"checkbox\" value=\"" + o.id + "\"></td><td onclick=\"addatr(this)\">" + o.id + "</td><td>" + o.UserName + "</td><td>" + o.NickName + "</td><td>" + o.TrueName + "</td><td>" + o.IdentityNum + "</td><td>" + o.Phone + "</td><td>" + o.State + "</td><td><a class=\"btn btn-default btn-sm\" href=\"/TUser/EditPortal?id=" + o.id + "\" role=\"button\" target=\"_blank\">查看</a></td></tr>";
                             })
                             str += "</table>";
                             $("#tblist").html(str);
@@ -76,6 +83,27 @@
                     var eachobj = $(e).children("td").eq(0).find(":checkbox");
                     if (qx.prop("checked")) eachobj.prop("checked", true); else eachobj.prop("checked", false);
                 })
+            }
+            //新增用户
+            CreateNew = function () {
+                window.open("/TUser/RegTUser", "_blank");
+            }
+            //修改用户
+            EditById = function () {
+                var tr = $("#tblist tbody tr"); var checknum = 0;//选中个数
+                var uid = 0;
+                $.each(tr, function (i, e) {
+                    var eachobj = $(e).children("td").eq(0).find(":checkbox");
+                    if (eachobj.prop("checked")) {
+                        checknum++;
+                        uid = eachobj.val();
+                    }
+                })
+                if (checknum > 1 || checknum == 0) {
+                    tips("请选中一条记录进行更新", 1);
+                    return 
+                }
+                window.open("/TUser/EditPortal?id=" + uid, "_blank");
             }
             //删除用户
             RemoveById = function () {
@@ -130,6 +158,28 @@
                         }
                     }
                 });
+            }
+            //弹出窗体
+            qiu_confirm = function (id, title, content, width, height) {
+                var iframe = $(id);
+                if (iframe.length > 0) {
+                    iframe.modal('show');
+                    return;
+                }
+                if (width != null) {
+                    width = "style=\"width:" + width + "px\"";
+                }
+                if (height != null) {
+                    height = "style=\"height:" + height + "px;overflow:auto\"";
+                }
+                var header = "<div class=\"modal-header\"><button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button><h4 class=\"modal-title\" id=\"myModalLabel\">" + title + "</h4></div>"
+                var footer = "<div class=\"modal-footer\"><button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">关闭</button></div>";
+                var BootDialog = "<div class=\"modal fade\" id=\"" + id + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">";
+                BootDialog += " <div class=\"modal-dialog\"><div class=\"modal-content\"" + width + ">" + header + "<div class=\"modal-body\"" + height + ">" + content + "</div>" + footer + "</div></div></div>";
+                var obj = $(BootDialog); obj.modal('show');
+                //obj.find("#Tj").click(function () {
+                //    obj.modal('hide');
+                //})
             }
             //弹于信息tips
             tips = function (content, timeout) {

@@ -44,6 +44,11 @@ namespace GetMoney.Application
             _repostory.Add(_build);
             _unitOfWork.Commit();
         }
+
+        public bool EditTUser(TUserDto dto) {
+            bool result = _dal.EditTUser(dto.id, dto.UserName, dto.NickName, dto.TrueName, dto.IdentityNum, dto.Phone, dto.TxUrl);
+            return result;
+        }
         /// <summary>
         /// 注册用户
         /// </summary>

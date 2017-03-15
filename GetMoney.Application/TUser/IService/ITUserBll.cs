@@ -13,6 +13,7 @@ namespace GetMoney.Application
         /// </summary>
         /// <param name="dto"></param>
         void AddTUser(TUserDto dto);
+        bool EditTUser(TUserDto dto);
         /// <summary>
         /// 注册用户(用户信息对象,返回结果)
         /// </summary>

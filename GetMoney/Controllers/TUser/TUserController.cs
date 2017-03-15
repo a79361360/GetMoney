@@ -26,6 +26,10 @@ namespace GetMoney.Controllers.TUser
         {
             return View();
         }
+        public ActionResult MyFriendPortal()
+        {
+            return View();
+        }
 
         public ActionResult Index()
         {
@@ -39,6 +43,32 @@ namespace GetMoney.Controllers.TUser
             return View();
         }
         public ActionResult EditTUser(int id) {
+            int uid = Convert.ToInt32(CommonManager.WebObj.RequestForm("id", "0"));
+            string nickname = CommonManager.WebObj.RequestForm("nickname", "");
+            string truename = CommonManager.WebObj.RequestForm("truename", "");
+            string identitynum = CommonManager.WebObj.RequestForm("identitynum", "");
+            string phone = CommonManager.WebObj.RequestForm("phone", "");
+            string txurl = CommonManager.WebObj.RequestForm("txurl", "");
+            TUserDto dto = new TUserDto();
+            dto.id = uid; dto.NickName = nickname; dto.TrueName = truename; dto.IdentityNum = identitynum;
+            dto.Phone = phone; dto.TxUrl = txurl;
+            string remark = "";
+            try
+            {
+                bool result = _bll.EditTUser(dto);
+                if (result) remark = "修改成功"; else remark = "修改失败";
+                //return JsonFormat(new ExtJson { success = true, msg = remark });
+                ContentResult content = new ContentResult();
+                content.Content = string.Format("<script language='javaScript' type='text/javaScript'>window.parent.window.location.href = '/TUser/Index';</script>");
+                return content;
+            }
+            catch (Exception er){
+                CommonManager.TxtObj.WriteLogs("/Logs/UpdateTUser_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "修改用户信息异常：" + er.Message);
+                remark = "出现技术异常,请联系管理员.";
+                return JsonFormat(new ExtJson { success = true, msg = remark });
+            }
+        }
+        public ActionResult EditPortal(int id) {
             TUserDto dto = _bll.FindUserById(id);
             return View(dto);
         }

@@ -13,6 +13,13 @@
     <script type="text/javascript" src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="~/Content/TestPage/mricode.pagination.css" rel="stylesheet" />
     <script src="~/Content/TestPage/mricode.pagination.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td,
+        .table > thead > tr > th {
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -76,29 +83,42 @@
                             caption += "<div class=\"btn-group\"><button type=\"button\" class=\"btn btn-default\" onclick=\"RemoveByNo(null)\">删除</button></div>";
                             caption += "</div></caption>";
 
-                            var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:6%;\"><label class=\"checkbox-inline\"><input id=\"allqx\" type=\"checkbox\" />全选</label></th><th style=\"width:130px;\">图片类型</th><th style=\"width:130px;\">图片标题</th><th style=\"width:130px;\">操作</th></tr></thead>";
+                            var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:6%;\"><label class=\"checkbox-inline\"><input id=\"allqx\" type=\"checkbox\" />全选</label></th><th style=\"width:10%;\">图片类型</th><th style=\"width:130px;\">图片标题</th><th style=\"width:10%;\">操作</th></tr></thead>" + caption;
                             $.each(data.list, function (i, o) {
                                 str += "<tr><td style=\"text-align:center\"><input type=\"checkbox\" value=\"" + o.id + "\"></td><td>" + o.Type + "</td><td>" + o.TitleName + "</td><td><button class=\"btn btn-primary\" onclick=\"FindImgByImgUrl(this,'" + o.Type + "','" + o.id + "')\">查看</button></td></tr>";
                             })
                             str += "</table>";
                             $("#tblist").html(str);
                         } else {
-                            var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:6%;\"><label class=\"checkbox-inline\"><input id=\"allqx\" type=\"checkbox\" />全选</label></th><th style=\"width:130px;\">图片类型</th><th style=\"width:130px;\">图片标题</th><th style=\"width:130px;\">操作</th></tr></thead>";
+                            var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:6%;\"><label class=\"checkbox-inline\"><input id=\"allqx\" type=\"checkbox\" />全选</label></th><th style=\"width:10%;\">图片类型</th><th style=\"width:130px;\">图片标题</th><th style=\"width:10%;\">操作</th></tr></thead>";
                             str += "</table>";
                             $("#tblist").html("");
                         }
+                        //点击全选调用
+                        $("#allqx").click(function () { togglechg(); })
                     },
                     totalName: 'total'              //指定返回数据的总数据量的字段名
                 }
             });
         })
+        //下拉选择框
         $('.dropdown-menu a').click(function () {
             var txt = $(this).text(); var val = $(this).attr("v_val");
             var objdrop = $(this).parent().parent().siblings("button").eq(0);
             objdrop.text(txt); objdrop.attr("v_val", val);
         })
+        //点击全选
+        togglechg = function () {
+            var qx = $("#allqx");
+            var tr = $("#tblist tbody tr")
+            $.each(tr, function (i, e) {
+                var eachobj = $(e).children("td").eq(0).find(":checkbox");
+                if (qx.prop("checked")) eachobj.prop("checked", true); else eachobj.prop("checked", false);
+            })
+        }
     })
-    FindImgByImgUrl = function (o,type, titleid) {
+    //根据TitleId取得图片列表
+    FindImgByImgUrl = function (o, type, titleid) {
         window.open("/Nsoup/ShowImg?type=2&imgtype=" + type + "&titleid=" + titleid);
     }
     </script>

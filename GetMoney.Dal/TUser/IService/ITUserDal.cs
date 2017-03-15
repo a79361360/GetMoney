@@ -45,5 +45,6 @@ namespace GetMoney.Dal
         /// <param name="id"></param>
         /// <returns></returns>
         DataTable FindUserById(int id);
+        bool EditTUser(int id,string username,string nickname,string truename,string identitynum,string phone,string txurl);
     }
 }
