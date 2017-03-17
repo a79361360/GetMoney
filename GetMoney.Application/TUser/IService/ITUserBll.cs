@@ -69,5 +69,12 @@ namespace GetMoney.Application
         /// <param name="id"></param>
         /// <returns></returns>
         TUserDto FindUserById(int id);
+        /// <summary>
+        /// 更新玩家的头像
+        /// </summary>
+        /// <param name="host">主机IP跟端口,外网的域名</param>
+        /// <param name="userid">用户ID</param>
+        /// <returns>完整的上传地址</returns>
+        string UpdateFileTx(string host, string userid);
     }
 }

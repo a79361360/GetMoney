@@ -145,5 +145,20 @@ namespace GetMoney.Dal
             DataTable dt = dal.ExtSql(sql, parameter);
             return dt;
         }
+        public void UpdateUserTx(int userid, string txurl, out Dictionary<string, object> list)
+        {
+            string ProName = "SP_UpdateUserTx";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@Userid",SqlDbType.Int),
+                new SqlParameter("@TxUrl",SqlDbType.NVarChar,250),
+                new SqlParameter("@ReturnValue",SqlDbType.Int)
+            };
+            parameter[0].Value = userid;
+            parameter[1].Value = txurl;
+            parameter[2].Direction = ParameterDirection.ReturnValue;
+            string[] str = new string[] { "@ReturnValue" };
+            dal.ExtProc(ProName, parameter, str, out list);
+        }
     }
 }

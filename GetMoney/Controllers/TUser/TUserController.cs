@@ -42,16 +42,28 @@ namespace GetMoney.Controllers.TUser
         public ActionResult RegTUser() {
             return View();
         }
+        public ActionResult UpdatePortal(int id)
+        {
+            TUserDto dto = _bll.FindUserById(id);
+            return View();
+        }
+        public ActionResult UpdateTx()
+        {
+            CommonManager.TxtObj.WriteLogs("/Logs/TxFile_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "1");
+            string host = "http://" + Request.Url.Authority;   //
+            string uid = CommonManager.WebObj.Request("Uid", "0");
+            string path = _bll.UpdateFileTx(host, uid);
+            return Content("<script>alert(1)</script>");
+        }
         public ActionResult EditTUser(int id) {
             int uid = Convert.ToInt32(CommonManager.WebObj.RequestForm("id", "0"));
             string nickname = CommonManager.WebObj.RequestForm("nickname", "");
             string truename = CommonManager.WebObj.RequestForm("truename", "");
             string identitynum = CommonManager.WebObj.RequestForm("identitynum", "");
             string phone = CommonManager.WebObj.RequestForm("phone", "");
-            string txurl = CommonManager.WebObj.RequestForm("txurl", "");
             TUserDto dto = new TUserDto();
             dto.id = uid; dto.NickName = nickname; dto.TrueName = truename; dto.IdentityNum = identitynum;
-            dto.Phone = phone; dto.TxUrl = txurl;
+            dto.Phone = phone;
             string remark = "";
             try
             {
@@ -166,7 +178,7 @@ namespace GetMoney.Controllers.TUser
             dto.IdentityNum = CommonManager.WebObj.RequestForm("IdentityNum", "");
             dto.Phone = CommonManager.WebObj.RequestForm("Phone", "");
             dto.RegIP = CommonManager.WebObj.GetWebClientIp();
-            dto.TxUrl= CommonManager.WebObj.RequestForm("TxUrl", "");
+
             Dictionary<string, object> list = new Dictionary<string, object>();
             int result = -1;    //注册结果
             string msg = "注册成功!";

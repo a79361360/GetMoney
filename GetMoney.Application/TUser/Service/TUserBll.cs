@@ -6,6 +6,7 @@ using GetMoney.Model;
 using GetMoney.Data.TUser;
 using GetMoney.Dal;
 using GetMoney.Framework.Common;
+using GetMoney.Common.Expand;
 
 namespace GetMoney.Application
 {
@@ -192,6 +193,23 @@ namespace GetMoney.Application
         public int VerifyTUsers(TUserDto dto) {
             int result = _dal.VerifyUserByUnamePwd(dto.UserName, dto.UserPwd);
             return result;
+        }
+        public string UpdateFileTx(string host, string userid)
+        {
+            string key = "ddzasdklfwne2394i23jovnfoirehnoi23";
+            string pathx = "/DownLoad/File/Tx/";                                        //图片地址
+            string filename = (userid.ToString() + key).MD5() + ".jpg";                 //图片名称 
+            string vtime = "?v=" + DateTime.Now.ToUnixTimeStamp().ToString();           //用时间戳来做版本号
+            string path = Common.CommonManager.FileObj.HttpUploadFile(pathx, filename); //返回完整的上传地址
+            if (!string.IsNullOrEmpty(path)) { 
+                Dictionary<string, object> dic;
+                _dal.UpdateUserTx(userid.ToInt32(), host + pathx + filename + vtime, out dic);
+                if (Convert.ToInt32(dic["@ReturnValue"]) == 1)
+                {
+                    return host + pathx + filename + vtime;
+                }
+            }
+            return "";
         }
     }
 }
