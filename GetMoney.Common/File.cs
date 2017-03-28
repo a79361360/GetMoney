@@ -275,9 +275,6 @@ namespace GetMoney.Common
                     string filePath = HttpContext.Current.Server.MapPath(virtualpath);
                     if (!Directory.Exists(filePath)) Directory.CreateDirectory(filePath);
                     string fname= HttpContext.Current.Request.Files[0].FileName;
-                    int ll = fname.LastIndexOf(".");
-                    int ljo = fname.Length;
-                    string l = fname.Substring(10, 3);
                     suffix = fname.Substring(fname.LastIndexOf(".") + 1, fname.Length - (fname.LastIndexOf(".") + 1));
                     if (string.IsNullOrEmpty(filename))
                     {
