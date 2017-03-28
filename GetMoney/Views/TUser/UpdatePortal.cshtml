@@ -16,8 +16,28 @@
 
     // How easy is this??
       $('#element_id').Jcrop();
+      $("#element_id").Jcrop({
+          bgColor: 'black',
+          bgOpacity: .4,
+          setSelect: [100, 100, 150, 150],  //设定4个角的初始位置
+          aspectRatio: 1 / 1,
+          onChange: showCoords,   //当裁剪框变动时执行的函数
+          onSelect: showCoords,   //当选择完成时执行的函数
+      });
 
-  });
+      //$('#element_id').on('cropmove', function (e, s, c) {
+      //    alert(c.x)
+      //    console.log(c.x);
+      //    console.log(c.y);
+      //    console.log(c.w);
+      //    console.log(c.h);
+      //});
+  }); showCoords = function (c) {
+      console.log(c.x);
+      console.log(c.y);
+      console.log(c.w);
+      console.log(c.h);
+  };
     </script>
 </head>
 <body>
