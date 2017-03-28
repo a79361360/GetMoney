@@ -7,6 +7,9 @@ using GetMoney.Data.TUser;
 using GetMoney.Dal;
 using GetMoney.Framework.Common;
 using GetMoney.Common.Expand;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 
 namespace GetMoney.Application
 {
@@ -210,6 +213,45 @@ namespace GetMoney.Application
                 }
             }
             return "";
+        }
+
+
+        /// <summary>
+        /// 剪裁图像
+        /// </summary>
+        /// <param name="Img"></param>
+        /// <param name="Width"></param>
+        /// <param name="Height"></param>
+        /// <param name="X"></param>
+        /// <param name="Y"></param>
+        /// <returns></returns>
+        private byte[] Crop(string Img, int Width, int Height, int X, int Y)
+        {
+            try
+            {
+                using (var OriginalImage = new Bitmap(Img))
+                {
+                    using (var bmp = new Bitmap(Width, Height, OriginalImage.PixelFormat))
+                    {
+                        bmp.SetResolution(OriginalImage.HorizontalResolution, OriginalImage.VerticalResolution);
+                        using (Graphics Graphic = Graphics.FromImage(bmp))
+                        {
+                            Graphic.SmoothingMode = SmoothingMode.AntiAlias;
+                            Graphic.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            Graphic.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                            Graphic.DrawImage(OriginalImage, new Rectangle(0, 0, Width, Height), X, Y, Width, Height,
+                                              GraphicsUnit.Pixel);
+                            var ms = new MemoryStream();
+                            bmp.Save(ms, OriginalImage.RawFormat);
+                            return ms.GetBuffer();
+                        }
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                throw (Ex);
+            }
         }
     }
 }
