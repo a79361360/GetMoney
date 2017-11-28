@@ -203,7 +203,7 @@ namespace GetMoney.Application
             string pathx = "/DownLoad/File/Tx/";                                        //图片地址
             string filename = (userid.ToString() + key).MD5() + ".jpg";                 //图片名称 
             string vtime = "?v=" + DateTime.Now.ToUnixTimeStamp().ToString();           //用时间戳来做版本号
-            string path = Common.CommonManager.FileObj.HttpUploadFile(pathx, filename); //返回完整的上传地址
+            string path = Common.CommonManager.FileObj.HttpUploadFile(pathx, filename); //返回完整的上传地址 
             if (!string.IsNullOrEmpty(path)) { 
                 Dictionary<string, object> dic;
                 _dal.UpdateUserTx(userid.ToInt32(), host + pathx + filename + vtime, out dic);
@@ -214,8 +214,27 @@ namespace GetMoney.Application
             }
             return "";
         }
-
-
+        public string UpdateFileTx1(string host, string userid,int x,int y,int w,int h,Stream Img)
+        {
+            string key = "ddzasdklfwne2394i23jovnfoirehnoi23";
+            string pathx = "/DownLoad/File/Tx/";                                        //图片地址
+            string filename = (userid.ToString() + key).MD5() + ".jpg";                 //图片名称 
+            string vtime = "?v=" + DateTime.Now.ToUnixTimeStamp().ToString();           //用时间戳来做版本号
+            //byte[] pbyte = Crop(Img, w, h, x, y);
+            byte[] pbyte = CropImage(Img, w, h, x, y);
+            string path = Common.CommonManager.FileObj.UploadFileByByte(pathx+ filename, pbyte); //返回完整的上传地址
+            if (!string.IsNullOrEmpty(path))
+            {
+                Dictionary<string, object> dic;
+                _dal.UpdateUserTx(userid.ToInt32(), pathx + filename + vtime, out dic);
+                if (Convert.ToInt32(dic["@ReturnValue"]) == 1)
+                {
+                    return host + pathx + filename + vtime;   //完整路径
+                    //return pathx + filename + vtime;     //虚拟路径
+                }
+            }
+            return "";
+        }
         /// <summary>
         /// 剪裁图像
         /// </summary>
@@ -225,7 +244,7 @@ namespace GetMoney.Application
         /// <param name="X"></param>
         /// <param name="Y"></param>
         /// <returns></returns>
-        private byte[] Crop(string Img, int Width, int Height, int X, int Y)
+        public byte[] Crop(Stream Img, int Width, int Height, int X, int Y)
         {
             try
             {
@@ -251,6 +270,37 @@ namespace GetMoney.Application
             catch (Exception Ex)
             {
                 throw (Ex);
+            }
+        }
+
+        public byte[] CropImage(Stream content, int cropWidth, int cropHeight, int x, int y)
+        {
+            using (Bitmap sourceBitmap = new Bitmap(content))
+            {
+
+                // 将选择好的图片缩放
+                //Bitmap bitSource = new Bitmap(sourceBitmap, sourceBitmap.Width, sourceBitmap.Height);
+                Bitmap bitSource = new Bitmap(sourceBitmap, 602, 400);
+
+                Rectangle cropRect = new Rectangle(x, y, cropWidth, cropHeight);
+
+                using (Bitmap newBitMap = new Bitmap(cropWidth, cropHeight))
+                {
+                    newBitMap.SetResolution(sourceBitmap.HorizontalResolution, sourceBitmap.VerticalResolution);
+                    using (Graphics g = Graphics.FromImage(newBitMap))
+                    {
+                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        g.SmoothingMode = SmoothingMode.HighQuality;
+                        g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                        g.CompositingQuality = CompositingQuality.HighQuality;
+
+                        g.DrawImage(bitSource, new Rectangle(0, 0, newBitMap.Width, newBitMap.Height), cropRect, GraphicsUnit.Pixel);
+                        var ms = new MemoryStream();
+                        newBitMap.Save(ms, sourceBitmap.RawFormat);
+                        return ms.GetBuffer();
+                        //return GetBitmapBytes(newBitMap);
+                    }
+                }
             }
         }
     }

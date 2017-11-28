@@ -1,6 +1,7 @@
 ﻿using GetMoney.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -76,5 +77,6 @@ namespace GetMoney.Application
         /// <param name="userid">用户ID</param>
         /// <returns>完整的上传地址</returns>
         string UpdateFileTx(string host, string userid);
+        string UpdateFileTx1(string host, string userid, int x, int y, int w, int h, Stream Img);
     }
 }
