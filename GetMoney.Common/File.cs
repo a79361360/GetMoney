@@ -88,7 +88,7 @@ namespace GetMoney.Common
         /// <param name="path">本地的虚拟地址</param>
         /// <param name="name">生成图片的名称</param>
         /// <returns>图片Bitmap对象</returns>
-        public Bitmap DowdLoad_ImgByUrl(string url,string path,string name)
+        public Bitmap DowdLoad_ImgByUrl(string url, string path, string name)
         {
             Bitmap img = null;
             HttpWebRequest req;
@@ -128,7 +128,7 @@ namespace GetMoney.Common
         /// <param name="path">本地的虚拟地址</param>
         /// <param name="name">生成图片的名称</param>
         /// <returns>保存图片的虚拟URL地址</returns>
-        public string DowdLoad_ImgByUrl(string url, string path, string name,ref int count)
+        public string DowdLoad_ImgByUrl(string url, string path, string name, ref int count)
         {
             Bitmap img = null;
             HttpWebRequest req;
@@ -258,7 +258,32 @@ namespace GetMoney.Common
             ms.Position = 0;
             return ms;
         }
-
+        /// <summary>
+        /// 将字节流保存到目标路径
+        /// </summary>
+        /// <param name="path">目标路径</param>
+        /// <param name="pbyte">字节流</param>
+        /// <returns></returns>
+        public bool SaveFileByByte(string path, byte[] pbyte) {
+            FileStream pFileStream = null;
+            try
+            {
+                pFileStream = new FileStream(path, FileMode.OpenOrCreate);
+                pFileStream.Write(pbyte, 0, pbyte.Length);
+                BinaryWriter w = new BinaryWriter(pFileStream);
+                w.Write(pbyte);
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                if (pFileStream != null)
+                    pFileStream.Close();
+            }
+            return true;
+        }
         /// <summary>
         /// 单个文件上传的时候使用这个方法
         /// </summary>
@@ -289,6 +314,21 @@ namespace GetMoney.Common
                 }
             }
             return path;
+        }
+        /// <summary>
+        /// 上传文件
+        /// </summary>
+        /// <param name="virtualpath">虚拟路径</param>
+        /// <param name="pbyte">byte[]数组</param>
+        /// <returns></returns>
+        public string UploadFileByByte(string virtualpath, byte[] pbyte) {
+            bool result = false;
+            string path = GetPhysicalPath(virtualpath);
+            result = SaveFileByByte(path, pbyte);
+            if (result) {
+                return path;
+            }
+            return "";
         }
     }
 }

@@ -57,6 +57,7 @@
     <Compile Include="Expand\_String.cs" />
     <Compile Include="File.cs" />
     <Compile Include="Folder.cs" />
+    <Compile Include="Helper\HttpRequestClient.cs" />
     <Compile Include="IDalInterFace.cs" />
     <Compile Include="IDeleteGate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
