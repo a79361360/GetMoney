@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Aspect Ratio with Preview Pane | Jcrop Demo</title>
@@ -11,21 +11,19 @@
 
     // Create variables (in this scope) to hold the API and image size
     var jcrop_api,
-        boundx,
-        boundy,
-
+        boundx = 0,
+        boundy = 0,
         // Grab some information about the preview pane
         $preview = $('#preview-pane'),
         $pcnt = $('#preview-pane .preview-container'),
         $pimg = $('#preview-pane .preview-container img'),
-
         xsize = $pcnt.width(),
         ysize = $pcnt.height();
     
     console.log('init',[xsize,ysize]);
     $('#target').Jcrop({
       onChange: updatePreview,
-      onSelect: updatePreview,
+      //onSelect: updatePreview,
       aspectRatio: xsize / ysize
     },function(){
       // Use the API to get the real image size
@@ -89,8 +87,8 @@
    area based on the size of the thumbnail preview,
    specified here */
 #preview-pane .preview-container {
-  width: 250px;
-  height: 170px;
+  width: 300px;
+  height: 300px;
   overflow: hidden;
 }
 

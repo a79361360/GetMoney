@@ -11,41 +11,138 @@
     <link href="~/Content/TestPage/Jcrop-0.9.12/css/jquery.Jcrop.min.css" rel="stylesheet" />
     <script src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
     <script src="~/Content/TestPage/Jcrop-0.9.12/js/jquery.Jcrop.js"></script>
+    <style type="text/css">
+         .jcrop-holder #preview-pane {
+             display: block;
+             position: absolute;
+             z-index: 2000;
+             top: 10px;
+             padding: 6px;
+             border: 1px rgba(0,0,0,.4) solid;
+             background-color: white;
+             -webkit-border-radius: 6px;
+             -moz-border-radius: 6px;
+             border-radius: 6px;
+             -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+             -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+             box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+         }
+         #preview-pane .preview-container {
+             width: 300px;
+             height: 300px;
+             overflow: hidden;
+         }
+    </style>
     <script type="text/javascript">
-  $(function(){
+        $(function () {
+            var jcrop_api,
+            $preview = $('#preview-pane'),
+            $pcnt = $('#preview-pane .preview-container'),
+            $pimg = $('#preview-pane .preview-container img'),
+            boundx = 0,
+            boundy = 0,
+            xsize = $pcnt.width(),
+            ysize = $pcnt.height();
+            //xsize = 606,
+            //ysize = 404;
+            //console.log('init', [xsize, ysize]);
+            InitJcrop();
+            function InitJcrop() {
+                $("#element_id").Jcrop({
+                    bgColor: 'black',
+                    bgOpacity: .4,
+                    setSelect: [0, 0, xsize, ysize],  //设定4个角的初始位置
+                    aspectRatio: 1 / 1,
+                    allowSelect: false,
+                    onChange: showCoords,   //当裁剪框变动时执行的函数
+                    onSelect: showCoords   //当选择完成时执行的函数
+                }, function () {
+                    var bounds = this.getBounds();
+                    boundx = bounds[0];
+                    boundy = bounds[1];
+                    jcrop_api = this;
+                    $preview.appendTo(jcrop_api.ui.holder);
+                });
+            }
+            function showCoords(c){
+                //console.log(c.x);
+                //console.log(c.y);
+                //console.log(c.w);
+                //console.log(c.h);
+                $('#x').val(c.x);
+                $('#y').val(c.y);
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+                if (parseInt(c.w) > 0) {
+                    var rx = xsize / c.w;
+                    var ry = ysize / c.h;
+                    //console.log("rx" + boundx);
+                    //console.log("ry" + boundy);
+                    //console.log("c.x" + c.x);
+                    //console.log("c.y" + c.y);
+                    $pimg.css({
+                        width: Math.round(rx * boundx) + 'px',
+                        height: Math.round(ry * boundy) + 'px',
+                        marginLeft: '-' + Math.round(rx * c.x) + 'px',
+                        marginTop: '-' + Math.round(ry * c.y) + 'px'
+                    });
+                }
+            };
+            var w = $(".jcrop-holder").width() + parseFloat(10);
+            $(".jcrop-holder #preview-pane").attr("style", "left:" + w + "px");
+            $("#file1").change(function () {
+                //jcrop_api.destroy();
+                var p = loadname(this, ".jcrop-holder img");
+                //console.log($(".jcrop-holder img").attr("src",p));
+                //$("#element_id").attr("src", $("#file1").val())
+                //console.log($("#element_id").attr("src"))
+            })
+        });
+        function loadname(img, previewName){  
+            var isIE = (navigator.appName=="Microsoft Internet Explorer");  
+            var path = img.value;  
+            var ext = path.substring(path.lastIndexOf('.') + 1).toLowerCase();  
 
-    // How easy is this??
-      $('#element_id').Jcrop();
-      $("#element_id").Jcrop({
-          bgColor: 'black',
-          bgOpacity: .4,
-          setSelect: [100, 100, 150, 150],  //设定4个角的初始位置
-          aspectRatio: 1 / 1,
-          onChange: showCoords,   //当裁剪框变动时执行的函数
-          onSelect: showCoords,   //当选择完成时执行的函数
-      });
+            if(ext == "gif" || ext == "jpeg" || ext == "jpg" ||  ext == "png" )  
+            {       
+                if(isIE) {  
+                    $('#'+ previewName).attr('src', path);  
+                }else{  
+                    if (img.files[0]) 
+                    {  
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("#element_id").attr('src', e.target.result);
+                            $(previewName).attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(img.files[0]);  
+                    }  
+                }  
 
-      //$('#element_id').on('cropmove', function (e, s, c) {
-      //    alert(c.x)
-      //    console.log(c.x);
-      //    console.log(c.y);
-      //    console.log(c.w);
-      //    console.log(c.h);
-      //});
-  }); showCoords = function (c) {
-      console.log(c.x);
-      console.log(c.y);
-      console.log(c.w);
-      console.log(c.h);
-  };
+            } else {
+
+            }
+            return path;
+        }
+
     </script>
 </head>
 <body>
     <img id="element_id" src="~/Content/TestPage/Jcrop-0.9.12/demos/demo_files/sago.jpg" />
-    <form action="/TUser/UpdateTx" method="post" enctype="multipart/form-data">
+    <div id="preview-pane">
+        <div class="preview-container">
+            <img src="~/Content/TestPage/Jcrop-0.9.12/demos/demo_files/sago.jpg" class="jcrop-preview" alt="Preview" />
+        </div>
+    </div>
+    <form action="/TUser/UpdateTx1" method="post" enctype="multipart/form-data">
+        <input type="text" size="4" id="x" name="x" />
+        <input type="text" size="4" id="y" name="y" />
+        <input type="text" size="4" id="w" name="w" />
+        <input type="text" size="4" id="h" name="h" />
         <input id="file1" name="file1" type="file" />
-        <input name="uid" type="text" value="10234" />
+        <input name="uid" id="uid" type="hidden" value="@ViewBag.id" />
         <input type="submit" value="提交" />
     </form>
+
 </body>
 </html>

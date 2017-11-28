@@ -7,6 +7,7 @@ using GetMoney.Framework;
 using GetMoney.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -44,7 +45,8 @@ namespace GetMoney.Controllers.TUser
         }
         public ActionResult UpdatePortal(int id)
         {
-            TUserDto dto = _bll.FindUserById(id);
+            //TUserDto dto = _bll.FindUserById(id);
+            ViewBag.id = id;
             return View();
         }
         public ActionResult UpdateTx()
@@ -54,6 +56,23 @@ namespace GetMoney.Controllers.TUser
             string uid = CommonManager.WebObj.Request("Uid", "0");
             string path = _bll.UpdateFileTx(host, uid);
             return Content("<script>alert(1)</script>");
+        }
+        public ActionResult UpdateTx1() {
+            
+            string xx = Request["x"].ToString();
+            int x = int.Parse(Request["x"]);
+            int y = int.Parse(Request["y"]);
+            int w = int.Parse(Request["w"]);
+            int h = int.Parse(Request["h"]);
+            Stream stream = Request.Files[0].InputStream;
+            string content = x.ToString() + y.ToString() + w.ToString() + h.ToString() + stream;
+            string host = "http://" + Request.Url.Authority;   //
+            string uid = CommonManager.WebObj.Request("uid", "0");
+            string path = _bll.UpdateFileTx1(host, uid, x, y, w, h, stream);
+            if (!string.IsNullOrEmpty(path)) {
+                return Content("成功");
+            }
+            return Content("失败");
         }
         public ActionResult EditTUser(int id) {
             int uid = Convert.ToInt32(CommonManager.WebObj.RequestForm("id", "0"));

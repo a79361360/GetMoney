@@ -96,5 +96,35 @@ namespace GetMoney.Controllers.Nsoup
         public ActionResult NsoupTitlePortal() {
             return View();
         }
+        public ActionResult SendMovie() {
+            string str = avi(@"F:\迅雷下载\MSTD-002.mp4", 600, 300);
+            ViewBag.str = str;
+            return View();
+        }
+        ///   <summary>   
+        ///   avi格式文件播放   
+        ///   </summary>   
+        ///   <param   name="url"></param>   
+        ///   <returns></returns>   
+        private string avi(string url, int width, int height)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            sb.Append("<object id=\"WMPlay\" width=\"400\" height=\"200 \" border=\"0\" classid=\"clsid: CFCDAA03 - 8BE4 - 11cf - B84B - 0020AFBBCCFA \">");
+            sb.Append("<param name=\"ShowDisplay\" value=\"0\">");
+            sb.Append("<param name=\"ShowControls\" value=\"1\">");
+            sb.Append("<param name=\"AutoStart\" value=\"1\">");
+            sb.Append("<param name=\"AutoRewind\" value=\"0\">");
+            sb.Append("<param name=\"PlayCount\" value=\"0\">");
+            sb.Append("<param name=\"Appearance\" value =\"0\">");
+            sb.Append("<param name=\"BorderStyle\" value =\"0\">");
+    
+            sb.Append("<param name=\"MovieWindowHeight\" value=\"240\">");
+            sb.Append("<param name=\"MovieWindowWidth\" value=\"320\">");
+            sb.Append("<param name=\"FileName\" value=\"" + url + "\">");
+            sb.Append("</object>");
+
+            return sb.ToString();
+        }
     }
 }

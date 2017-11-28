@@ -89,11 +89,19 @@
             })
         })
         //弹于信息tips
+        var tips_content;
         tips = function (content, timeout) {
+            tips_content = content;
+            var tipsobj = $("#myModal");
+            if (tipsobj.length > 0) {
+                tipsobj.modal('show');
+                if (timeout > 0) { setTimeout(function () { tipsobj.modal('hide') }, timeout * 1000); }
+                return;
+            }
             var BootDialog = "<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">";
-            BootDialog += " <div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-body\">" + content + "</div></div></div></div>";
-            var obj = $(BootDialog); obj.modal('show');
-            setTimeout(function () { obj.modal('hide') }, timeout * 1000);
+            BootDialog += " <div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-body\">" + tips_content + "</div></div></div></div>";
+            tipsobj = $(BootDialog); tipsobj.modal('show');
+            if (timeout > 0) { setTimeout(function () { tipsobj.modal('hide') }, timeout * 1000); }
         }
         //弹出窗体
         qiu_confirm = function (title, content) {
