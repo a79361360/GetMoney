@@ -50,7 +50,7 @@ namespace GetMoney.Dal
         /// 将已经上传的头像更新到数据库
         /// </summary>
         /// <param name="userid">用户ID</param>
-        /// <param name="txurl">用户头像地址</param>
+        /// <param name="txurl">用户头像地址，虚拟路径完整路径传什么保存什么</param>
         /// <param name="list">数据库返回的数据,9用户不存在,1000执行失败回滚,1成功</param>
         void UpdateUserTx(int userid, string txurl, out Dictionary<string, object> list);
     }
