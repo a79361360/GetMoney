@@ -2902,6 +2902,11 @@
     <Content Include="Views\Nsoup\NsoupImgIndex.cshtml" />
     <Content Include="Views\Nsoup\ShowImg.cshtml" />
     <Content Include="Views\Nsoup\NsoupTitlePortal.cshtml" />
+    <Content Include="Views\TUser\EditPortal.cshtml" />
+    <Content Include="Views\TUser\EditTUser.cshtml" />
+    <Content Include="Views\TUser\MyFriendPortal.cshtml" />
+    <Content Include="Views\TUser\UpdatePortal.cshtml" />
+    <Content Include="Views\TUser\UserMenuPortal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Application\GetMoney.Application.csproj">
