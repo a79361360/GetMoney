@@ -58,6 +58,7 @@
     <Compile Include="Order\Order.cs" />
     <Compile Include="Order\OrderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlDal\AccessCon.cs" />
     <Compile Include="SqlDal\IDalInterFace.cs" />
     <Compile Include="SqlDal\SqlConn.cs" />
     <Compile Include="SqlDal\SqlDal.cs" />
