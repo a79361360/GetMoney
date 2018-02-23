@@ -30,11 +30,11 @@ namespace GetMoney.Controllers
             {
                 string c = "?c=" + DEncrypt.DESEncrypt1("SNS|1|" + WebHelp.GetCurHttpHost() + "/Wx/WeiXLogin");   //c参数进行加密
                 string param = c;   //string param = Request.Url.Query + c; 参数串,例如:http://wx.ndll800.com/home/default?ctype=1&issue=1 取的param为:   ?ctype=1&issue=1
-                CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "Index     param： " + param);
+                CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WeiXLogin     param： " + param);
                 string state = "";                  //state的值暂时为空,如果后面有需要验签,再用起来,现在就直接用参数来做校验
                 //string url = wxbll.Wx_Auth_Code(wxbll.appid, System.Web.HttpUtility.UrlEncode(WebHelp.GetCurHttpHost() + "/WeiX/Wx_Auth_Code" + param), "snsapi_userinfo", state);  //snsapi_base,snsapi_userinfo
                 string url = wxbll.Wx_Auth_Code(wxbll.appid, System.Web.HttpUtility.UrlEncode("http://wx.ndll800.com/WeiX/Wx_Auth_Code1" + param), "snsapi_userinfo", state);  //snsapi_base,snsapi_userinfo
-                CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "Index     URL： " + url);
+                CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WeiXLogin     URL： " + url);
                 return Redirect(url);
             }
             else
@@ -43,17 +43,17 @@ namespace GetMoney.Controllers
                 try
                 {
                     string p = Request["p"].ToString(); //1|subscribe|openid  微信发送|是否关注|openid
-                    CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "Index     p：" + Request["p"].ToString());
+                    CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WeiXLogin     p：" + Request["p"].ToString());
                     string temp = DEncrypt.DESDecrypt1(p);    //取得p参数,并且进行解密
-                    CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "Index     p：" + temp);
+                    CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WeiXLogin     p：" + temp);
                     string[] plist = temp.Split('|');   //微信发送|Openid|呢称|头像URL
                     if (plist[0] != "1") return Content("配置参数异常");
                     openid = plist[1]; headurl = plist[2]; nickname = Request["n"].ToString();
-                    CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "Index     openid：" + openid + "headurl: " + headurl + "nickname: " + nickname);
+                    CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WeiXLogin     openid：" + openid + "headurl: " + headurl + "nickname: " + nickname);
                 }
                 catch (Exception er)
                 {
-                    CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "Index     异常：" + er.Message);
+                    CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WeiXLogin     异常：" + er.Message);
                     return Content("参数错误");
                 }
                 if (string.IsNullOrEmpty(openid))
@@ -88,6 +88,51 @@ namespace GetMoney.Controllers
                 }
                 CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "读取用户数据失败     openid：" + openid);
                 return Content("读取用户信息失败");
+            }
+        }
+
+
+        public ActionResult WxCreateFriend()
+        {
+            if (Session["Userid"] != null)
+            {
+                int parentid = Convert.ToInt32(CommonManager.WebObj.Request("pid", "0")); //师父ID
+                int uid = Convert.ToInt32(Session["Userid"]); //徒弟ID
+            }
+            else {
+                if (Request["p"] == null)
+                {
+                    string c = "?c=" + DEncrypt.DESEncrypt1("SNS|1|" + WebHelp.GetCurHttpHost() + "/Wx/WxCreateFriend");   //c参数进行加密
+                    string param = c;   //string param = Request.Url.Query + c; 参数串,例如:http://wx.ndll800.com/home/default?ctype=1&issue=1 取的param为:   ?ctype=1&issue=1
+                    CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WxCreateFriend     param： " + param);
+                    string state = "";                  //state的值暂时为空,如果后面有需要验签,再用起来,现在就直接用参数来做校验
+                    //string url = wxbll.Wx_Auth_Code(wxbll.appid, System.Web.HttpUtility.UrlEncode(WebHelp.GetCurHttpHost() + "/WeiX/Wx_Auth_Code" + param), "snsapi_userinfo", state);  //snsapi_base,snsapi_userinfo
+                    string url = wxbll.Wx_Auth_Code(wxbll.appid, System.Web.HttpUtility.UrlEncode("http://wx.ndll800.com/WeiX/Wx_Auth_Code1" + param), "snsapi_userinfo", state);  //snsapi_base,snsapi_userinfo
+                    CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WxCreateFriend     URL： " + url);
+                    return Redirect(url);
+                }
+                else {
+                    string openid = "", nickname = "", headurl = "";    //当没有自己的公众号的情况下,在这里进行数据写入,本来需要在ComExpendController->Wx_Auth_Code这里写入的,这里择中处理一下
+                    try
+                    {
+                        string p = Request["p"].ToString(); //1|subscribe|openid  微信发送|是否关注|openid
+                        CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WeiXLogin     p：" + Request["p"].ToString());
+                        string temp = DEncrypt.DESDecrypt1(p);    //取得p参数,并且进行解密
+                        CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WeiXLogin     p：" + temp);
+                        string[] plist = temp.Split('|');   //微信发送|Openid|呢称|头像URL
+                        if (plist[0] != "1") return Content("配置参数异常");
+                        openid = plist[1]; headurl = plist[2]; nickname = Request["n"].ToString();
+                        CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WeiXLogin     openid：" + openid + "headurl: " + headurl + "nickname: " + nickname);
+
+                    }
+                    catch (Exception er)
+                    {
+                        CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WeiXLogin     异常：" + er.Message);
+                        return Content("参数错误");
+                    }
+                    if (string.IsNullOrEmpty(openid))
+                        return Content("授权失败");
+                }
             }
         }
     }
