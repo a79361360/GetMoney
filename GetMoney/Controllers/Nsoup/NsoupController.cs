@@ -18,7 +18,6 @@ namespace GetMoney.Controllers.Nsoup
 
         public ActionResult Index()
         {
-            GetImgByUrl();
             return View();
         }
         public void GetImgByUrl() {

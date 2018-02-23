@@ -1,8 +1,0 @@
-G:\ZongQiu\C#\GetMoney\GetMoney.Data\bin\Release\GetMoney.Data.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Data\bin\Release\GetMoney.Data.pdb
-G:\ZongQiu\C#\GetMoney\GetMoney.Data\bin\Release\EntityFramework.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Data\bin\Release\EntityFramework.xml
-G:\ZongQiu\C#\GetMoney\GetMoney.Data\bin\Release\zh-Hans\EntityFramework.resources.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Data\obj\Release\GetMoney.Data.csprojResolveAssemblyReference.cache
-G:\ZongQiu\C#\GetMoney\GetMoney.Data\obj\Release\GetMoney.Data.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Data\obj\Release\GetMoney.Data.pdb

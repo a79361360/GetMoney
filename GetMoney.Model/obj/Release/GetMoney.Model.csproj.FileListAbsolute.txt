@@ -1,4 +1,0 @@
-G:\ZongQiu\C#\GetMoney\GetMoney.Model\bin\Release\GetMoney.Model.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Model\bin\Release\GetMoney.Model.pdb
-G:\ZongQiu\C#\GetMoney\GetMoney.Model\obj\Release\GetMoney.Model.dll
-G:\ZongQiu\C#\GetMoney\GetMoney.Model\obj\Release\GetMoney.Model.pdb

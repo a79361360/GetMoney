@@ -2,3 +2,17 @@
 /GetMoney/DownLoad
 /GetMoney/logs
 /GetMoney/obj
+/GetMoney.Application/bin
+/GetMoney.Application/obj
+/GetMoney.Common/obj
+/GetMoney.Common/bin
+/GetMoney.Dal/obj
+/GetMoney.Dal/bin
+/GetMoney.Data/bin
+/GetMoney.Data/obj
+/GetMoney.Framework/bin
+/GetMoney.Framework/obj
+/GetMoney.Ioc/bin
+/GetMoney.Ioc/obj
+/GetMoney.Model/bin
+/GetMoney.Model/obj
