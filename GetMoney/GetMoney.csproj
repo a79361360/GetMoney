@@ -198,6 +198,7 @@
     <Compile Include="Controllers\OnlyNameTest\OnlyNameTestController.cs" />
     <Compile Include="Controllers\Order\OrderController.cs" />
     <Compile Include="Controllers\TUser\TUserController.cs" />
+    <Compile Include="Controllers\WxController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Filters\LoginFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -2949,7 +2950,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1714</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

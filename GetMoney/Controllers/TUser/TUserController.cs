@@ -118,7 +118,7 @@ namespace GetMoney.Controllers.TUser
         public ActionResult QuickRegTUser() { 
             TUserDto dto = new TUserDto();
             dto.UserName = CommonManager.WebObj.RequestForm("UserName", "");
-            dto.UserPwd = CommonManager.WebObj.RequestForm("UserPwd", "").MD5();
+            dto.UserPwd = TxtHelp.MD5(CommonManager.WebObj.RequestForm("UserPwd", ""));
             dto.BankPwd = dto.UserPwd;
             dto.NickName = dto.UserName;
             dto.RegIP = CommonManager.WebObj.GetWebClientIp();
@@ -153,7 +153,7 @@ namespace GetMoney.Controllers.TUser
         public ActionResult PhoneRegTUser() {
             TUserDto dto = new TUserDto();
             dto.UserName = CommonManager.WebObj.RequestForm("UserName", "");
-            dto.UserPwd = CommonManager.WebObj.RequestForm("UserPwd", "").MD5();
+            dto.UserPwd = TxtHelp.MD5(CommonManager.WebObj.RequestForm("UserPwd", ""));
             dto.BankPwd = dto.UserPwd;
             dto.Phone = CommonManager.WebObj.RequestForm("UserName", "");
             dto.RegIP = CommonManager.WebObj.GetWebClientIp();
@@ -190,8 +190,8 @@ namespace GetMoney.Controllers.TUser
         public ActionResult FullRegTUser() {
             TUserDto dto = new TUserDto();
             dto.UserName = CommonManager.WebObj.RequestForm("UserName", "");
-            dto.UserPwd = CommonManager.WebObj.RequestForm("UserPwd", "").MD5();
-            dto.BankPwd = CommonManager.WebObj.RequestForm("BankPwd", "").MD5();
+            dto.UserPwd = TxtHelp.MD5(CommonManager.WebObj.RequestForm("UserPwd", ""));
+            dto.BankPwd = TxtHelp.MD5(CommonManager.WebObj.RequestForm("BankPwd", ""));
             dto.NickName = CommonManager.WebObj.RequestForm("NickName", "");
             dto.TrueName = CommonManager.WebObj.RequestForm("TrueName", "");
             dto.IdentityNum = CommonManager.WebObj.RequestForm("IdentityNum", "");
@@ -354,7 +354,7 @@ namespace GetMoney.Controllers.TUser
                 return JsonFormat(new ExtJson { success = false, msg = "账户和密码不能为空" });
             }
             TUserDto dto = new TUserDto();
-            dto.UserName = UserName; dto.UserPwd = Pwd.MD5();
+            dto.UserName = UserName; dto.UserPwd = TxtHelp.MD5(Pwd);
             int userid = _bll.VerifyTUsers(dto);
             if (userid != -1)
             {

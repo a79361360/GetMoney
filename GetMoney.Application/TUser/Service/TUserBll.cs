@@ -201,7 +201,7 @@ namespace GetMoney.Application
         {
             string key = "ddzasdklfwne2394i23jovnfoirehnoi23";
             string pathx = "/DownLoad/File/Tx/";                                        //图片地址
-            string filename = (userid.ToString() + key).MD5() + ".jpg";                 //图片名称 
+            string filename = TxtHelp.MD5(userid.ToString() + key) + ".jpg";                 //图片名称 
             string vtime = "?v=" + DateTime.Now.ToUnixTimeStamp().ToString();           //用时间戳来做版本号
             string path = Common.CommonManager.FileObj.HttpUploadFile(pathx, filename); //返回完整的上传地址 
             if (!string.IsNullOrEmpty(path)) { 
@@ -218,7 +218,7 @@ namespace GetMoney.Application
         {
             string key = "ddzasdklfwne2394i23jovnfoirehnoi23";
             string pathx = "/DownLoad/File/Tx/";                                        //图片地址
-            string filename = (userid.ToString() + key).MD5() + ".jpg";                 //图片名称 
+            string filename = TxtHelp.MD5(userid.ToString() + key) + ".jpg";                 //图片名称 
             string vtime = "?v=" + DateTime.Now.ToUnixTimeStamp().ToString();           //用时间戳来做版本号
             //byte[] pbyte = Crop(Img, w, h, x, y);
             byte[] pbyte = CropImage(Img, w, h, x, y);
