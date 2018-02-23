@@ -118,7 +118,7 @@ namespace GetMoney.Dal
             string sql = "select id from TUsers where UserName=@username and UserPwd=@userpwd";
             SqlParameter[] parameter = new[]
             {
-                new SqlParameter("@username",SqlDbType.NVarChar,20),
+                new SqlParameter("@username",SqlDbType.NVarChar,50),
                 new SqlParameter("@userpwd",SqlDbType.NVarChar,50)
             };
             parameter[0].Value = UserName;
@@ -128,6 +128,40 @@ namespace GetMoney.Dal
                 return Convert.ToInt32(dt.Rows[0]["id"]);
             }
             return -1;
+        }
+        /// <summary>
+        /// 根据UserName取得用户ID
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <returns></returns>
+        public int VerifyUserName(string UserName) {
+            string sql = "select id from TUsers where UserName=@username";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@username",SqlDbType.NVarChar,50)
+            };
+            parameter[0].Value = UserName;
+            DataTable dt = dal.ExtSql(sql, parameter);
+            if (dt.Rows.Count > 0)
+            {
+                return Convert.ToInt32(dt.Rows[0]["id"]);
+            }
+            return -1;
+        }
+        /// <summary>
+        /// 根据UserName取得用户DTO
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <returns></returns>
+        public DataTable FindUserByUserName(string UserName) {
+            string sql = "SELECT [id],[UserName],[UserPwd],[BankPwd],[NickName],[UserJb],[TrueName],[IdentityNum],[Phone],[RegIP],[TxUrl],[State],[Addtime] FROM [TUsers] where UserName=@username";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@username",SqlDbType.NVarChar,50)
+            };
+            parameter[0].Value = UserName;
+            DataTable dt = dal.ExtSql(sql, parameter);
+            return dt;
         }
         /// <summary>
         /// 通过ID查询返回TUser对象

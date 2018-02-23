@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
+@model GetMoney.Model.TUserDto
 <!DOCTYPE html>
 
 <html>
@@ -11,7 +11,10 @@
 </head>
 <body>
     <div>
-        
+        <div><span>用户ID</span><span>@Model.id</span></div>
+        <div><span>用户呢称</span><span>@Model.NickName</span></div>
+        <div><span>用户头像</span><span>@Model.TxUrl</span></div>
+        <div><span>用户手机</span><span>@Model.Phone</span></div>
     </div>
 </body>
 </html>

@@ -70,6 +70,7 @@
     <Compile Include="TUser\IService\ITUserDal.cs" />
     <Compile Include="TUser\Service\TUserDal.cs" />
     <Compile Include="TUser\UserRepository.cs" />
+    <Compile Include="WeiX\WeiXDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Data\GetMoney.Data.csproj">

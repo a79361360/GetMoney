@@ -1,4 +1,5 @@
-﻿using GetMoney.Application;
+﻿using FJSZ.OA.Common.Web;
+using GetMoney.Application;
 using GetMoney.Common;
 using GetMoney.Common.Expand;
 using GetMoney.Common.SerializeObject;
@@ -107,9 +108,17 @@ namespace GetMoney.Controllers.TUser
         {
             return View();
         }
+        /// <summary>
+        /// 显示登入用户的信息
+        /// </summary>
+        /// <returns></returns>
         public ActionResult TUserSearch()
         {
-            return View();
+            if (Session["uid"] == null)
+                return Content("登入状态已经失效,微信登入可用地址: <a href=\"" + WebHelp.GetCurHttpHost() + "/Wx/WeiXLogin\">去登入</a>");
+            int uid = Convert.ToInt32(Session["uid"]);
+            TUserDto dto = _bll.FindUserById(uid);
+            return View(dto);
         }
         /// <summary>
         /// 快速注册
@@ -132,7 +141,7 @@ namespace GetMoney.Controllers.TUser
                     switch (result)
                     {
                         case 1:
-                            Session["Userid"] = list["@Userid"].ToString();
+                            Session["uid"] = list["@Userid"].ToString();
                             break;  
                         default:
                             msg = "注册失败!";
@@ -169,7 +178,7 @@ namespace GetMoney.Controllers.TUser
                     switch (result)
                     {
                         case 1:
-                            Session["Userid"] = list["@Userid"].ToString();
+                            Session["uid"] = list["@Userid"].ToString();
                             break;
                         default:
                             msg = "注册失败!";
@@ -210,7 +219,7 @@ namespace GetMoney.Controllers.TUser
                     switch (result)
                     {
                         case 1:
-                            Session["Userid"] = list["@Userid"].ToString();
+                            Session["uid"] = list["@Userid"].ToString();
                             break;
                         default:
                             msg = "注册失败!";
@@ -224,6 +233,7 @@ namespace GetMoney.Controllers.TUser
             else
                 return JsonFormat(new ExtJson { success = false, msg = msg });
         }
+
         /// <summary>
         /// 批量删除用户信息(ids数组)
         /// </summary>

@@ -106,6 +106,13 @@ namespace GetMoney.Application
             IList<FriendDto> list = DataTableToList.ModelConvertHelper<FriendDto>.ConvertToModel(_dal.ListUserPage(ref Total, param));
             return list;
         }
+        public TUserDto FindUserByUserName(string UserName) {
+            IList<TUserDto> list = DataTableToList.ModelConvertHelper<TUserDto>.ConvertToModel(_dal.FindUserByUserName(UserName));
+            if (list.Count > 0){
+                return list[0];
+            }
+            return null;
+        }
         public TUserDto FindUserById(int id) {
             IList<TUserDto> list = DataTableToList.ModelConvertHelper<TUserDto>.ConvertToModel(_dal.FindUserById(id));
             if (list.Count > 0) {
@@ -195,6 +202,16 @@ namespace GetMoney.Application
         /// <returns>成功返回用户ID,失败返回-1</returns>
         public int VerifyTUsers(TUserDto dto) {
             int result = _dal.VerifyUserByUnamePwd(dto.UserName, dto.UserPwd);
+            return result;
+        }
+        /// <summary>
+        /// 用户名判断是否已经存在
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public int VerifyTUserByUName(TUserDto dto)
+        {
+            int result = _dal.VerifyUserName(dto.UserName);
             return result;
         }
         public string UpdateFileTx(string host, string userid)

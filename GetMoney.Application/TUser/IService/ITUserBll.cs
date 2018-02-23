@@ -65,6 +65,18 @@ namespace GetMoney.Application
         /// <returns></returns>
         int VerifyTUsers(TUserDto dto);
         /// <summary>
+        /// 用户名判断是否已经存在
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        int VerifyTUserByUName(TUserDto dto);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <returns></returns>
+        TUserDto FindUserByUserName(string UserName);
+        /// <summary>
         /// 根据ID返回TUser对象
         /// </summary>
         /// <param name="id"></param>
