@@ -196,12 +196,36 @@ namespace GetMoney.Application
             return result;
         }
         /// <summary>
+        /// 添加好友
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public int AddTUserFriend(int pid, int userid)
+        {
+            Dictionary<string, object> dic;
+            int result = 0;
+            dic = new Dictionary<string, object>();
+            _dal.MakeTUserFriend(pid, userid, 1, out dic);
+            result = Convert.ToInt32(dic["@ReturnValue"]);
+            return result;
+        }
+        /// <summary>
         /// 通过账号和密码判断用户ID是否存在,存在返回用户ID,失败返回-1
         /// </summary>
         /// <param name="dto">用户对象</param>
         /// <returns>成功返回用户ID,失败返回-1</returns>
         public int VerifyTUsers(TUserDto dto) {
             int result = _dal.VerifyUserByUnamePwd(dto.UserName, dto.UserPwd);
+            return result;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public int VerfyUserById(int userid) {
+            int result = _dal.VerfyUserById(userid);
             return result;
         }
         /// <summary>

@@ -64,25 +64,25 @@
       <publishTime>11/02/2017 17:19:05</publishTime>
     </File>
     <File Include="bin/GetMoney.Application.dll">
-      <publishTime>02/23/2018 18:01:28</publishTime>
+      <publishTime>02/24/2018 16:10:45</publishTime>
     </File>
     <File Include="bin/GetMoney.Common.dll">
       <publishTime>02/23/2018 17:50:36</publishTime>
     </File>
     <File Include="bin/GetMoney.Dal.dll">
-      <publishTime>02/23/2018 18:01:28</publishTime>
+      <publishTime>02/24/2018 16:10:44</publishTime>
     </File>
     <File Include="bin/GetMoney.Data.dll">
       <publishTime>02/23/2018 17:50:36</publishTime>
     </File>
     <File Include="bin/GetMoney.dll">
-      <publishTime>02/23/2018 18:55:43</publishTime>
+      <publishTime>02/24/2018 16:10:45</publishTime>
     </File>
     <File Include="bin/GetMoney.Framework.dll">
       <publishTime>02/23/2018 17:50:36</publishTime>
     </File>
     <File Include="bin/GetMoney.Ioc.dll">
-      <publishTime>02/23/2018 18:01:28</publishTime>
+      <publishTime>02/24/2018 16:10:45</publishTime>
     </File>
     <File Include="bin/GetMoney.Model.dll">
       <publishTime>02/23/2018 17:50:36</publishTime>
@@ -8148,6 +8148,9 @@
     <File Include="packages.config">
       <publishTime>02/23/2018 15:18:59</publishTime>
     </File>
+    <File Include="Scripts/clipboard.min.js">
+      <publishTime>02/24/2018 14:49:59</publishTime>
+    </File>
     <File Include="Scripts/easyloader.js">
       <publishTime>11/02/2017 17:19:03</publishTime>
     </File>
@@ -8290,7 +8293,7 @@
       <publishTime>11/02/2017 17:19:03</publishTime>
     </File>
     <File Include="Views/TUser/TUserSearch.cshtml">
-      <publishTime>02/23/2018 17:45:32</publishTime>
+      <publishTime>02/24/2018 15:38:36</publishTime>
     </File>
     <File Include="Views/TUser/UpdatePortal.cshtml">
       <publishTime>11/29/2017 09:40:32</publishTime>
@@ -8300,6 +8303,9 @@
     </File>
     <File Include="Views/Web.config">
       <publishTime>11/29/2017 09:40:32</publishTime>
+    </File>
+    <File Include="Views/Wx/WxCreateFriend.cshtml">
+      <publishTime>02/24/2018 14:34:40</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
       <publishTime>11/02/2017 17:19:03</publishTime>

@@ -59,11 +59,24 @@ namespace GetMoney.Application
         /// <returns>完成好友添加数量</returns>
         int AddTUserFriend(int userid, IList<UListDto> list);
         /// <summary>
+        /// 添加好友
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        int AddTUserFriend(int pid, int userid);
+        /// <summary>
         /// 验证用户(用户对象)
         /// </summary>
         /// <param name="dto">用户对象</param>
         /// <returns></returns>
         int VerifyTUsers(TUserDto dto);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        int VerfyUserById(int userid);
         /// <summary>
         /// 用户名判断是否已经存在
         /// </summary>

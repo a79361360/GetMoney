@@ -8,6 +8,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>TUserSearch</title>
+
 </head>
 <body>
     <div>
@@ -15,6 +16,21 @@
         <div><span>用户呢称</span><span>@Model.NickName</span></div>
         <div><span>用户头像</span><span>@Model.TxUrl</span></div>
         <div><span>用户手机</span><span>@Model.Phone</span></div>
+        <div><span>添加好友链接</span><input type="text" value="http://gm.cf518.cn/Wx/WxCreateFriend?pid=@Model.id" /><button id="btn_fz">复制</button></div>
     </div>
 </body>
 </html>
+<script src="~/Scripts/clipboard.min.js"></script>
+<script type="text/javascript">
+    var clipboard = new Clipboard('#btn_fz', {
+            text: function () {
+                return 'http://gm.cf518.cn/Wx/WxCreateFriend?pid='+@Model.id;
+            }
+        });
+        clipboard.on('success', function (e) {
+            alert("复制成功");
+        });
+        clipboard.on('error', function(e) {
+            alert("复制失败");
+        });
+</script>

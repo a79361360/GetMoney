@@ -2823,6 +2823,7 @@
     <Content Include="Content\waterfall\js\waterfall.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\clipboard.min.js" />
     <Content Include="Scripts\easyloader.js" />
     <Content Include="Scripts\iscroll-probe.js" />
     <Content Include="Scripts\iscroll.js" />
@@ -2908,6 +2909,7 @@
     <Content Include="Views\TUser\MyFriendPortal.cshtml" />
     <Content Include="Views\TUser\UpdatePortal.cshtml" />
     <Content Include="Views\TUser\UserMenuPortal.cshtml" />
+    <Content Include="Views\Wx\WxCreateFriend.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Application\GetMoney.Application.csproj">
