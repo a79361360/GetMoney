@@ -33,7 +33,7 @@
                             if (data.success) {
                                 var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:50px;\">次数</th><th>用户ID</th><th>真实姓名</th><th>手机号码</th><th style=\"width:130px;\">操作</th></tr></thead>";
                                 $.each(data.list, function (i, o) {
-                                    str += "<tr><td>0</td><td>" + o.Pcid + "</td><td>" + o.TrueName + "</td><td>" + o.Phone + "</td><td><button class=\"btn btn-default\" onclick=\"pitchbtn(1,this)\">增加</button><button class=\"btn btn-default\" onclick=\"pitchbtn(2,this)\">减少</button></td></tr>";
+                                    str += "<tr><td>0</td><td>" + o.Pcid + "</td><td>" + o.NickName + "</td><td>" + o.Phone + "</td><td><button class=\"btn btn-default\" onclick=\"pitchbtn(1,this)\">增加</button><button class=\"btn btn-default\" onclick=\"pitchbtn(2,this)\">减少</button></td></tr>";
                                 })
                                 str += "</table>";
                                 $("#gfriendtblist").html(str);

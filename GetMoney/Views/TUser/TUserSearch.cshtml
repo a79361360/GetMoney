@@ -8,13 +8,50 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>TUserSearch</title>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#myorder").bind("click",function(ret){
+                var data = {
+                    pageindex:0,
+                    pagesize:5,
+                    type:1
+                }
+                $.getJSON("/Order/MyListOrderPage",data,function(ret){
+                    var str = "<table><thead><tr><th>会头</th><th>会费</th><th>总额</th><th>标会日期</th><th>查看</th></tr></thead>";
+                    $.each(ret.list, function (i, o) {
+                        str += "<tr><td>" + o.TouTrueName + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.Remark + "</td><td>" + o.State + "</td><td><button class=\"btn btn-primary\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button></td></tr>";
+                    })
+                    str += "</table>";
+                    $("#div_list").html(str);
+                })
+            })
+        })
+    </script>
 </head>
 <body>
     <div>
         <div><span>用户ID</span><span>@Model.id</span></div>
         <div><span>用户呢称</span><span>@Model.NickName</span></div>
-        <div><span>用户头像</span><span>@Model.TxUrl</span></div>
+        <div><span>用户头像</span><span><img src="@Model.TxUrl" /></span></div>
         <div><span>用户手机</span><span>@Model.Phone</span></div>
+        <div><span>添加好友链接</span><input type="text" value="http://gm.cf518.cn/Wx/WxCreateFriend?pid=@Model.id" /><button id="btn_fz">复制</button></div>
+        <div><span><button id="myorder">我的会单</button></span></div>
+        <div id="div_list"></div>
     </div>
 </body>
 </html>
+<script src="~/Scripts/clipboard.min.js"></script>
+<script type="text/javascript">
+    var clipboard = new Clipboard('#btn_fz', {
+            text: function () {
+                return 'http://gm.cf518.cn/Wx/WxCreateFriend?pid='+@Model.id;
+            }
+        });
+        clipboard.on('success', function (e) {
+            alert("复制成功");
+        });
+        clipboard.on('error', function(e) {
+            alert("复制失败");
+        });
+</script>

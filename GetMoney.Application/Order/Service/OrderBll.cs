@@ -109,7 +109,7 @@ namespace GetMoney.Application
             SqlPageParam param = new SqlPageParam();
             param.TableName = "View_OrderUser";
             param.PrimaryKey = "id";
-            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,MoneySendType,MeetType,MeetNum,FirstDate,InputDate,State,Remark,LowestMoney,TouUserid,TouTrueName,FirstExtraDate,ExtraDate,Address,MeetExtNum";
+            param.Fields = "id,OrderNo,PeoperNum,PeoperMoney,MoneySendType,MeetType,MeetNum,FirstDate,CONVERT(varchar(2),FirstDate,106) Remark,InputDate,State,Remark,LowestMoney,TouUserid,TouTrueName,FirstExtraDate,ExtraDate,Address,MeetExtNum";
             param.PageSize = pageSize;
             param.PageIndex = pageIndex;
             param.Filter = filter;

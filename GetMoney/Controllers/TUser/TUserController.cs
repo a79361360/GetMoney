@@ -114,9 +114,10 @@ namespace GetMoney.Controllers.TUser
         /// <returns></returns>
         public ActionResult TUserSearch()
         {
-            if (Session["uid"] == null)
-                return Content("登入状态已经失效,微信登入可用地址: <a href=\"" + WebHelp.GetCurHttpHost() + "/Wx/WeiXLogin\">去登入</a>");
-            int uid = Convert.ToInt32(Session["uid"]);
+            //if (Session["uid"] == null)
+            //    return Content("登入状态已经失效,微信登入可用地址: <a href=\"" + WebHelp.GetCurHttpHost() + "/Wx/WeiXLogin?backurl=/TUser/TUserSearch\">去登入</a>");
+            //int uid = Convert.ToInt32(Session["uid"]);
+            int uid = 10000; Session["uid"] = 10000;
             TUserDto dto = _bll.FindUserById(uid);
             return View(dto);
         }
@@ -320,6 +321,25 @@ namespace GetMoney.Controllers.TUser
             {
                 return JsonFormat(new ExtJson { success = false, msg = "添加失败！", jsonresult = "" });
             }
+        }
+        /// <summary>
+        /// 添加好友
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SignleCreateFriend() {
+            string pid = CommonManager.WebObj.RequestForm("pid", "");
+            string uid = CommonManager.WebObj.RequestForm("uid", "");
+            string sign = CommonManager.WebObj.RequestForm("sign", "");
+            CommonManager.TxtObj.WriteLogs("/Logs/TUserController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "SignleCreateFriend pid: "+ pid+ " uid: "+ uid+ "sign: "+ sign);
+            int result = _bll.VerfyUserById(Convert.ToInt32(pid));
+            if (result == -1) return JsonFormat(new ExtJson { success = false, msg = "账号不存在！", jsonresult = "" });
+            result = _bll.VerfyUserById(Convert.ToInt32(uid));
+            if (result == -1) return JsonFormat(new ExtJson { success = false, msg = "好友账号不存在！", jsonresult = "" });
+            result = _bll.AddTUserFriend(Convert.ToInt32(pid), Convert.ToInt32(uid));
+            if (result == 1)
+                return JsonFormat(new ExtJson { success = true, code = 1000, msg = "添加成功！" });
+            else
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "添加失败！" });
         }
         /// <summary>
         /// 查询我的好友

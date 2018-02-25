@@ -40,6 +40,12 @@ namespace GetMoney.Dal
         /// <returns>存在用户的ID不存在-1</returns>
         int VerifyUserByUnamePwd(string UserName, string UserPwd);
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        int VerfyUserById(int userid);
+        /// <summary>
         /// 根据UserName取得用户ID
         /// </summary>
         /// <param name="UserName"></param>

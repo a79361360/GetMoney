@@ -37,7 +37,7 @@ namespace GetMoney.Dal
             string ProName="SP_AddNewUser";
             SqlParameter[] parameter = new[]
             {
-                new SqlParameter("@UserName",SqlDbType.NVarChar,20),
+                new SqlParameter("@UserName",SqlDbType.NVarChar,50),
                 new SqlParameter("@Password",SqlDbType.NVarChar,50),
                 new SqlParameter("@BankPwd",SqlDbType.NVarChar,50),
                 new SqlParameter("@NickName",SqlDbType.NVarChar,20),
@@ -45,7 +45,7 @@ namespace GetMoney.Dal
                 new SqlParameter("@IdentityNum",SqlDbType.NVarChar,20),
                 new SqlParameter("@Phone",SqlDbType.NVarChar,12),
                 new SqlParameter("@RegIP",SqlDbType.NVarChar,16),
-                new SqlParameter("@TxUrl",SqlDbType.NVarChar,100),
+                new SqlParameter("@TxUrl",SqlDbType.NVarChar,255),
                 new SqlParameter("@Userid",SqlDbType.Int),
                 new SqlParameter("@ReturnValue",SqlDbType.Int)
             };
@@ -71,7 +71,7 @@ namespace GetMoney.Dal
                 new SqlParameter("@TrueName",SqlDbType.NVarChar,20),
                 new SqlParameter("@IdentityNum",SqlDbType.NVarChar,20),
                 new SqlParameter("@Phone",SqlDbType.NVarChar,12),
-                new SqlParameter("@TxUrl",SqlDbType.NVarChar,100),
+                new SqlParameter("@TxUrl",SqlDbType.NVarChar,255),
                 new SqlParameter("@id",SqlDbType.Int)
             };
             parameter[0].Value = nickname;
@@ -130,6 +130,22 @@ namespace GetMoney.Dal
             return -1;
         }
         /// <summary>
+        /// 判断当前用户ID是否存在
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public int VerfyUserById(int userid) {
+            string sql = "select top 1 id from TUsers where id=@id";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@id",SqlDbType.Int)
+            };
+            parameter[0].Value = userid;
+            var result = dal.ExtScalarSql(sql, parameter);
+            if (result == null) return -1;
+            return Convert.ToInt32(result);
+        }
+        /// <summary>
         /// 根据UserName取得用户ID
         /// </summary>
         /// <param name="UserName"></param>
@@ -179,13 +195,14 @@ namespace GetMoney.Dal
             DataTable dt = dal.ExtSql(sql, parameter);
             return dt;
         }
+        
         public void UpdateUserTx(int userid, string txurl, out Dictionary<string, object> list)
         {
             string ProName = "SP_UpdateUserTx";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@Userid",SqlDbType.Int),
-                new SqlParameter("@TxUrl",SqlDbType.NVarChar,250),
+                new SqlParameter("@TxUrl",SqlDbType.NVarChar,255),
                 new SqlParameter("@ReturnValue",SqlDbType.Int)
             };
             parameter[0].Value = userid;

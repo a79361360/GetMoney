@@ -1,0 +1,46 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>微信添加好友</title>
+    <link href="~/Content/TestPage/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Content/TestPage/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn_tj").bind("click", function () {
+                var pid = $("#pid").val();
+                var uid = $("#uid").val();
+                var sign = $("#sign").val();
+                var data={
+                    pid: pid,
+                    uid: uid,
+                    sign: sign
+                }
+                $.post("/TUser/SignleCreateFriend", data, function (ret) {
+                    if (ret.code == 1000) {
+                        alert("添加成功");
+                    } else {
+                        alert("添加失败");
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <input type="hidden" id="pid" value="@ViewBag.pid"/>
+        <input type="hidden" id="uid" value="@ViewBag.uid" />
+        <input type="hidden" id="sign" value="1" />
+        <img src="@ViewBag.TxUrl" /><span>@ViewBag.NickName</span>
+        <b>想要添加你为好友</b>
+        <input type="button" id="btn_tj" class="btn btn-default" value="同意" />
+        <input type="button" class="btn btn-default" value="拒绝" onclick="window.close()" />
+</div>
+</body>
+</html>

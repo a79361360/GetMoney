@@ -87,15 +87,16 @@ namespace GetMoney.Controllers.Order
         /// 取得我的正在进行中/已经结束的会单信息
         /// </summary>
         /// <returns></returns>
-        [LoginFilter]
         public ActionResult MyListOrderPage() {
+            if(Session["uid"]==null)
+                return JsonFormat(new ExtJsonPage { success = false, code = -1001, msg = "登入状态已失效！" });
             int pageIndex = Convert.ToInt32(Request["pageIndex"]);  //页
             int pageSize = Convert.ToInt32(Request["pageSize"]);    //每页条数
             string type = CommonManager.WebObj.Request("type", ""); //1为正在进行中,2为已经结束的
             int uid = Convert.ToInt32(Session["uid"]);              //登入的用户ID
             string filter = "";
-            if (type == "1") filter = "State!=4 AND " + uid + " IN(SELECT DISTINCT Userid FROM dbo.Order_ListUsers WHERE OrderNo=dbo.Orders.OrderNo)";
-            else if (type == "2") filter = "State=4 AND " + uid + " IN(SELECT DISTINCT Userid FROM dbo.Order_ListUsers WHERE OrderNo=dbo.Orders.OrderNo)";
+            if (type == "1") filter = "State!=4 AND " + uid + " IN(SELECT DISTINCT Userid FROM dbo.Order_ListUsers WHERE OrderNo=View_OrderUser.OrderNo)";
+            else if (type == "2") filter = "State=4 AND " + uid + " IN(SELECT DISTINCT Userid FROM dbo.Order_ListUsers WHERE OrderNo=View_OrderUser.OrderNo)";
 
             int Total = 0;
             IList<OrderDto> list = _bll.ListOrderPage(ref Total, pageSize, pageIndex, filter);
