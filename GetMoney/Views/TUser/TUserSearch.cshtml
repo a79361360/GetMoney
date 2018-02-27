@@ -8,6 +8,13 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>TUserSearch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="~/Content/WeiXin/css/table.css" rel="stylesheet" />
+    <link href="~/Content/WeiXin/BeatPicker/BeatPicker.min.css" rel="stylesheet" />
+    <script src="~/Content/WeiXin/fixTable/fixTable.js"></script>
+    <script src="~/Content/WeiXin/BeatPicker/BeatPicker.min.js"></script>
     <script src="~/Scripts/jquery.min.js"></script>
     <script type="text/javascript">
         $(function(){
@@ -27,18 +34,123 @@
                 })
             })
         })
+        fixcallback = function(){
+            var data = {
+                pageindex:0,
+                pagesize:7,
+                type:1
+            }
+            $.getJSON("/Order/MyListOrderPage",data,function(ret){
+                var str = "<table><thead><tr><th>会头</th><th>会费</th><th>总额</th><th>标会日期</th><th>查看</th></tr></thead>";
+                $.each(ret.list, function (i, o) {
+                    str += "<tr><td>" + o.TouTrueName + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.Remark + "</td><td>" + o.State + "</td><td><button class=\"btn btn-primary\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button></td></tr>";
+                })
+                str += "</table>";
+                $("#div_list").html(str);
+            })
+        }
     </script>
 </head>
 <body>
-    <div>
-        <div><span>用户ID</span><span>@Model.id</span></div>
-        <div><span>用户呢称</span><span>@Model.NickName</span></div>
-        <div><span>用户头像</span><span><img src="@Model.TxUrl" /></span></div>
-        <div><span>用户手机</span><span>@Model.Phone</span></div>
-        <div><span>添加好友链接</span><input type="text" value="http://gm.cf518.cn/Wx/WxCreateFriend?pid=@Model.id" /><button id="btn_fz">复制</button></div>
-        <div><span><button id="myorder">我的会单</button></span></div>
-        <div id="div_list"></div>
+    <div class="head">
+        <ul class="userinfo">
+            <li><span>用户ID：</span><b>@Model.id</b></li>
+            <li><span>昵称：</span><b>@Model.NickName</b></li>
+            <li><span>手机号：</span><b>@Model.Phone</b></li>
+            <li><span>好友链接：</span><button id="btn_fz">复制</button></li>
+        </ul>
+        <div class="userImg"><img src="@Model.TxUrl" /></div>
     </div>
+
+    <div class="conditional">
+        <table width="100%" class="everyday">
+            <tr>
+                <th align="left">查询</th>
+                <th align="right" id="key">展开</th>
+            </tr>
+        </table>
+        <div class="screen">
+            <b>
+                <span>状态：</span>
+                <select id="op">
+                    <option value="">全部</option>
+                    <option value="1">1</option>
+                    <option value="2">1</option>
+                </select>
+                <button id="search">查询</button>
+            </b>
+            <b>
+                <span class="datatext">查询时间：</span>
+                <input type="text" class="my-input" />
+            </b>
+
+        </div>
+    </div>
+    <div class="cont">
+
+        <div class="data-table">
+            <div class="data-list">
+                <table style="min-width:1400px;" id="MyTable" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>渠道</th>
+                            <th>新增用户</th>
+                            <th>活跃用户</th>
+                            <th>登录的设备数</th>
+                            <th>新用户付费数</th>
+                            <th>总付费数</th>
+                            <th>新用户充值额</th>
+                            <th>总充值额</th>
+                            <th>新用户付费率</th>
+                            <th>新增付费用户</th>
+                            <th>活跃付费率</th>
+                            <th>ARPPU</th>
+                            <th>ARPU</th>
+                            <th>当日首充数</th>
+                            <th>10把钥匙次数</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!-- 数据行 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="goTop">TOP</div>
+    <div class="footnav">
+        <ul>
+            <li id="foot1"><a href="javascript:void(0);">1</a></li>
+            <li id="foot2">
+                <a href="javascript:void(0);">2</a>
+                <div class="footdiv" id="footdiv3">
+                    <div>
+                        <a href="javascript:void(0);">3</a>
+                        <a href="javascript:void(0);">3</a>
+                        <a href="javascript:void(0);">3</a>
+                        <a href="javascript:void(0);">3</a>
+                    </div>
+                    <div class="triangle"></div>
+                </div>
+            </li>
+            <li id="foot3">
+                <a href="javascript:void(0);">3</a>
+                <div class="footdiv" id="footdiv3">
+                    <div>
+                        <a href="javascript:void(0);">3</a>
+                        <a href="javascript:void(0);">3</a>
+                        <a href="javascript:void(0);">3</a>
+                        <a href="javascript:void(0);">3</a>
+                    </div>
+                    <div class="triangle"></div>
+                </div>
+            </li>
+            <li id="foot4"><a href="javascript:void(0);">4</a></li>
+        </ul>
+    </div>
+    <div style="display:none;" id="fontsize"></div>
 </body>
 </html>
 <script src="~/Scripts/clipboard.min.js"></script>
