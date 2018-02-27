@@ -2821,6 +2821,17 @@
     <Content Include="Content\waterfall\js\jquery.waterfall.js" />
     <Content Include="Content\waterfall\js\jquery.waterfall.min.js" />
     <Content Include="Content\waterfall\js\waterfall.js" />
+    <Content Include="Content\WeiXin\BeatPicker\BeatPicker.min.css" />
+    <Content Include="Content\WeiXin\BeatPicker\BeatPicker.min.js" />
+    <Content Include="Content\WeiXin\BeatPicker\demos.css" />
+    <Content Include="Content\WeiXin\BeatPicker\jquery-1.11.0.min.js" />
+    <Content Include="Content\WeiXin\BeatPicker\prism.css" />
+    <Content Include="Content\WeiXin\BeatPicker\prism.js" />
+    <Content Include="Content\WeiXin\BeatPicker\reset.css" />
+    <Content Include="Content\WeiXin\css\table.css" />
+    <Content Include="Content\WeiXin\fixTable\fixTable.js" />
+    <Content Include="Content\WeiXin\js\jquery-1.11.0.min.js" />
+    <Content Include="Content\WeiXin\js\table.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\clipboard.min.js" />
