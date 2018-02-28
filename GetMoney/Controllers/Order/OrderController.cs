@@ -90,13 +90,20 @@ namespace GetMoney.Controllers.Order
         public ActionResult MyListOrderPage() {
             if(Session["uid"]==null)
                 return JsonFormat(new ExtJsonPage { success = false, code = -1001, msg = "登入状态已失效！" });
-            int pageIndex = Convert.ToInt32(Request["pageIndex"]);  //页
-            int pageSize = Convert.ToInt32(Request["pageSize"]);    //每页条数
-            string type = CommonManager.WebObj.Request("type", ""); //1为正在进行中,2为已经结束的
-            int uid = Convert.ToInt32(Session["uid"]);              //登入的用户ID
-            string filter = "";
-            if (type == "1") filter = "State!=4 AND " + uid + " IN(SELECT DISTINCT Userid FROM dbo.Order_ListUsers WHERE OrderNo=View_OrderUser.OrderNo)";
-            else if (type == "2") filter = "State=4 AND " + uid + " IN(SELECT DISTINCT Userid FROM dbo.Order_ListUsers WHERE OrderNo=View_OrderUser.OrderNo)";
+            int pageIndex = Convert.ToInt32(Request["pageIndex"]) - 1;      //页
+            int pageSize = Convert.ToInt32(Request["pageSize"]);            //每页条数
+            string state = CommonManager.WebObj.Request("state", "");       //1为正在进行中,2为已经结束的
+            int uid = Convert.ToInt32(Session["uid"]);                      //登入的用户ID
+            string btime = CommonManager.WebObj.Request("btime", "");       //开始时间
+            string etime = CommonManager.WebObj.Request("etime", "");       //结束时间
+
+            string filter = uid + " IN(SELECT DISTINCT Userid FROM dbo.Order_ListUsers WHERE OrderNo = View_OrderUser.OrderNo)";
+            if (state != "-1")
+                filter += " AND State=" + state;
+            if (!string.IsNullOrEmpty(btime))
+                filter += " and FirstDate>='" + btime + " 00:00:00'";
+            if (!string.IsNullOrEmpty(etime))
+                filter += " and FirstDate<='" + etime + " 23:59:59.999'";
 
             int Total = 0;
             IList<OrderDto> list = _bll.ListOrderPage(ref Total, pageSize, pageIndex, filter);

@@ -1,7 +1,4 @@
-﻿@{
-    Layout = null;
-}
-@model GetMoney.Model.TUserDto
+﻿@model GetMoney.Model.TUserDto
 <!DOCTYPE html>
 
 <html>
@@ -15,38 +12,38 @@
     <link href="~/Content/WeiXin/BeatPicker/BeatPicker.min.css" rel="stylesheet" />
     <script src="~/Content/WeiXin/fixTable/fixTable.js"></script>
     <script src="~/Content/WeiXin/BeatPicker/BeatPicker.min.js"></script>
-    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Content/WeiXin/BeatPicker/jquery-1.11.0.min.js"></script>
+    <script src="~/Content/WeiXin/js/table.js"></script>
     <script type="text/javascript">
-        $(function(){
-            $("#myorder").bind("click",function(ret){
-                var data = {
-                    pageindex:0,
-                    pagesize:5,
-                    type:1
-                }
-                $.getJSON("/Order/MyListOrderPage",data,function(ret){
-                    var str = "<table><thead><tr><th>会头</th><th>会费</th><th>总额</th><th>标会日期</th><th>查看</th></tr></thead>";
-                    $.each(ret.list, function (i, o) {
-                        str += "<tr><td>" + o.TouTrueName + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.Remark + "</td><td>" + o.State + "</td><td><button class=\"btn btn-primary\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button></td></tr>";
-                    })
-                    str += "</table>";
-                    $("#div_list").html(str);
-                })
+        var pageindex = 1;        //当前页码
+        var pagesize = 20;      //每页几条
+        var pagenum = 1;   //共几页
+        $(function () {
+            //fixcallback();
+            $("#search").bind("click", function (ret) {
+                fixcallback();
             })
         })
-        fixcallback = function(){
+        fixcallback = function () {
+            var bt = $(".beatpicker-input-from").val();
+            var et = $(".beatpicker-input-to").val();
+            var state = $("#op").val();
             var data = {
-                pageindex:0,
-                pagesize:7,
-                type:1
+                pageindex: pageindex,
+                pagesize: pagesize,
+                state: state,
+                btime: bt,
+                etime: et
             }
             $.getJSON("/Order/MyListOrderPage",data,function(ret){
-                var str = "<table><thead><tr><th>会头</th><th>会费</th><th>总额</th><th>标会日期</th><th>查看</th></tr></thead>";
+                //var str = "<table><thead><tr><th>会单ID</th><th>会头</th><th>会费</th><th>总额</th><th>标会日期</th><th>查看</th></tr></thead>";
+                var str = "";
                 $.each(ret.list, function (i, o) {
                     str += "<tr><td>" + o.TouTrueName + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.Remark + "</td><td>" + o.State + "</td><td><button class=\"btn btn-primary\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button></td></tr>";
                 })
                 str += "</table>";
-                $("#div_list").html(str);
+                $(".data-list tbody").append(str);
+                call(768, 100);
             })
         }
     </script>
@@ -73,7 +70,7 @@
             <b>
                 <span>状态：</span>
                 <select id="op">
-                    <option value="">全部</option>
+                    <option value="-1">全部</option>
                     <option value="1">1</option>
                     <option value="2">1</option>
                 </select>
@@ -86,11 +83,12 @@
 
         </div>
     </div>
+
     <div class="cont">
 
         <div class="data-table">
             <div class="data-list">
-                <table style="min-width:1400px;" id="MyTable" border="0" cellspacing="0" cellpadding="0">
+                <table style="min-width:600px;" id="MyTable" border="0" cellspacing="0" cellpadding="0">
                     <thead>
                         <tr>
                             <th>时间</th>
@@ -153,7 +151,7 @@
     <div style="display:none;" id="fontsize"></div>
 </body>
 </html>
-<script src="~/Scripts/clipboard.min.js"></script>
+@*<script src="~/Scripts/clipboard.min.js"></script>
 <script type="text/javascript">
     var clipboard = new Clipboard('#btn_fz', {
             text: function () {
@@ -166,4 +164,4 @@
         clipboard.on('error', function(e) {
             alert("复制失败");
         });
-</script>
+</script>*@
