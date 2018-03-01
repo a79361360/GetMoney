@@ -41,7 +41,7 @@ namespace GetMoney.Controllers
             }
             else
             {
-                string openid = "", nickname = "", headurl = "", backurl = "/TUser/TUserSearch";    //当没有自己的公众号的情况下,在这里进行数据写入,本来需要在ComExpendController->Wx_Auth_Code这里写入的,这里择中处理一下
+                string openid = "", nickname = "", headurl = "", backurl = "/TUser/TUserWxOrder";    //当没有自己的公众号的情况下,在这里进行数据写入,本来需要在ComExpendController->Wx_Auth_Code这里写入的,这里择中处理一下
                 try
                 {
                     string p = Request["p"].ToString(); //1|subscribe|openid  微信发送|是否关注|openid

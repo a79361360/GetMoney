@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>TUserSearch</title>
+    <title>TUserWxOrder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -15,36 +15,82 @@
     <script src="~/Content/WeiXin/BeatPicker/jquery-1.11.0.min.js"></script>
     <script src="~/Content/WeiXin/js/table.js"></script>
     <script type="text/javascript">
-        var pageindex = 1;        //当前页码
-        var pagesize = 20;      //每页几条
-        var pagenum = 1;   //共几页
-        $(function () {
-            //fixcallback();
-            $("#search").bind("click", function (ret) {
-                fixcallback();
-            })
-        })
-        fixcallback = function () {
-            var bt = $(".beatpicker-input-from").val();
-            var et = $(".beatpicker-input-to").val();
-            var state = $("#op").val();
-            var data = {
-                pageindex: pageindex,
-                pagesize: pagesize,
-                state: state,
-                btime: bt,
-                etime: et
-            }
-            $.getJSON("/Order/MyListOrderPage",data,function(ret){
-                //var str = "<table><thead><tr><th>会单ID</th><th>会头</th><th>会费</th><th>总额</th><th>标会日期</th><th>查看</th></tr></thead>";
-                var str = "";
-                $.each(ret.list, function (i, o) {
-                    str += "<tr><td>" + o.TouTrueName + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.Remark + "</td><td>" + o.State + "</td><td><button class=\"btn btn-primary\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button></td></tr>";
+        $(document).ready(function () {
+            var pagesize = Math.ceil($(".cont").height() / 30) - 1;//获取每页条数
+            var len;                    //共几条
+            var pageindex = 1;          //当前页码
+            var pagenum = 1;            //共几页
+            //滚动的方法
+            function scrolls() {
+                $("#MyTable_tableData").on('scroll', function () {
+                    if (top = $(this).scrollTop()) {
+                        var h = $(this).height();//div可视区域的高度
+                        var sh = $(this)[0].scrollHeight;//内容高度
+                        var st = $(this).scrollTop();//滚动条的高度，即滚动条的当前位置到div顶部的距离
+                        if (st > 50) {
+                            $(".goTop").fadeIn();
+                        } else {
+                            $(".goTop").fadeOut();
+                        }
+                        if (st >= sh - h) {
+                            if (parseInt(pageindex) >= parseInt(pagenum)) {
+                                //$('.over').show().delay(1200).fadeOut();
+                                return;
+                            }
+                            pageindex++;
+                            searchlist();
+                        }
+                    }
                 })
-                str += "</table>";
-                $(".data-list tbody").append(str);
-                call(768, 100);
+            }
+            //初始化和滚动
+            init = function () {
+                getRem(768, 100);   //
+                scrolls();          //
+            }
+            $("#search").bind("click", function (ret) {
+                searchlist(1);
             })
+            $(window).resize(function () { init() });
+            searchlist = function (firstpage) {
+                var bt = $(".beatpicker-input-from").val();
+                var et = $(".beatpicker-input-to").val();
+                var state = $("#op").val();
+                var curpindex = pagesize;
+                if(firstpage==1){curpindex = firstpage;$(".data-list tbody").html("");}
+                var data = {
+                    pageindex: curpindex,
+                    pagesize: pagesize,
+                    state: state,
+                    btime: bt,
+                    etime: et
+                }
+                $.getJSON("/Order/MyListOrderPage", data, function (ret) {
+                    if (ret.success) {
+                        var str = "";
+                        $.each(ret.list, function (i, o) {
+                            str += "<tr><td>" + o.TouTrueName + "</td><td>" + o.OrderNo + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.PeoperNum + "</td><td>" + o.FirstDate1 + "</td><td>" + GetStateN(o.State) + "</td><td><button class=\"btn_fz\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button><button class=\"btn_fz\" onclick=\"OrderPriView('/Order/OrderListViewPortal?orderno=" + o.OrderNo + "')\")\">预览</button></td></tr>";
+                        })
+                        str += "</table>";
+                        $(".data-list tbody").append(str);
+                        len = ret.total;    //总条数
+                        if (len != 0)
+                            pagenum = Math.ceil(len / pagesize)
+                        init();
+                    }
+                })
+            }
+            searchlist(1);
+        })
+        //会单状态
+        GetStateN = function (v) {
+            if (v == 1) return '活会';
+            if (v == 2) return '死会';
+            if (v == 3) return '险会';
+        }
+        //预览
+        OrderPriView = function(url){
+            window.open(url,"_blank");
         }
     </script>
 </head>
@@ -54,7 +100,7 @@
             <li><span>用户ID：</span><b>@Model.id</b></li>
             <li><span>昵称：</span><b>@Model.NickName</b></li>
             <li><span>手机号：</span><b>@Model.Phone</b></li>
-            <li><span>好友链接：</span><button id="btn_fz">复制</button></li>
+            <li><span>好友链接：</span><button id="btn_fz" class="btn_fz">复制</button></li>
         </ul>
         <div class="userImg"><img src="@Model.TxUrl" /></div>
     </div>
@@ -91,22 +137,14 @@
                 <table style="min-width:600px;" id="MyTable" border="0" cellspacing="0" cellpadding="0">
                     <thead>
                         <tr>
-                            <th>时间</th>
-                            <th>渠道</th>
-                            <th>新增用户</th>
-                            <th>活跃用户</th>
-                            <th>登录的设备数</th>
-                            <th>新用户付费数</th>
-                            <th>总付费数</th>
-                            <th>新用户充值额</th>
-                            <th>总充值额</th>
-                            <th>新用户付费率</th>
-                            <th>新增付费用户</th>
-                            <th>活跃付费率</th>
-                            <th>ARPPU</th>
-                            <th>ARPU</th>
-                            <th>当日首充数</th>
-                            <th>10把钥匙次数</th>
+                            <th>会头</th>
+                            <th>会单ID</th>
+                            <th>会费</th>
+                            <th>总会款</th>
+                            <th>会员人数</th>
+                            <th>首标日期</th>
+                            <th>会状态</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
 
@@ -148,10 +186,10 @@
             <li id="foot4"><a href="javascript:void(0);">4</a></li>
         </ul>
     </div>
-    <div style="display:none;" id="fontsize"></div>
+    <div class="over" style="display:none">到底了！</div>
 </body>
 </html>
-@*<script src="~/Scripts/clipboard.min.js"></script>
+<script src="~/Scripts/clipboard.min.js"></script>
 <script type="text/javascript">
     var clipboard = new Clipboard('#btn_fz', {
             text: function () {
@@ -164,4 +202,4 @@
         clipboard.on('error', function(e) {
             alert("复制失败");
         });
-</script>*@
+</script>

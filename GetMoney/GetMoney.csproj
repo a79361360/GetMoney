@@ -2899,7 +2899,7 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\TUser\Index.cshtml" />
     <Content Include="Views\TUser\TUserFriend.cshtml" />
-    <Content Include="Views\TUser\TUserSearch.cshtml" />
+    <Content Include="Views\TUser\TUserWxOrder.cshtml" />
     <Content Include="Views\TUser\Login.cshtml" />
     <Content Include="Views\TUser\RegTUser.cshtml" />
     <Content Include="Views\Order\OrderPortal.cshtml" />
@@ -2921,6 +2921,7 @@
     <Content Include="Views\TUser\UpdatePortal.cshtml" />
     <Content Include="Views\TUser\UserMenuPortal.cshtml" />
     <Content Include="Views\Wx\WxCreateFriend.cshtml" />
+    <Content Include="Views\Order\OrderWxLists.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Application\GetMoney.Application.csproj">

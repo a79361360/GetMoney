@@ -69,6 +69,7 @@ namespace GetMoney.Model
         /// 首次标会日期
         /// </summary>
         public DateTime FirstDate { get; set; }
+        public string FirstDate1 { get; set; }
         /// <summary>
         /// 每N月标会一次
         /// </summary>

@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* CSS Document */
 
 *{font-weight:normal; padding:0; margin:0; outline:none; list-style:none;}
@@ -33,7 +33,10 @@ body{border:1px solid #ddd; max-width:768px; height:100%; margin:0 auto; positio
 	.screen b .datatext{width:auto;}
 }*/
 .beatpicker-input-from{margin-right:5%;}
-
+.btn_fz {
+    padding:0 10px; color:#fff; border:none; border-radius:5px; line-height:24px; right:5px; top:5px;
+    background:linear-gradient(to bottom, #EA4F38 0%,#B30208 100%);
+}
 .screen #search{padding:0 10px; color:#fff; border:none; border-radius:5px; line-height:24px; margin-left:.1rem; position:absolute; right:5px; top:5px;
 background:-moz-linear-gradient(top, #EA4F38 0%, #B30208 100%);
 background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#EA4F38), color-stop(100%,#B30208));
@@ -47,10 +50,10 @@ background:linear-gradient(to bottom, #EA4F38 0%,#B30208 100%);
 
 .cont{position:absolute; max-width:768px; margin:0 auto; left:0; right:0; top:1.6rem; bottom:.9rem; overflow:hidden;}
 
-.data-table{width:auto; margin:0 5px; padding-bottom:10px;}
+.data-table{width:auto; margin:0 5px; padding-bottom:10px; border-right:1px solid #c5c5c5;}
 .data-table *{box-sizing:border-box; font-size:13px;}
 
-.data-list{width:100%; border-right:1px solid #c5c5c5;}
+.data-list{width:100%;}
 .data-list table{border:1px solid #c5c5c5; border-bottom:none; border-right:none;}
 #MyTable{margin-bottom:1px;}
 .data-list th,.data-list td{min-width:100px; height:30px; white-space:nowrap; text-align:center; border:1px solid #c5c5c5; border-top:none; border-left:none;}
@@ -71,3 +74,6 @@ background:linear-gradient(to bottom, #EA4F38 0%,#B30208 100%);
 .triangle::before{position:absolute; content:''; top:1px; left:-9.5px; width:0; height:0; border-style:solid; border-width:0 9.5px 15px 9px; border-color:transparent transparent #ffffff transparent;}
 .footnav ul li .footdiv div a{line-height:28px; font-size:13px; border:1px solid #c5c5c5; border-bottom:none;}
 .footnav ul li .footdiv div a:last-child{border-bottom:1px solid #c5c5c5;}
+
+
+.over{position:absolute; left:1rem; right:1rem; top:50%; height:1rem; line-height:1rem; margin-top:-.5rem; font-size:.4rem; color:#fff; text-align:center; background:#000; z-index:9999;}

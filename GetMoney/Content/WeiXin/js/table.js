@@ -1,13 +1,9 @@
 // JavaScript Document
 $(document).ready(function () {
-	getRem(768,100)
-	$(window).resize(function() {
-		getRem(768,100)
-	});
-	
+
 	//伸缩
 	$("#key").click(function() {
-		$(this).html($(".screen").is(":hidden") ? "收起<i class=\'fa fa-angle-up\'></i>" : "展开<i class=\'fa fa-angle-down\'></i>");
+		$(this).html($(".screen").is(":hidden") ? "收起" : "展开");
 		$(".screen").slideToggle();
 	});
 	
@@ -45,25 +41,7 @@ $(document).ready(function () {
 	var to = maxDate;
 	$(".beatpicker-input-from").val(from);
 	$(".beatpicker-input-to").val(to);
-	$("#MyTable_tableData").bind('scroll',function(){
-        var h = $(this).height();//div可视区域的高度
-        var sh = $(this)[0].scrollHeight;//内容高度
-		var st =$(this).scrollTop();//滚动条的高度，即滚动条的当前位置到div顶部的距离
-		if(st>50){
-			$(".goTop").fadeIn();
-		}else{
-			$(".goTop").fadeOut();
-		}
-		console.log(st)
-		console.log(sh - h)
-		if (st >= sh - h) {
-            alert(1)
-		    //fixcallback();
-			//var shuju="<tr><td>2017-12-13</td><td>所有渠道</td><td>1000</td><td>5000</td><td>5000</td><td>300</td><td>1230</td><td>3614</td><td>14384</td><td>5.01%</td><td>622</td><td>7.61%</td><td>11.60</td><td>0.88</td><td>930</td><td>630</td></tr>"
-            //$(".data-list tbody").append(shuju+shuju+shuju+shuju+shuju+shuju+shuju+shuju+shuju+shuju);
-			/*call();*/
-        }
-    })
+	
 	$('.goTop').on('click',function(){
 		//var container = $('#MyTable_tableData');container.scrollTop(0);//滚动到div 100px
 		$('#MyTable_tableData').animate({scrollTop: 0}, 300);
@@ -87,11 +65,36 @@ $(document).ready(function () {
 window.onresize = function(){
 	getRem(768,100)
 };*/
-function getRem(pwidth, prem) {
-    call(pwidth, prem);
+function getRem(pwidth,prem){
+	call(pwidth,prem);
 }
 
-function call(pwidth, prem) {
+function call(pwidth,prem){
+	var html = document.getElementsByTagName("html")[0];
+	var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
+	var oHeight = document.body.clientHeight || document.documentElement.clientHeight;
+	if (oWidth >= pwidth) {
+		oWidth = pwidth;
+	}if (oWidth > oHeight) {
+		oWidth = oHeight
+	}
+	var size=oWidth/pwidth*prem
+	html.style.fontSize = size + "px";
+	//以下为表格特效代码
+	var top=1.6*size+30+0.1*size;
+	var h=oHeight-top-0.9*size
+	$('.cont').css({"top": top,"height":h});
+	
+	var w = $(".data-table").width() - 1;
+	$('.data-list').css("width", w);
+	ss = $(".data-list").width();
+	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+		FixTable("MyTable", 1, "100%", h);
+	} else {
+		FixTable("MyTable", 1, ss, h);
+	}
+}
+function call2(pwidth, prem) {
     var html = document.getElementsByTagName("html")[0];
     var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
     var oHeight = document.body.clientHeight || document.documentElement.clientHeight;
@@ -103,10 +106,11 @@ function call(pwidth, prem) {
     var size = oWidth / pwidth * prem
     html.style.fontSize = size + "px";
     //以下为表格特效代码
-    var top = 1.6 * size + 30 + 0.1 * size;
-    var h = oHeight - top - 0.9 * size
+    var conditional = 0.1 * size;
+    $('.conditional').css({ "top": conditional });
+    var top = 30 + 0.2 * size;
+    var h = oHeight - top - 0.9 * size;
     $('.cont').css({ "top": top, "height": h });
-
     var w = $(".data-table").width() - 1;
     $('.data-list').css("width", w);
     ss = $(".data-list").width();
