@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* CSS Document */
 
 *{font-weight:normal; padding:0; margin:0; outline:none; list-style:none;}
@@ -33,7 +33,10 @@ body{border:1px solid #ddd; max-width:768px; height:100%; margin:0 auto; positio
 	.screen b .datatext{width:auto;}
 }*/
 .beatpicker-input-from{margin-right:5%;}
-
+.btn_fz {
+    padding:0 10px; color:#fff; border:none; border-radius:5px; line-height:24px; right:5px; top:5px;
+    background:linear-gradient(to bottom, #EA4F38 0%,#B30208 100%);
+}
 .screen #search{padding:0 10px; color:#fff; border:none; border-radius:5px; line-height:24px; margin-left:.1rem; position:absolute; right:5px; top:5px;
 background:-moz-linear-gradient(top, #EA4F38 0%, #B30208 100%);
 background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#EA4F38), color-stop(100%,#B30208));
