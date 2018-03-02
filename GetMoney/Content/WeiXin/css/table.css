@@ -47,7 +47,7 @@ background:linear-gradient(to bottom, #EA4F38 0%,#B30208 100%);
 
 .cont{position:absolute; max-width:768px; margin:0 auto; left:0; right:0; top:1.6rem; bottom:.9rem; overflow:hidden;}
 
-.data-table{width:auto; margin:0 5px; padding-bottom:10px;}
+.data-table{width:auto; margin:0 5px; padding-bottom:10px; background:#fff;}
 .data-table *{box-sizing:border-box; font-size:13px;}
 
 .data-list{width:100%;}
@@ -56,12 +56,11 @@ background:linear-gradient(to bottom, #EA4F38 0%,#B30208 100%);
 #MyTable_tableHead,#MyTable_tableData,#MyTable2_tableHead,#MyTable2_tableData{border-right:1px solid #c5c5c5;}
 #MyTable_tableColumn,#MyTable_tableData,#MyTable2_tableColumn,#MyTable2_tableData{border-bottom:1px solid #c5c5c5;}
 .data-list th,.data-list td{min-width:100px; height:30px; white-space:nowrap; text-align:center; border:1px solid #c5c5c5; border-top:none; border-left:none;}
-.data-list td{background:#fff;}
 .data-list tr th:last-child,.data-list tr td:last-child{border-right:none;}/**/
 .data-list tr:last-child td{border-bottom:none;}
 
-.goTop,.goTop2{width:1rem; height:1rem; line-height:1rem; text-align:center; font-size:.4rem; position:absolute; right:5px; bottom:1rem; z-index:999; background:rgba(0,0,0,.3); border-radius:50%; display:none;}
-
+.goTop,.goTop2{width:1rem; height:1rem; line-height:1rem; text-align:center; font-size:.4rem; position:absolute; right:5px; bottom:1rem; z-index:1000; background:rgba(0,0,0,.3); border-radius:50%; display:none;}
+.goTop2{z-index:1001;}
 
 
 .footnav *{box-sizing:border-box;}
