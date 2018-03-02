@@ -7,6 +7,7 @@ using GetMoney.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -193,7 +194,22 @@ namespace GetMoney.Controllers.Order
             if (string.IsNullOrEmpty(OrderNo))
                 return JsonFormat(new ExtJson { success = false, code = -1000, msg = "单号不能为空！" });
             IList<OrderListDto> list = _bll.OrderLists(OrderNo);
-            ViewBag.List = list;
+            StringBuilder sb = new StringBuilder();
+            string btn = "";
+            foreach (var item in list) {
+                if (item.State == "1")
+                {
+                    btn = "<button class=\"btn_fz\" onclick=\"FindOrderUser('" + item.OrderNo + "'," + item.ID + "," + item.State + ")\">查看明细</butoon>";
+                    item.State = "已结束";
+                }else if (item.State == "2")
+                {
+                    btn = "<button class=\"btn_fz\" onclick=\"FindOrderUser('" + item.OrderNo + "'," + item.ID + "," + item.State + ")\">填写标金</butoon>";
+                    item.State = "未结束";
+                }
+
+                sb.Append("<tr><td>" + item.MeetDate + "</td><td>" + item.AccrualMoney + "</td><td> " + item.TrueName + "</td><td>" + item.State + "</td><td>" + btn + "</td></tr>");
+            }
+            ViewBag.List = sb;
             return View();
         }
         /// <summary>

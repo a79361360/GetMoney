@@ -53,10 +53,8 @@
         Init = function () {
             var tr = $(".data-list tbody").find("tr");
             $.each(tr, function (i, o) {
-                console.log($(o))
-                var h = $(o).eq(0).find("td").eq(4).html();
-                console.log(h);
-                $(o).eq(4).html(ReBtnHtml(h));
+                var h = $(o).find("td").eq(3).html();
+                $(o).eq(3).html(ReBtnHtml(h));
             })
         }
         ReBtnHtml = function (state) {
@@ -89,14 +87,12 @@
                             <th>夺标金额</th>
                             <th>夺标人</th>
                             <th>状态</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                            @foreach (var item in ViewBag.List)
-                            {
-                                <tr><td>@item.MeetDate</td><td>@item.AccrualMoney</td><td>@item.TrueName</td><td>@item.State</td></tr>
-                            }
+                        @Html.Raw(ViewBag.List)
                     </tbody>
                 </table>
             </div>
