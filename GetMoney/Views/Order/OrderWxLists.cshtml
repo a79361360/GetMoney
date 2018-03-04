@@ -23,32 +23,41 @@
                 //明细
                 $.getJSON("/Order/OrderListUsers", { listid: listid }, function (ret) {
                     if (ret.code == 1000) {
-                        var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th style=\"width:61px;\">竞标人</th><th style=\"width:61px;\">竞标金额</th><th style=\"width:160px;\">最后提交时间</th></tr></thead>";
+                        var str = "";
+                        $("#data-list2 tbody").html("");
                         $.each(ret.jsonresult, function (i, obj) {
                             str += "<tr><td>" + obj.TrueName + "</td><td>" + obj.AccrualMoney + "</td><td>" + obj.Lastdate + "</td></tr>";
                         })
-                        str += "</table>";
-                        //ds.dialog({ title: '会单明细', content: str, timeout: 0 });
-                        qiu_confirm("qin_jldetail", "会单记录明细", str, null, 700);
+                        $("#data-list2 tbody").append(str);
+                        $(".details_bg").show();
+                        call3(768, 100);
                     }
                 });
             } if (state == "2") {
                 $.getJSON("/Order/GetOrderListUserPrvMoney", { orderno: No, listid: listid }, function (ret) {
                     if (ret.code == 1000) {
-                        var data = ret.jsonresult;
-                        var str = "<table class=\"table table-bordered table-hover\"><thead><tr><th>标金金额</th><th>最后提交时间</th><th>操作</th></tr></thead>";
-                        str += "<tr><td><input type=\"text\" style=\"text-align:center\" value=" + data.AccrualMoney + "></td><td>" + data.Lastdate + "</td><td><button class=\"btn btn-primary btn-sm\" onclick=\"UpdateUserMoney('" + No + "'," + listid + ",this)\">更新</butoon></td></tr>";
-                        str += "</table>";
-                        //ds.dialog({ title: '填写标金', content: str, timeout: 0 });
-                        qiu_confirm("qin_prvmy", "填写标金", str);
-                    } else {
-
-                    }
+                        $("#txt_bj").val(ret.jsonresult.AccrualMoney);
+                        $("#bj_lastd").html(ret.jsonresult.Lastdate);
+                        $("#up_bjin").bind("click", function () {
+                            UpdateUserMoney(No, listid, this);
+                        })
+                        $(".update_bg").show();
+                    } 
                 });
             }
             if (state == "3") {
                 ds.dialog.tips("当前期无人参与竞标或者最高竞标金额少于最低竞标额!等待会头处理...", 2, true, true);
             }
+        }
+        //提交标金
+        UpdateUserMoney = function (No, listid, e) {
+            var text = $("#txt_bj").val();
+            $.getJSON("/Order/UpdateOrderListUserMoney", { orderno: No, listid: listid, money: text }, function (ret) {
+                if (ret.code == 1000) {
+                    alert('更新成功');
+                }else
+                    alert('没有提交成功，需要重新提交.');
+            });
         }
         Init = function () {
             var tr = $(".data-list tbody").find("tr");
@@ -72,7 +81,7 @@
         <table width="100%" class="everyday">
             <tr>
                 <th align="left">查询</th>
-                <th align="right">返回</th>
+                <th align="right" onclick="javascript:window.history.go(-1)">返回</th>
             </tr>
         </table>
     </div>
@@ -128,6 +137,49 @@
             </li>
             <li id="foot4"><a href="javascript:void(0);">4</a></li>
         </ul>
+    </div>
+
+    <div class="details_bg" style="display:none;">
+        <div class="details_close">X</div>
+        <div class="details_cont">
+            <div class="data-table" id="data-table2">
+                <div class="data-list" id="data-list2">
+                    <table style="min-width:400px;" id="MyTable2" border="0" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr>
+                                <th>竞标人</th>
+                                <th>竞标金额</th>
+                                <th>最后提交时间</th>
+                            </tr>
+                        </thead>
+
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="update_bg">
+        <div class="update_cont">
+            <h3>填写标金<i class="update_close">X</i></h3>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th>竞标金额</th>
+                        <th>最后提交时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="25%"><input type="text" id="txt_bj" /></td>
+                        <td width="45%" id="bj_lastd">2018-02-25 14:12:29.890</td>
+                        <td><button id="up_bjin">更新</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

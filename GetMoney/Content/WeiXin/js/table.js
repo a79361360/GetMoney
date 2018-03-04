@@ -13,7 +13,7 @@ $(document).ready(function () {
 	var mm = myDate.getMonth()+1;
 	var dd = myDate.getDate();
 	var maxDate = yy + '-' + mm + '-' + dd;
-	var date = new Date(myDate.getTime() - 7 * 24 * 3600 * 1000);
+	var date = new Date(myDate.getTime() - 365 * 24 * 3600 * 1000);
 	var y7 = date.getFullYear();
 	var m7 = date.getMonth()+1;
 	var d7 = date.getDate();
@@ -144,14 +144,14 @@ function call3(pwidth,prem){
 	
 	var top=$('.details_cont').offset().top;
 	var h=oHeight-top*2+10;
-	//console.log(top);
+	console.log(top);
 	$('.details_cont').css({"height":h});
 	var w = $("#data-table2").width() - 1;
 	$('#data-list2').css("width", w);
 	ss = $("#data-list2").width();
 	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-		FixTableTwo("MyTable2", 1, "100%", h);
+	    FixTable("MyTable2", 1, "100%", h);
 	} else {
-		FixTableTwo("MyTable2", 1, ss, h);
+	    FixTable("MyTable2", 1, ss, h);
 	}
 }

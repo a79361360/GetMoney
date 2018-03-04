@@ -86,7 +86,7 @@ background:linear-gradient(to bottom, #EA4F38 0%,#B30208 100%);
 .details_close,.update_close{position:absolute; right:10px; top:10px; width:30px; height:30px; line-height:30px; text-align:center; background:#fff; border-radius:50%; color:#000; font-size:16px}
 .details_cont{position:absolute; max-width:768px; margin:0 auto; left:0; right:0; top:50px;}
 
-.update_cont{position:absolute; width:6rem; height:2.2rem; margin:-1.1rem 0 0 -3rem; left:50%; top:50%; background:#fff; box-sizing:border-box; border-radius:.1rem;}
+.update_cont{position:absolute; width:6rem; height:3.2rem; margin:-1.1rem 0 0 -3rem; left:50%; top:50%; background:#fff; box-sizing:border-box; border-radius:.1rem;}
 .update_cont *{box-sizing:border-box; font-size:.3rem;}
 .update_cont h3{height:.7rem; line-height:.7rem; margin-bottom:.1rem; border-bottom:1px solid #ddd; padding:0 .3rem;}
 .update_close{background:#000; color:#fff; font-style:normal; width:.5rem; height:.5rem; line-height:.5rem; right:.2rem; top:.1rem; font-size:.3rem;}

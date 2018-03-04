@@ -45,7 +45,7 @@
             }
             //初始化和滚动
             init = function () {
-                getRem(768, 100);   //
+                call(768, 100);   //
                 scrolls();          //
             }
             $("#search").bind("click", function (ret) {
@@ -69,7 +69,7 @@
                     if (ret.success) {
                         var str = "";
                         $.each(ret.list, function (i, o) {
-                            str += "<tr><td>" + o.TouTrueName + "</td><td>" + o.OrderNo + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.PeoperNum + "</td><td>" + o.FirstDate1 + "</td><td>" + GetStateN(o.State) + "</td><td><button class=\"btn_fz\" onclick=\"FindOrderLists(this,'" + o.OrderNo + "')\">查看</button><button class=\"btn_fz\" onclick=\"OrderPriView('/Order/OrderListViewPortal?orderno=" + o.OrderNo + "')\")\">预览</button></td></tr>";
+                            str += "<tr><td>" + o.TouTrueName + "</td><td>" + o.OrderNo + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.PeoperNum + "</td><td>" + o.FirstDate1 + "</td><td>" + GetStateN(o.State) + "</td><td><button class=\"btn_fz\" onclick=\"FindOrderLists('/Order/OrderWxLists?orderno=" + o.OrderNo + "')\">查看</button><button class=\"btn_fz\" onclick=\"OrderPriView('/Order/OrderListViewPortal?orderno=" + o.OrderNo + "')\")\">预览</button></td></tr>";
                         })
                         str += "</table>";
                         $(".data-list tbody").append(str);
@@ -91,6 +91,10 @@
         //预览
         OrderPriView = function(url){
             window.open(url,"_blank");
+        }
+        //
+        FindOrderLists = function(url){
+            window.location.href=url;
         }
     </script>
 </head>
