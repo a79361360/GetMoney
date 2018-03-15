@@ -54,6 +54,7 @@
     <Compile Include="Model\OrderDto.cs" />
     <Compile Include="Model\OrderListDto.cs" />
     <Compile Include="Model\OrderListUserDto.cs" />
+    <Compile Include="Model\TUOptionDTO.cs" />
     <Compile Include="Model\TUserDto.cs" />
     <Compile Include="Model\UListDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

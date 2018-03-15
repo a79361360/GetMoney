@@ -67,5 +67,10 @@ namespace GetMoney.Controllers.OnlyNameTest
             }
             return img;
         }
+
+
+        public ActionResult ViewPageOne() {
+            return View();
+        }
     }
 }

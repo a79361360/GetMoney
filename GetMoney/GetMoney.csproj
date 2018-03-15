@@ -197,6 +197,7 @@
     <Compile Include="Controllers\Nsoup\NsoupController.cs" />
     <Compile Include="Controllers\OnlyNameTest\OnlyNameTestController.cs" />
     <Compile Include="Controllers\Order\OrderController.cs" />
+    <Compile Include="Controllers\TUser\TuOptionController.cs" />
     <Compile Include="Controllers\TUser\TUserController.cs" />
     <Compile Include="Controllers\WxController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -2922,6 +2923,9 @@
     <Content Include="Views\TUser\UserMenuPortal.cshtml" />
     <Content Include="Views\Wx\WxCreateFriend.cshtml" />
     <Content Include="Views\Order\OrderWxLists.cshtml" />
+    <Content Include="Views\OnlyNameTest\ViewPageOne.cshtml" />
+    <Content Include="Views\Shared\_WxFoot.cshtml" />
+    <Content Include="Views\TuOption\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Application\GetMoney.Application.csproj">

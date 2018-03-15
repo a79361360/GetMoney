@@ -68,6 +68,7 @@
     <Compile Include="Repository.cs" />
     <Compile Include="SqlPageParam.cs" />
     <Compile Include="TUser\IService\ITUserDal.cs" />
+    <Compile Include="TUser\Service\TUOptionDAL.cs" />
     <Compile Include="TUser\Service\TUserDal.cs" />
     <Compile Include="TUser\UserRepository.cs" />
     <Compile Include="WeiX\WeiXDAL.cs" />
@@ -76,6 +77,10 @@
     <ProjectReference Include="..\GetMoney.Data\GetMoney.Data.csproj">
       <Project>{61bce72c-0e38-4f36-b200-605f92d3f437}</Project>
       <Name>GetMoney.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GetMoney.Model\GetMoney.Model.csproj">
+      <Project>{964DE9D2-17E0-48B8-ABA3-5DFFCBC6EB8E}</Project>
+      <Name>GetMoney.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

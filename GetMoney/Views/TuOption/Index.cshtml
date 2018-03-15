@@ -1,0 +1,104 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>投诉与建议</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="~/Content/WeiXin/css/table.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getRem(768, 100);
+            if ($("#reply").val() == "") {
+                $(".reply").hide();
+            } else {
+                $(".reply").show();
+            }
+            $(window).resize(function () {
+                getRem(768, 100);
+            });
+            function getRem(pwidth, prem) {
+                var html = document.getElementsByTagName("html")[0];
+                var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
+                var oHeight = document.body.clientHeight || document.documentElement.clientHeight;
+                if (oWidth >= pwidth) {
+                    oWidth = pwidth;
+                } if (oWidth > oHeight) {
+                    oWidth = oHeight
+                }
+                var size = oWidth / pwidth * prem
+                html.style.fontSize = size + "px";
+            }
+            $(".footnav li").click(function () {
+                $(this).siblings().children('.footdiv').hide();
+                if ($(this).children('.footdiv').is(':hidden')) {
+                    $(this).children('.footdiv').show()
+                } else {
+                    $(this).children('.footdiv').hide()
+                }
+            });
+        })
+        //投诉建议
+        setoption = function () {
+            var title = $("txt_title").val();
+            var type = $("txt_type").val();
+            var yj = $("txt_content").val();
+            $.post("/TuOption/AddUOption", { title: title, type: type, yj: yj },function (ret) {
+                if (ret.success) {
+
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+
+    <div class="opinion">
+        <table width="100%;">
+            <tbody>
+                <tr>
+                    <td style="width:1.5rem">标题：</td>
+                    <td><input type="text" id="txt_title" value="@Model.title" /></td>
+                </tr>
+                <tr>
+                    <td>类型：</td>
+                    <td>
+                        <select id="txt_type">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>意见：</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><textarea id="txt_content"></textarea></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" align="center"><input type="button" value="提交" /><button>关闭</button></td>
+                </tr>
+            </tfoot>
+        </table>
+        <table width="100%;" class="reply">
+            <tr>
+                <td>回复：</td>
+            </tr>
+            <tr>
+                <td><textarea disabled="disabled" id="reply">123</textarea></td>
+            </tr>
+        </table>
+    </div>
+    @RenderPage("~/Views/Shared/_WxFoot.cshtml")
+</body>
+</html>
