@@ -8,6 +8,7 @@ namespace GetMoney.Model.Model
     public class TUOptionDTO
     {
         public int id { get; set; }
+        public int userid { get; set; }
         public string title { get; set; }
         public int type { get; set; }
         public string nametype { get; set; }

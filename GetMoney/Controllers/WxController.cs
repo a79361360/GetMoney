@@ -25,6 +25,15 @@ namespace GetMoney.Controllers
         {
             return View();
         }
+        public ActionResult LoginPortal()
+        {
+            string backurl = "/TUser/TUserWxOrder"; //默认回调地址
+            if (Request["backurl"] != null)
+                backurl = Request["backurl"].ToString();
+            string url = WebHelp.GetCurHttpHost() + "/Wx/WeiXLogin?backurl=" + backurl;
+            ViewBag.url = url;
+            return View();
+        }
         public ActionResult WeiXLogin()
         {
             if (Request["p"] == null)

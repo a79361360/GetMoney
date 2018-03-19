@@ -43,15 +43,18 @@
                     $(this).children('.footdiv').hide()
                 }
             });
+            $("#tj").click(function () {
+                setoption();
+            })
         })
         //投诉建议
         setoption = function () {
-            var title = $("txt_title").val();
-            var type = $("txt_type").val();
-            var yj = $("txt_content").val();
-            $.post("/TuOption/AddUOption", { title: title, type: type, yj: yj },function (ret) {
+            var title = $("#txt_title").val();
+            var type = $("#txt_type").val();
+            var yj = $("#txt_content").val();
+            $.post("/TuOption/AddUOption", { title: title, type: type, content: yj }, function (ret) {
                 if (ret.success) {
-
+                    alert("添加成功");
                 }
             })
         }
@@ -70,9 +73,9 @@
                     <td>类型：</td>
                     <td>
                         <select id="txt_type">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                            <option value="1">意见</option>
+                            <option value="2">投诉</option>
+                            <option value="3">其他</option>
                         </select>
                     </td>
                 </tr>
@@ -86,7 +89,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="2" align="center"><input type="button" value="提交" /><button>关闭</button></td>
+                    <td colspan="2" align="center"><input type="button" id="tj" value="提交" /><button>关闭</button></td>
                 </tr>
             </tfoot>
         </table>
@@ -95,7 +98,7 @@
                 <td>回复：</td>
             </tr>
             <tr>
-                <td><textarea disabled="disabled" id="reply">123</textarea></td>
+                <td><textarea disabled="disabled" id="reply"></textarea></td>
             </tr>
         </table>
     </div>

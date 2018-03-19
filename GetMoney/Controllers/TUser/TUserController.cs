@@ -115,7 +115,8 @@ namespace GetMoney.Controllers.TUser
         public ActionResult TUserWxOrder()
         {
             if (Session["uid"] == null)
-                return Content("登入状态已经失效,微信登入可用地址: <a href=\"" + WebHelp.GetCurHttpHost() + "/Wx/WeiXLogin?backurl=/TUser/TUserWxOrder\">去登入</a>");
+                return Redirect("/Wx/LoginPortal?backurl=/TUser/TUserWxOrder");
+                //return Content("登入状态已经失效,微信登入可用地址: <a href=\"" + WebHelp.GetCurHttpHost() + "/Wx/WeiXLogin?backurl=/TUser/TUserWxOrder\">去登入</a>");
             int uid = Convert.ToInt32(Session["uid"]);
             //int uid = 10000; Session["uid"] = 10000;
             TUserDto dto = _bll.FindUserById(uid);
