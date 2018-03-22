@@ -25,6 +25,10 @@ namespace GetMoney.Model
         /// </summary>
         public int AccrualMoney { get; set; }
         /// <summary>
+        /// 实收全款
+        /// </summary>
+        public int AllMoney { get; set; }
+        /// <summary>
         /// 开标日期
         /// </summary>
         public string MeetDate { get; set; }

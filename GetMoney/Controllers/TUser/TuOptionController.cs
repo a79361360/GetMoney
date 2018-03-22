@@ -36,7 +36,7 @@ namespace GetMoney.Controllers.TUser
             else
                 return JsonFormat(new ExtJson { success = false, msg = "提交失败！" });
         }
-        public ActionResult ListOption() {
+        public ActionResult ListOptionPage() {
             if (Session["uid"] == null)
                 return JsonFormat(new ExtJsonPage { success = false, code = -1001, msg = "登入状态已失效！" });
             int pageIndex = Convert.ToInt32(Request["pageIndex"]) - 1;      //当前页,这个存储过程首页0为开始
@@ -50,6 +50,9 @@ namespace GetMoney.Controllers.TUser
                 return JsonFormat(new ExtJsonPage { success = true, code = 1000, msg = "查询成功！", total = Total, list = list });
             else
                 return JsonFormat(new ExtJsonPage { success = false, code = -1000, msg = "查询失败！" });
+        }
+        public ActionResult ListOptionPortal() {
+            return View();
         }
     }
 }

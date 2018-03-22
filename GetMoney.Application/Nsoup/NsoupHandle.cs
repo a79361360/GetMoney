@@ -39,7 +39,6 @@ namespace GetMoney.Application.Nsoup
                 int titleid = dal.CreateTitle(101, text);               //添加类型到数据库
                 string path = downpath + titleid;                       //存放图片的文件夹
                 if (!string.IsNullOrEmpty(text) && !string.IsNullOrEmpty(path)) {
-                    //int titleid = dal.CreateTitle(101, text);        //添加类型到数据库
                     CatchImgPutPath(uri, path,titleid);
                 }
                 //return; //调试阶段不用执行那么多次
@@ -90,7 +89,7 @@ namespace GetMoney.Application.Nsoup
             catch (Exception er)
             {
                 ExecuteNum++;
-                if (ExecuteNum > 3) return "";
+                if (ExecuteNum > 3) { return ""; }
                 GetHtmlString(webClient, url);
             }
             return result;
@@ -117,7 +116,14 @@ namespace GetMoney.Application.Nsoup
             path = CommonManager.FileObj.GetPhysicalPath(path);
             CommonManager.FolderObj.CreateFolder(path);
         }
-
+        /// <summary>
+        /// 获取图片流转换后保存到磁盘地址
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="path"></param>
+        /// <param name="name"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         public string TestStream(string url, string path, ref string name, ref int count)
         {
             //Bitmap img = null;

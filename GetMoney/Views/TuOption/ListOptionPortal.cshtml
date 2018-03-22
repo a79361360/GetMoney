@@ -1,0 +1,127 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我的意见</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="~/Content/WeiXin/css/table.css" rel="stylesheet" />
+    <script src="~/Content/WeiXin/fixTable/fixTable.js"></script>
+    <script src="~/Content/WeiXin/BeatPicker/jquery-1.11.0.min.js"></script>
+    <script src="~/Content/WeiXin/js/table.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var pagesize = Math.ceil($(".cont").height() / 30) - 1;//获取每页条数
+            var len;                    //共几条
+            var pageindex = 1;          //当前页码
+            var pagenum = 1;            //共几页
+            //滚动的方法
+            function scrolls() {
+                $("#MyTable_tableData").on('scroll', function () {
+                    if (top = $(this).scrollTop()) {
+                        var h = $(this).height();//div可视区域的高度
+                        var sh = $(this)[0].scrollHeight;//内容高度
+                        var st = $(this).scrollTop();//滚动条的高度，即滚动条的当前位置到div顶部的距离
+                        if (st > 50) {
+                            $(".goTop").fadeIn();
+                        } else {
+                            $(".goTop").fadeOut();
+                        }
+                        if (st >= sh - h) {
+                            if (parseInt(pageindex) >= parseInt(pagenum)) {
+                                //$('.over').show().delay(1200).fadeOut();
+                                return;
+                            }
+                            pageindex++;
+                            searchlist();
+                        }
+                    }
+                })
+            }
+            //初始化和滚动
+            init = function () {
+                call2(768, 100);   //
+                scrolls();          //
+            }
+            //页面大小变动后重新渲染
+            $(window).resize(function () { init() });
+            //查询方法
+            searchlist = function (firstpage) {
+                var curpindex = pagesize;
+                if(firstpage==1){curpindex = firstpage;$(".data-list tbody").html("");}
+                var data = {
+                    pageindex: curpindex,
+                    pagesize: pagesize
+                }
+                $.getJSON("/TuOption/ListOptionPage", data, function (ret) {
+                    if (ret.success) {
+                        var str = "";
+                        $.each(ret.list, function (i, o) {
+                            str += "<tr><td>" + rename(o.type) + "</td><td>" + o.title + "</td><td>" + o.content + "</td><td>" + o.rcontent + "</td><td><button class=\"btn_fz\" onclick=\"fundoptionbyid(" + o.id + ")\">查看</button></td></tr>";
+                        })
+                        str += "</table>";
+                        $(".data-list tbody").append(str);
+                        len = ret.total;    //总条数
+                        if (len != 0)
+                            pagenum = Math.ceil(len / pagesize)
+                        init();
+                    }
+                })
+            }
+            //
+            rename = function (type) {
+                if (type == 1) return "意见";
+                else if (type == 2) return "投诉";
+                else return "其他";
+            }
+            //首次取得数据
+            searchlist(1);
+            //查询意义回复
+            fundoptionbyid = function (id) {
+                window.location.href = "/TuOption/Index?id=" + id;
+            }
+        })
+    </script>
+</head>
+<body>
+
+    <div class="conditional">
+        <table width="100%" class="everyday">
+            <tr>
+                <th align="left"><button class="btn_fz" onclick="window.location.href = '/TuOption/Index'">新建</button></th>
+                <th align="right" onclick="javascript:window.history.go(-1)">返回</th>
+            </tr>
+        </table>
+    </div>
+
+    <div class="cont">
+        <div class="data-table">
+            <div class="data-list">
+                <table style="min-width:400px;" id="MyTable" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th>类型</th>
+                            <th>标题</th>
+                            <th>内容</th>
+                            <th>回复</th>
+                            <th>查看</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <!-- 数据行 -->
+                        <tr><td>其他</td><td>做的不好</td><td>不好用</td><td></td><td><button class="btn_fz" onclick="fundoptionbyid(2)">查看</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @RenderPage("~/Views/Shared/_WxFoot.cshtml")
+</body>
+</html>

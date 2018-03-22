@@ -69,7 +69,9 @@ namespace GetMoney.Dal
             dal.ExtProc(ProName, parameter, str, out list);
         }
         public DataTable OrderLists(string No) {
-            string sql = "select a.ID,a.OrderNo,convert(varchar(20),a.MeetDate,120) MeetDate,a.Userid,b.TrueName,a.AccrualMoney,a.State from Order_Lists a left outer join TUsers b on a.Userid=b.id where a.OrderNo=@No Order by MeetDate";
+            string sql = "select a.ID,a.OrderNo,convert(varchar(20),a.MeetDate,120) MeetDate,a.Userid,b.TrueName,a.AccrualMoney,a.State,";
+            sql += "(SELECT (PeoperNum*PeoperMoney)+(SELECT ISNULL(SUM(AccrualMoney),0) FROM Order_Lists WHERE OrderNo=a.OrderNo AND MeetDate < a.MeetDate AND State=1) FROM Orders WHERE OrderNo=a.OrderNo) AllMoney";  //实收全款=会费+利息
+            sql += " from Order_Lists a left outer join TUsers b on a.Userid=b.id where a.OrderNo=@No Order by MeetDate";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@No",SqlDbType.NVarChar,50)

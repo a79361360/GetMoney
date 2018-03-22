@@ -197,17 +197,22 @@ namespace GetMoney.Controllers.Order
             StringBuilder sb = new StringBuilder();
             string btn = "";
             foreach (var item in list) {
+                btn = "";   //重新清空
                 if (item.State == "1")
                 {
                     btn = "<button class=\"btn_fz\" onclick=\"FindOrderUser('" + item.OrderNo + "'," + item.ID + "," + item.State + ")\">查看明细</butoon>";
                     item.State = "已结束";
-                }else if (item.State == "2")
+                }
+                else if (item.State == "2")
                 {
                     btn = "<button class=\"btn_fz\" onclick=\"FindOrderUser('" + item.OrderNo + "'," + item.ID + "," + item.State + ")\">填写标金</butoon>";
                     item.State = "未结束";
                 }
-
-                sb.Append("<tr><td>" + item.MeetDate + "</td><td>" + item.AccrualMoney + "</td><td> " + item.TrueName + "</td><td>" + item.State + "</td><td>" + btn + "</td></tr>");
+                else if (item.State == "3") {
+                    btn = "<button class=\"btn_fz\" onclick=\"FindOrderUser('" + item.OrderNo + "'," + item.ID + "," + item.State + ")\">查看情况</butoon>";
+                    item.State = "异常流标";
+                }
+                sb.Append("<tr><td>" + item.MeetDate + "</td><td>" + item.AccrualMoney + "</td><td> " + item.TrueName + "</td><td style=\"color:red\">" + item.AllMoney + "</td><td>" + item.State + "</td><td>" + btn + "</td></tr>");
             }
             ViewBag.List = sb;
             return View();

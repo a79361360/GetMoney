@@ -9,13 +9,12 @@
     <link href="~/Content/WeiXin/css/table.css" rel="stylesheet" />
     <link href="~/Content/WeiXin/BeatPicker/BeatPicker.min.css" rel="stylesheet" />
     <script src="~/Content/WeiXin/fixTable/fixTable.js"></script>
-    <script src="~/Content/WeiXin/BeatPicker/BeatPicker.min.js"></script>
     <script src="~/Content/WeiXin/BeatPicker/jquery-1.11.0.min.js"></script>
+    <script src="~/Content/WeiXin/BeatPicker/BeatPicker.min.js"></script>
     <script src="~/Content/WeiXin/js/table.js"></script>
     <script>
         $(function () {
             call2(768, 100);
-            Init();
         })
         //会单号,记录列表ID,记录列表状态
         FindOrderUser = function (No, listid, state) {
@@ -46,7 +45,7 @@
                 });
             }
             if (state == "3") {
-                ds.dialog.tips("当前期无人参与竞标或者最高竞标金额少于最低竞标额!等待会头处理...", 2, true, true);
+                alert("当前期无人参与竞标或者最高竞标金额少于最低竞标额!等待会头处理");
             }
         }
         //提交标金
@@ -58,21 +57,6 @@
                 }else
                     alert('没有提交成功，需要重新提交.');
             });
-        }
-        Init = function () {
-            var tr = $(".data-list tbody").find("tr");
-            $.each(tr, function (i, o) {
-                var h = $(o).find("td").eq(3).html();
-                $(o).eq(3).html(ReBtnHtml(h));
-            })
-        }
-        ReBtnHtml = function (state) {
-            var czstr = "";
-            if (state == 1)
-                czstr = "<button class=\"btn_fz\" onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">查看明细</butoon>";
-            if (state == 2)
-                czstr = "<button class=\"btn_fz\" onclick=\"FindOrderUser('" + No + "'," + o.ID + "," + o.State + ")\">填写标金</butoon>";
-            return czstr;
         }
     </script>
 </head>
@@ -95,6 +79,7 @@
                             <th>开标日期</th>
                             <th>夺标金额</th>
                             <th>夺标人</th>
+                            <th>实收全款</th>
                             <th>状态</th>
                             <th>操作</th>
                         </tr>

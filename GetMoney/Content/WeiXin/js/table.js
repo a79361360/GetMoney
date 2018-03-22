@@ -7,40 +7,42 @@ $(document).ready(function () {
 		$(".screen").slideToggle();
 	});
 	
-	//日期设置
-	var myDate = new Date();
-	var yy = myDate.getFullYear();
-	var mm = myDate.getMonth()+1;
-	var dd = myDate.getDate();
-	var maxDate = yy + '-' + mm + '-' + dd;
-	var date = new Date(myDate.getTime() - 365 * 24 * 3600 * 1000);
-	var y7 = date.getFullYear();
-	var m7 = date.getMonth()+1;
-	var d7 = date.getDate();
-	//console.log(yy+'-'+mm+'-'+dd);
-	var day3 = new Date();
-	day3.setTime(day3.getTime()+24*60*60*1000);
-	var s3 = day3.getFullYear()+"," + (day3.getMonth()+1) + "," + day3.getDate();
-	
-	var options = {
-		dateInputNode : $(".my-input"),
-		selectionRule: {
-			single: false,
-			range: true,
-			rangeDisableSelect: true,
-		},
-		modules: {
-			today: false,
-			gotoDate: false,
-			clear: false
-		},
-		disablingRules: [{from :[s3] , to:'>'}]
+	dateInit = function () {
+	    //日期设置
+	    var myDate = new Date();
+	    var yy = myDate.getFullYear();
+	    var mm = myDate.getMonth() + 1;
+	    var dd = myDate.getDate();
+	    var maxDate = yy + '-' + mm + '-' + dd;
+	    var date = new Date(myDate.getTime() - 365 * 24 * 3600 * 1000);
+	    var y7 = date.getFullYear();
+	    var m7 = date.getMonth() + 1;
+	    var d7 = date.getDate();
+	    //console.log(yy+'-'+mm+'-'+dd);
+	    var day3 = new Date();
+	    day3.setTime(day3.getTime() + 24 * 60 * 60 * 1000);
+	    var s3 = day3.getFullYear() + "," + (day3.getMonth() + 1) + "," + day3.getDate();
+
+	    var options = {
+	        dateInputNode: $(".my-input"),
+	        selectionRule: {
+	            single: false,
+	            range: true,
+	            rangeDisableSelect: true,
+	        },
+	        modules: {
+	            today: false,
+	            gotoDate: false,
+	            clear: false
+	        },
+	        disablingRules: [{ from: [s3], to: '>' }]
+	    }
+	    var instance = new BeatPicker(options);
+	    var from = y7 + '-' + m7 + '-' + d7;
+	    var to = maxDate;
+	    $(".beatpicker-input-from").val(from);
+	    $(".beatpicker-input-to").val(to);
 	}
-	var instance = new BeatPicker(options);
-	var from = y7 + '-' + m7 + '-' + d7;
-	var to = maxDate;
-	$(".beatpicker-input-from").val(from);
-	$(".beatpicker-input-to").val(to);
 	
 	$('.goTop').on('click',function(){
 		//var container = $('#MyTable_tableData');container.scrollTop(0);//滚动到div 100px
@@ -58,11 +60,13 @@ $(document).ready(function () {
 	$(".footnav li").click(function() {
 		$(this).siblings().children('.footdiv').hide();
 		if($(this).children('.footdiv').is(':hidden')){
-			$(this).children('.footdiv').show()
+		    $(this).children('.footdiv').show()
+		    var xxx = $(this).children('.footdiv').height()
+		    $(this).children('.footdiv').css("top", -xxx)
 		}else{
 			$(this).children('.footdiv').hide()
 		}
-	}); 
+	});
 	$(".details_bg").on("click",".details_close",function() {
 		$(".details_bg").hide();
 	});

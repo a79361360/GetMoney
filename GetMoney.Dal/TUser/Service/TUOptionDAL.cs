@@ -33,7 +33,7 @@ namespace GetMoney.Dal
             return dal.IntExtSql(sql, parameter);
         }
         public DataTable FindTOptionById(int id) {
-            string sql = "SELECT userid,type,title,content,rcontent FROM TUOption WHERE id=@id";
+            string sql = "SELECT id,userid,type,title,content,rcontent FROM TUOption WHERE id=@id";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@id",SqlDbType.Int),

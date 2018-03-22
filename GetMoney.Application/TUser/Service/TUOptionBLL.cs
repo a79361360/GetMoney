@@ -1,4 +1,5 @@
-﻿using GetMoney.Dal;
+﻿using GetMoney.Common.Expand;
+using GetMoney.Dal;
 using GetMoney.Model.Model;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,11 @@ namespace GetMoney.Application.TUser.Service
             param.Group = "";
             param.Order = "id";
             IList<TUOptionDTO> list = DataTableToList.ModelConvertHelper<TUOptionDTO>.ConvertToModel(dal.ListPage(ref Total, param));
+            foreach (var item in list) {
+                item.title = item.title.Cut(5, "..");
+                item.content = item.content.Cut(10, "..");
+                item.rcontent = item.rcontent.Cut(10, "..");
+            }
             return list;
         }
     }

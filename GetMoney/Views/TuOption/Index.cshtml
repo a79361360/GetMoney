@@ -11,7 +11,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link href="~/Content/WeiXin/css/table.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Content/WeiXin/fixTable/fixTable.js"></script>
+    <script src="~/Content/WeiXin/BeatPicker/jquery-1.11.0.min.js"></script>
+    <script src="~/Content/WeiXin/js/table.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             getRem(768, 100);
@@ -35,17 +37,10 @@
                 var size = oWidth / pwidth * prem
                 html.style.fontSize = size + "px";
             }
-            $(".footnav li").click(function () {
-                $(this).siblings().children('.footdiv').hide();
-                if ($(this).children('.footdiv').is(':hidden')) {
-                    $(this).children('.footdiv').show()
-                } else {
-                    $(this).children('.footdiv').hide()
-                }
-            });
             $("#tj").click(function () {
                 setoption();
             })
+            init();
         })
         //投诉建议
         setoption = function () {
@@ -58,11 +53,24 @@
                 }
             })
         }
+        //初化加载一下
+        init = function () {
+            var id = $("#hid_id").val();
+            if (id != "0") {
+                var type = '@Model.type';
+                $("#txt_type").val(type);
+                $("#txt_title").attr("disabled", true);
+                $("#txt_type").attr("disabled", true);
+                $("#txt_content").attr("disabled", true);
+                $(".opinion tfoot").hide();
+            }
+        }
     </script>
 </head>
 <body>
 
     <div class="opinion">
+        <input id="hid_id" value="@Model.id" type="hidden" />
         <table width="100%;">
             <tbody>
                 <tr>
@@ -84,12 +92,12 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><textarea id="txt_content"></textarea></td>
+                    <td colspan="2"><textarea id="txt_content">@Model.content</textarea></td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="2" align="center"><input type="button" id="tj" value="提交" /><button>关闭</button></td>
+                    <td colspan="2" align="center"><input type="button" id="tj" value="提交" /><button onclick="window.location.href = '/TuOption/ListOptionPortal'">关闭</button></td>
                 </tr>
             </tfoot>
         </table>
@@ -98,7 +106,7 @@
                 <td>回复：</td>
             </tr>
             <tr>
-                <td><textarea disabled="disabled" id="reply"></textarea></td>
+                <td><textarea disabled="disabled" id="reply">@Model.rcontent</textarea></td>
             </tr>
         </table>
     </div>
