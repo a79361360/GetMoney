@@ -95,5 +95,11 @@ namespace GetMoney.Controllers.Nsoup
         public ActionResult NsoupTitlePortal() {
             return View();
         }
+        public ActionResult GetHtml() {
+            NsoupHandle handle = new NsoupHandle();
+            string url = "http://gm.cf518.cn/bank.html";
+            var list = handle.binhtml(url);
+            return JsonFormat(new ExtJson { success = false, code = -1000, msg = "查询失败！", jsonresult= list });
+        }
     }
 }

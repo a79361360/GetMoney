@@ -100,6 +100,11 @@ namespace GetMoney.Controllers.TUser
                 return JsonFormat(new ExtJson { success = true, msg = remark });
             }
         }
+        public ActionResult WxEditPortal(int id)
+        {
+            TUserDto dto = _bll.FindUserById(id);
+            return View(dto);
+        }
         public ActionResult EditPortal(int id) {
             TUserDto dto = _bll.FindUserById(id);
             return View(dto);

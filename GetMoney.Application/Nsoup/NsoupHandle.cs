@@ -2,6 +2,7 @@
 using GetMoney.Dal;
 using GetMoney.Dal.Nsoup;
 using GetMoney.Model;
+using GetMoney.Model.Model.Nsoup;
 using NSoup.Select;
 using System;
 using System.Collections.Generic;
@@ -239,6 +240,49 @@ namespace GetMoney.Application.Nsoup
             param.Group = "";
             param.Order = "id desc";
             IList<Nsoup_ImgDetailDto> list = DataTableToList.ModelConvertHelper<Nsoup_ImgDetailDto>.ConvertToModel(dal.ListDetailPage(ref Total, param));
+            return list;
+        }
+
+
+        public IList<Nsoup_bankDto> binhtml(string url) {
+            Elements links = null;
+            MyWebClient webClient = new MyWebClient();
+            String HtmlString = GetHtmlString(webClient, url);
+
+            NSoup.Nodes.Document doc = NSoup.NSoupClient.Parse(HtmlString);
+            links = doc.Select("tr");
+            IList<Nsoup_bankDto> list = new List<Nsoup_bankDto>();
+            int index = 0;
+            foreach (var item in links)
+            {
+                index++;
+                if (index == 1) continue;
+                try
+                {
+                    if (index == 679) {
+                        string ll = "1";
+                    }
+                    Nsoup_bankDto dto = new Nsoup_bankDto();
+                    string id = item.Select("td")[0].Text().Trim();
+                    string bankName = item.Select("td")[1].Text().Trim();
+                    string bankNameEn = item.Select("td")[2].Text().Trim();
+                    string issueid = item.Select("td")[3].Text().Trim();
+                    string cardName = item.Select("td")[4].Text().Trim();
+                    string nLength = item.Select("td")[5].Text().Trim();
+                    string binLength = item.Select("td")[6].Text().Trim();
+                    string bin = item.Select("td")[7].Text().Trim() == "(NULL)" ? "0" : item.Select("td")[7].Text().Trim();
+                    string cardType = item.Select("td")[8].Text().Trim();
+                    dto.id = Convert.ToInt32(id); dto.bankName = bankName;
+                    dto.bankNameEn = bankNameEn; dto.issueid = Convert.ToInt32(issueid);
+                    dto.cardName = cardName; dto.nLength = Convert.ToInt32(nLength);
+                    dto.binLength = Convert.ToInt32(binLength); dto.bin = Convert.ToInt64(bin);
+                    dto.cardType = cardType;
+                    list.Add(dto);
+                }
+                catch(Exception er) {
+                    throw er;
+                }
+            }
             return list;
         }
     }

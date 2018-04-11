@@ -45,5 +45,12 @@ namespace GetMoney.Controllers
         public ActionResult UserErr() {
             return View();
         }
+        /// <summary>
+        /// 基本的使用方法说明
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UserRemark() {
+            return View();
+        }
     }
 }

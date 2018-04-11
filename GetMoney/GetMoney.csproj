@@ -2727,6 +2727,12 @@
     <Content Include="Content\img\124213.png" />
     <Content Include="Content\img\pull-icon%402x.png" />
     <Content Include="Content\img\tx.png" />
+    <Content Include="Content\img\useremark\1.jpg" />
+    <Content Include="Content\img\useremark\2.jpg" />
+    <Content Include="Content\img\useremark\3.jpg" />
+    <Content Include="Content\img\useremark\4.jpg" />
+    <Content Include="Content\img\useremark\5.jpg" />
+    <Content Include="Content\img\useremark\6.jpg" />
     <Content Include="Content\My97DatePicker\calendar.js" />
     <Content Include="Content\My97DatePicker\lang\en.js" />
     <Content Include="Content\My97DatePicker\lang\zh-cn.js" />
@@ -2931,6 +2937,8 @@
     <Content Include="Views\TuOption\Index.cshtml" />
     <Content Include="Views\Wx\LoginPortal.cshtml" />
     <Content Include="Views\TuOption\ListOptionPortal.cshtml" />
+    <Content Include="Views\Home\UserRemark.cshtml" />
+    <Content Include="Views\TUser\WxEditPortal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Application\GetMoney.Application.csproj">
@@ -2958,6 +2966,9 @@
     <EmbeddedResource Include="Migrations\201608161329284_20160816001.resx">
       <DependentUpon>201608161329284_20160816001.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

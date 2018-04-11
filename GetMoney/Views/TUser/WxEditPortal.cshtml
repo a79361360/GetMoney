@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>完善用户信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btn_s").click(function () {
+                var v = $("#txt_bank").val();
+                console.log(v)
+                var val = getBankName(v);
+                alert(val)
+            })
+        })
+        // 根据银行卡号获取发卡行名称
+        getBankName = function (bankCard) {
+            if (bankCard == null || bankCard == "") {
+                return "";
+            }
+            $.getJSON("http://static.cf518.cn/bankbin.json", {}, function (data) {
+                var bankBin = 0;
+                var isFind = false;
+                for (var key = 10; key >= 2; key--) {
+                    bankBin = bankCard.substring(0, key);
+                    $.each(data, function (i, item) {
+                        if (item.bin == bankBin) {
+                            isFind = true;
+                            return item.bankName;
+                        }
+                    });
+
+                    if (isFind) {
+                        break;
+                    }
+                }
+
+                if (!isFind) {
+                    return "未知发卡银行";
+                }
+            },'json');
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <input id="txt_bank" type="text" value="6222300050189524" /><button id="btn_s">校验</button>
+    </div>
+</body>
+</html>
