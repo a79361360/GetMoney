@@ -18,7 +18,6 @@
                 var v = $("#txt_bank").val();
                 console.log(v)
                 var val = getBankName(v);
-                alert(val)
             })
         })
         // 根据银行卡号获取发卡行名称
@@ -26,27 +25,18 @@
             if (bankCard == null || bankCard == "") {
                 return "";
             }
-            $.getJSON("http://static.cf518.cn/bankbin.json", {}, function (data) {
-                var bankBin = 0;
-                var isFind = false;
-                for (var key = 10; key >= 2; key--) {
-                    bankBin = bankCard.substring(0, key);
-                    $.each(data, function (i, item) {
-                        if (item.bin == bankBin) {
-                            isFind = true;
-                            return item.bankName;
-                        }
+            $.ajax({
+                type: "get",//请求方式
+                url: "http://static.cf518.cn/bankbin.json",//地址，就是json文件的请求路径
+                dataType: "json",//数据类型可以为 text xml json  script  jsonp
+                success: function (result) {//返回的参数就是 action里面所有的有get和set方法的参数
+                    alert(1111)
+                    $.each(result, function (index, obj) {
+                        var str = '<div>姓名:性别：</div>';
+                        document.write(str);
                     });
-
-                    if (isFind) {
-                        break;
-                    }
                 }
-
-                if (!isFind) {
-                    return "未知发卡银行";
-                }
-            },'json');
+            });
         }
     </script>
 </head>
