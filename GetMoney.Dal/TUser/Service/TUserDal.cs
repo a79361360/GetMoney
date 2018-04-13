@@ -211,5 +211,17 @@ namespace GetMoney.Dal
             string[] str = new string[] { "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }
+        public DataTable BankBin(long bin,int binlen) {
+            string sql = "SELECT id,bankName,bankNameEn,cardName,cardType,bin,binLength,issueid FROM TBankBin WHERE bin=@bin AND binLength=@len";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@bin",SqlDbType.BigInt),
+                new SqlParameter("@len",SqlDbType.Int),
+            };
+            parameter[0].Value = bin;
+            parameter[1].Value = binlen;
+            DataTable dt = dal.ExtSql(sql, parameter);
+            return dt;
+        }
     }
 }

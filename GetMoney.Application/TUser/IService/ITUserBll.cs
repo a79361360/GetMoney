@@ -103,5 +103,11 @@ namespace GetMoney.Application
         /// <returns>完整的上传地址</returns>
         string UpdateFileTx(string host, string userid);
         string UpdateFileTx1(string host, string userid, int x, int y, int w, int h, Stream Img);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cardno"></param>
+        /// <returns></returns>
+        Nsoup_bankDto BankBin(string cardno);
     }
 }

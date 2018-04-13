@@ -421,5 +421,14 @@ namespace GetMoney.Controllers.TUser
         public ActionResult WaterFall() {
             return JsonFormat(new ExtJson { success = false, msg = "登入失败" });
         }
+        /// <summary>
+        /// 取得银行卡的bin码和银行名称
+        /// </summary>
+        /// <param name="cardno"></param>
+        /// <returns></returns>
+        public ActionResult BankBin(string cardno) {
+            var result = _bll.BankBin(cardno);
+            return JsonFormat(new ExtJson { success = true, msg = "查看成功", jsonresult = result });
+        }
     }
 }

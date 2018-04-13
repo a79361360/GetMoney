@@ -25,17 +25,9 @@
             if (bankCard == null || bankCard == "") {
                 return "";
             }
-            $.ajax({
-                type: "get",//请求方式
-                url: "http://static.cf518.cn/bankbin.json",//地址，就是json文件的请求路径
-                dataType: "json",//数据类型可以为 text xml json  script  jsonp
-                success: function (result) {//返回的参数就是 action里面所有的有get和set方法的参数
-                    alert(1111)
-                    $.each(result, function (index, obj) {
-                        var str = '<div>姓名:性别：</div>';
-                        document.write(str);
-                    });
-                }
+            $.getJSON("/TUser/BankBin", { cardno: bankCard }, function (data) {
+                //each循环 使用$.each方法遍历返回的数据date
+                console.log(data);
             });
         }
     </script>

@@ -344,5 +344,74 @@ namespace GetMoney.Application
                 }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cardno"></param>
+        /// <returns></returns>
+        public Nsoup_bankDto BankBin(string cardno) {
+            int[] binlen = new int[] { 6, 3, 4, 5, 7, 8, 9, 10 };
+            Nsoup_bankDto dto = new Nsoup_bankDto();
+            foreach (var item in binlen) {
+                string cno = cardno.Substring(0, item);
+                var result = _dal.BankBin(Convert.ToInt64(cno), item);
+                if (result.Rows.Count> 0) {
+                    IList<Nsoup_bankDto> list = DataTableToList.ModelConvertHelper<Nsoup_bankDto>.ConvertToModel(result);
+                    dto = list[0];
+                    return dto;
+                }
+            }
+            return dto;
+        }
+        //public String getNameOfBank(char[] charBin, int offset)
+        //{
+        //    long longBin = 0;
+        //    for (int i = 0; i < 6; i++)
+        //    {
+        //        longBin = (longBin * 10) + (charBin[i + offset] - 48);
+        //    }
+        //    int index = binarySearch(bankbin(), longBin);
+        //    if (index == -1)
+        //    {
+        //        return "磁条卡";
+        //    }
+        //    return bankname()[index];
+        //}
+        ////二分查找方法
+        //public static int binarySearch(long[] srcArray, long des)
+        //{
+        //    int low = 0;
+        //    int high = srcArray.Length - 1;
+        //    while (low <= high)
+        //    {
+        //        int middle = (low + high) / 2;
+        //        if (des == srcArray[middle])
+        //        {
+        //            return middle;
+        //        }
+        //        else if (des < srcArray[middle])
+        //        {
+        //            high = middle - 1;
+        //        }
+        //        else
+        //        {
+        //            low = middle + 1;
+        //        }
+        //    }
+        //    return -1;
+        //}
+        //public string GetBankName(string cardID)
+        //{
+        //    try
+        //    {
+        //        char[] cardNumber = cardID.ToCharArray();//卡号
+        //        String name = getNameOfBank(cardNumber, 0);//获取银行卡的信息
+        //        return name;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return "0";
+        //    }
+        //}
     }
 }

@@ -71,5 +71,12 @@ namespace GetMoney.Dal
         /// <param name="txurl">用户头像地址，虚拟路径完整路径传什么保存什么</param>
         /// <param name="list">数据库返回的数据,9用户不存在,1000执行失败回滚,1成功</param>
         void UpdateUserTx(int userid, string txurl, out Dictionary<string, object> list);
+        /// <summary>
+        /// 取得银行信息
+        /// </summary>
+        /// <param name="bin"></param>
+        /// <param name="binlen"></param>
+        /// <returns></returns>
+        DataTable BankBin(long bin, int binlen);
     }
 }

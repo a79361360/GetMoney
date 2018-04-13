@@ -2,7 +2,6 @@
 using GetMoney.Dal;
 using GetMoney.Dal.Nsoup;
 using GetMoney.Model;
-using GetMoney.Model.Model.Nsoup;
 using NSoup.Select;
 using System;
 using System.Collections.Generic;
@@ -252,16 +251,13 @@ namespace GetMoney.Application.Nsoup
             NSoup.Nodes.Document doc = NSoup.NSoupClient.Parse(HtmlString);
             links = doc.Select("tr");
             IList<Nsoup_bankDto> list = new List<Nsoup_bankDto>();
-            int index = 0;
+            int index = 0, resultindex = 0;
             foreach (var item in links)
             {
                 index++;
                 if (index == 1) continue;
                 try
                 {
-                    if (index == 679) {
-                        string ll = "1";
-                    }
                     Nsoup_bankDto dto = new Nsoup_bankDto();
                     string id = item.Select("td")[0].Text().Trim();
                     string bankName = item.Select("td")[1].Text().Trim();
@@ -278,6 +274,8 @@ namespace GetMoney.Application.Nsoup
                     dto.binLength = Convert.ToInt32(binLength); dto.bin = Convert.ToInt64(bin);
                     dto.cardType = cardType;
                     list.Add(dto);
+                    resultindex = dal.AddBankBin(dto.id, dto.bankName, dto.bankNameEn, dto.cardName, dto.cardType, dto.bin, dto.nLength, dto.binLength, dto.issueid);
+                    resultindex += resultindex;
                 }
                 catch(Exception er) {
                     throw er;
