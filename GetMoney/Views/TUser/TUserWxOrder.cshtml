@@ -51,6 +51,7 @@
             $("#search").bind("click", function (ret) {
                 searchlist(1);
             })
+            $("#img_tx").bind("click",function(ret){UserInfo();})
             $(window).resize(function () { init() });
             searchlist = function (firstpage) {
                 var bt = $(".beatpicker-input-from").val();
@@ -102,6 +103,10 @@
             var str = '***'+orderno.substr(orderno.length-5);
             return str;
         }
+        //更新用户信息
+        UserInfo = function(){
+            window.location.href='/TUser/WxEditPortal?id='+@Model.id;
+        }
     </script>
 </head>
 <body>
@@ -112,7 +117,7 @@
             <li><span>手机号：</span><b>@Model.Phone</b></li>
             <li><span>好友链接：</span><button id="btn_fz" class="btn_fz">复制</button></li>
         </ul>
-        <div class="userImg"><img src="@Model.TxUrl" /></div>
+        <div class="userImg"><img id="img_tx" src="@Model.TxUrl" /></div>
     </div>
 
     <div class="conditional">

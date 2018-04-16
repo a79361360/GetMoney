@@ -63,7 +63,7 @@ namespace GetMoney.Dal
         /// <param name="id"></param>
         /// <returns></returns>
         DataTable FindUserById(int id);
-        bool EditTUser(int id,string username,string nickname,string truename,string identitynum,string phone,string txurl);
+        bool EditTUser(int id, string truename, string identitynum, string phone, string BankNumber, int binid);
         /// <summary>
         /// 将已经上传的头像更新到数据库
         /// </summary>

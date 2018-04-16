@@ -1,4 +1,5 @@
-﻿@{
+﻿@model GetMoney.Model.TUserDto
+@{
     Layout = null;
 }
 
@@ -11,13 +12,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="~/Content/WeiXin/css/table.css" rel="stylesheet" />
+    <style>
+	    *{margin:0; padding:0; box-sizing:border-box;}
+	    html,body{min-height:100%;}
+	    input{outline:0; -web-kit-appearance:none; -moz-appearance:none;}
+	    :-moz-placeholder,::-moz-placeholder,input:-ms-input-placeholder,input::-webkit-input-placeholder{color:#aaa; opacity:1;}
+	    .userinfo{padding:0 .3rem;}
+	    .userinfo dl:after{content:""; display:block; width:100%; height:.01rem; clear:both;}
+	    .userinfo dt,.userinfo dd{display:block; float:left; height:1rem; line-height:.8rem; padding:.1rem; border-bottom:.02rem solid #DDD; font-size:.3rem;}
+	    .userinfo dt{width:30%;}
+	    .userinfo dd{text-align:right; width:70%;}
+	    .userinfo dd img{height:.8rem; width:.8rem;}
+	    .userinfo dd input{border:0; text-align:right; font-size:.3rem; background:transparent; width:100%; height:.8rem;}
+	    .userinfo .saveinfo{font-size:.3rem;outline:0;-web-kit-appearance:none;-moz-appearance: none; display:block; margin:1rem auto 0; position: relative; width: 2rem; height: .7rem; cursor: pointer; color: #fff; border: .02rem solid #D60202; border-radius: .1rem; -webkit-box-shadow: 0 0 .1rem rgba(0,0,0,0.5), 0 0 .08rem #fff inset; box-shadow: 0 0 .1rem rgba(0,0,0,0.5), 0 0 .08rem #fff inset;
+	    background: #D60202;
+	    background: linear-gradient(to bottom, #EA4F38 0%,#B30208 100%);
+	    }
+	    .userinfo .saveinfo:active { cursor: pointer; color: #fff; border-radius: .1rem; -webkit-box-shadow: 0 0 .1rem rgba(0,0,0,0.5), 0 0 .08rem #fff inset; box-shadow: 0 0 .1rem rgba(0,0,0,0.5), 0 0 .08rem #fff inset;
+	    background: #D60202;
+	    background: linear-gradient(to bottom, #EA4F38 0%,#B30208 100%);
+	    }
+    </style>
     <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Content/WeiXin/js/table.js"></script>
     <script type="text/javascript">
+        function getRem(pwidth, prem) {
+            var html = document.getElementsByTagName("html")[0];
+            var oWidth = document.clientWidth || document.documentElement.clientWidth;
+            var oHeight = document.clientHeight || document.documentElement.clientHeight;
+            if (oWidth >= pwidth) {
+                oWidth = pwidth;
+            } if (oWidth > oHeight) {
+                oWidth = oHeight
+            }
+            var size = oWidth / pwidth * prem;
+            html.style.fontSize = size + "px";
+        }
+        window.onload = function () { getRem(768, 100) };
+        window.onresize = function () { getRem(768, 100) };
         $(function () {
-            $("#btn_s").click(function () {
-                var v = $("#txt_bank").val();
-                console.log(v)
-                var val = getBankName(v);
+            Init();
+            $("#txt_bank").blur(function (i) {
+                var v = $(this).val()
+                getBankName(v);
+            })
+            $(".saveinfo").click(function () {
+                tj();
             })
         })
         // 根据银行卡号获取发卡行名称
@@ -26,15 +67,88 @@
                 return "";
             }
             $.getJSON("/TUser/BankBin", { cardno: bankCard }, function (data) {
-                //each循环 使用$.each方法遍历返回的数据date
-                console.log(data);
+                if (data.success) {
+                    var n = data.jsonresult.bankName + "(" + data.jsonresult.bankNameEn + ")";
+                    $("#banktxt").val(n); $("#binid").val(data.jsonresult.id);
+                }
             });
+        }
+        tj = function () {
+            var uid = $("#txt_uid").val();
+            var truename = $("#txt_truename").val();
+            var bankcard = $("#txt_bank").val();
+            var binid = $("#binid").val();
+            var identitynum = $("#txt_identitynum").val();
+            var phone = $("#txt_phone").val();
+            var data = {
+                id: uid,
+                truename: truename,
+                identitynum: identitynum,
+                phone: phone,
+                BankNumber: bankcard,
+                binid: binid,
+                
+            }
+            $.ajax({
+                type: "post",
+                url: "/TUser/EditTUser",
+                data: data,
+                success: function (ret) {
+                    if (ret.success)
+                        alert(ret.msg);
+                    else
+                        alert(ret.msg);
+                }
+            });
+        }
+        //初始
+        Init = function () {
+            var bid = $("#binid").val();
+            if (bid != "0")
+            {
+                var bankn = '@Model.bankName';
+                var banknen = '@Model.bankNameEn';
+                $("#banktxt").val(bankn + "(" + banknen + ")");
+            }
         }
     </script>
 </head>
 <body>
-    <div>
-        <input id="txt_bank" type="text" value="6222300050189524" /><button id="btn_s">校验</button>
+    <div class="userinfo">
+        <dl>
+            <dt>头像</dt>
+            <dd><img src="@Model.TxUrl" /></dd>
+        </dl>
+        <dl>
+            <dt>用户ID</dt>
+            <dd><input id="txt_uid" type="text" value="@Model.id" disabled /></dd>
+        </dl>
+        <dl>
+            <dt>昵称</dt>
+            <dd><input type="text" placeholder="请输入你的呢称" value="@Model.NickName" disabled /></dd>
+        </dl>
+        <dl>
+            <dt>真实姓名</dt>
+            <dd><input id="txt_truename" type="text" placeholder="请输入你的真实姓名与银行卡的一致!" value="@Model.TrueName" /></dd>
+        </dl>
+        <dl>
+            <dt>银行卡号</dt>
+            <dd><input id="txt_bank" type="text" placeholder="请输入您的银行卡号" value="@Model.BankNumber" /></dd>
+        </dl>
+        <dl>
+            <dt>所属银行</dt>
+            <dd><input id="banktxt" type="text" placeholder="选择所属银行" value="" /><input id="binid" type="hidden" value="@Model.Bankbinid" /></dd>
+        </dl>
+        <dl>
+            <dt>身份证号码</dt>
+            <dd><input id="txt_identitynum" type="text" placeholder="请输入身份证号码" value="@Model.IdentityNum" /></dd>
+        </dl>
+        <dl>
+            <dt>手机号码</dt>
+            <dd><input id="txt_phone" type="text" placeholder="请输入您的手机号" value="@Model.Phone" /></dd>
+        </dl>
+        <button class="saveinfo">保存</button>
     </div>
+    @RenderPage("~/Views/Shared/_WxFoot.cshtml")
 </body>
 </html>

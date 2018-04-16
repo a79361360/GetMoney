@@ -63,22 +63,22 @@ namespace GetMoney.Dal
             string[] str = new string[] { "@Userid", "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }
-        public bool EditTUser(int id, string username, string nickname, string truename, string identitynum, string phone, string txurl) {
-            string sql = "Update TUsers set NickName=@NickName,TrueName=@TrueName,IdentityNum=@IdentityNum,Phone=@Phone,TxUrl=@TxUrl where id=@id";
+        public bool EditTUser(int id, string truename, string identitynum, string phone,string BankNumber,int binid) {
+            string sql = "Update TUsers set TrueName=@TrueName,IdentityNum=@IdentityNum,Phone=@Phone,BankNumber=@BankNumber,Bankbinid=@binid where id=@id";
             SqlParameter[] parameter = new[]
             {
-                new SqlParameter("@NickName",SqlDbType.NVarChar,20),
-                new SqlParameter("@TrueName",SqlDbType.NVarChar,20),
+                new SqlParameter("@TrueName",SqlDbType.NVarChar,50),
                 new SqlParameter("@IdentityNum",SqlDbType.NVarChar,20),
-                new SqlParameter("@Phone",SqlDbType.NVarChar,12),
-                new SqlParameter("@TxUrl",SqlDbType.NVarChar,255),
+                new SqlParameter("@Phone",SqlDbType.NVarChar,16),
+                new SqlParameter("@BankNumber",SqlDbType.NVarChar,50),
+                new SqlParameter("@binid",SqlDbType.Int),
                 new SqlParameter("@id",SqlDbType.Int)
             };
-            parameter[0].Value = nickname;
-            parameter[1].Value = truename;
-            parameter[2].Value = identitynum;
-            parameter[3].Value = phone;
-            parameter[4].Value = txurl;
+            parameter[0].Value = truename;
+            parameter[1].Value = identitynum;
+            parameter[2].Value = phone;
+            parameter[3].Value = BankNumber;
+            parameter[4].Value = binid;
             parameter[5].Value = id;
             int result = dal.IntExtSql(sql, parameter);
             if (result > 0) return true;
@@ -186,7 +186,7 @@ namespace GetMoney.Dal
         /// <returns></returns>
         public DataTable FindUserById(int id)
         {
-            string sql = "SELECT [id],[UserName],[UserPwd],[BankPwd],[NickName],[UserJb],[TrueName],[IdentityNum],[Phone],[RegIP],[TxUrl],[State],[Addtime] FROM [TUsers] where id=@id";
+            string sql = "SELECT id,UserName,UserPwd,BankPwd,NickName,UserJb,TrueName,BankNumber,Bankbinid,IdentityNum,Phone,RegIP,TxUrl,State,Addtime,bankName,bankNameEn FROM V_TUsers where id=@id";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@id",SqlDbType.Int)

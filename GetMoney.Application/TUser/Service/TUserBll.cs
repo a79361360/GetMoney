@@ -50,7 +50,7 @@ namespace GetMoney.Application
         }
 
         public bool EditTUser(TUserDto dto) {
-            bool result = _dal.EditTUser(dto.id, dto.UserName, dto.NickName, dto.TrueName, dto.IdentityNum, dto.Phone, dto.TxUrl);
+            bool result = _dal.EditTUser(dto.id, dto.TrueName, dto.IdentityNum, dto.Phone, dto.BankNumber, dto.Bankbinid);
             return result;
         }
         /// <summary>

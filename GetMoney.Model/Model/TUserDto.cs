@@ -33,6 +33,22 @@ namespace GetMoney.Model
         /// </summary>
         public string TrueName { get; set; }
         /// <summary>
+        /// 银行卡号码
+        /// </summary>
+        public string BankNumber { get; set; }
+        /// <summary>
+        /// BankBin的ID
+        /// </summary>
+        public int Bankbinid { get; set; }
+        /// <summary>
+        /// 银行名称
+        /// </summary>
+        public string bankName { get; set; }
+        /// <summary>
+        /// 银行名称编码
+        /// </summary>
+        public string bankNameEn { get; set; }
+        /// <summary>
         /// 用户身份证号
         /// </summary>
         public string IdentityNum { get; set; }
