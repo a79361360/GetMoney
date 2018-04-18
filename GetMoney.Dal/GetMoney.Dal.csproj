@@ -59,6 +59,7 @@
     <Compile Include="Configuration\OrderConfiguration.cs" />
     <Compile Include="Configuration\TUserConfiguration.cs" />
     <Compile Include="DBContextOfUnitWork.cs" />
+    <Compile Include="Notice\NoticeDal.cs" />
     <Compile Include="Nsoup\NsoupDal.cs" />
     <Compile Include="OnlyNameTest\OnlyNameTestRepository.cs" />
     <Compile Include="Order\IService\IOrderDal.cs" />

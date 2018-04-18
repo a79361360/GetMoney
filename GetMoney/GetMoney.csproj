@@ -194,6 +194,7 @@
     <Compile Include="Controllers\Card\CardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Mobile\MobileController.cs" />
+    <Compile Include="Controllers\Notice\NoticeController.cs" />
     <Compile Include="Controllers\Nsoup\NsoupController.cs" />
     <Compile Include="Controllers\OnlyNameTest\OnlyNameTestController.cs" />
     <Compile Include="Controllers\Order\OrderController.cs" />
@@ -2733,6 +2734,8 @@
     <Content Include="Content\img\useremark\4.jpg" />
     <Content Include="Content\img\useremark\5.jpg" />
     <Content Include="Content\img\useremark\6.jpg" />
+    <Content Include="Content\layer_mobile\layer.js" />
+    <Content Include="Content\layer_mobile\need\layer.css" />
     <Content Include="Content\My97DatePicker\calendar.js" />
     <Content Include="Content\My97DatePicker\lang\en.js" />
     <Content Include="Content\My97DatePicker\lang\zh-cn.js" />

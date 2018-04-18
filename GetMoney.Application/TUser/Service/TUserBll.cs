@@ -413,5 +413,23 @@ namespace GetMoney.Application
         //        return "0";
         //    }
         //}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="type"></param>
+        /// <returns>1已存在-1不存在</returns>
+        public int ExtTUserDayOnly(int userid, int type) {
+            return _dal.ExtTUserDayOnly(userid, type);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public int SetTUserDayOnly(int userid, int type) {
+            return _dal.SetTUserDayOnly(userid, type);
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using FJSZ.OA.Common.Web;
 using GetMoney.Application;
+using GetMoney.Application.Card;
+using GetMoney.Application.Notice;
 using GetMoney.Common;
 using GetMoney.Common.Expand;
 using GetMoney.Common.SerializeObject;
@@ -18,9 +20,11 @@ namespace GetMoney.Controllers.TUser
     public class TUserController : BaseController
     {
         ITUserBll _bll = null;
-        public TUserController(ITUserBll bll)
+        ICardBll _cbll = null;
+        public TUserController(ITUserBll bll, ICardBll cbll)
         {
             _bll = bll;
+            _cbll = cbll;
         }
         //
         // GET: /TUser/
@@ -128,6 +132,16 @@ namespace GetMoney.Controllers.TUser
             int uid = Convert.ToInt32(Session["uid"]);
             //int uid = 10000; Session["uid"] = 10000;
             TUserDto dto = _bll.FindUserById(uid);
+            int notice = _bll.ExtTUserDayOnly(uid, 1);
+            ViewBag.n = notice;
+            if (notice == -1)
+            {
+                NoticeBll nbll = new NoticeBll();
+                ViewData["Notice"] = nbll.GetNotice();
+            }
+            else {
+                ViewData["Notice"] = new TNoticeDto();
+            }
             return View(dto);
         }
         /// <summary>
@@ -432,6 +446,19 @@ namespace GetMoney.Controllers.TUser
         public ActionResult BankBin(string cardno) {
             var result = _bll.BankBin(cardno);
             return JsonFormat(new ExtJson { success = true, msg = "查看成功", jsonresult = result });
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type">1系统公告</param>
+        /// <returns></returns>
+        public ActionResult UserDayOnly(int type) {
+            if (Session["uid"] == null)
+                return JsonFormat(new ExtJson { success = false, msg = "登入状态失效", jsonresult = "" });
+            int userid = Convert.ToInt32(Session["uid"]);
+            var result = _bll.SetTUserDayOnly(userid, type);
+            if (result > 0) return JsonFormat(new ExtJson { success = true, msg = "查看成功" });
+            else return JsonFormat(new ExtJson { success = false, msg = "查看失败" });
         }
     }
 }

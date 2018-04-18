@@ -67,6 +67,7 @@
     <Compile Include="Card\IService\ICardBll.cs" />
     <Compile Include="Card\Service\CardBll.cs" />
     <Compile Include="DataTableToList.cs" />
+    <Compile Include="Notice\NoticeBll.cs" />
     <Compile Include="Nsoup\MyWebClient.cs">
       <SubType>Component</SubType>
     </Compile>

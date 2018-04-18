@@ -2,7 +2,7 @@
 /* CSS Document */
 
 *{font-weight:normal; padding:0; margin:0; outline:none; list-style:none;}
-
+html{min-height:100%;}
 body{border:1px solid #ddd; max-width:768px; height:100%; margin:0 auto; position:absolute; left:0; right:0; top:0; bottom:0; box-sizing:border-box;}
 
 .head{position:absolute; max-width:768px; margin:0 auto; left:0; right:0; top:0; height:1.5rem; border-bottom:.02rem solid #c5c5c5; box-sizing:border-box; padding:.2rem; z-index:99;}

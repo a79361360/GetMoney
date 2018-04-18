@@ -1,4 +1,8 @@
 ﻿@model GetMoney.Model.TUserDto
+@using GetMoney.Model
+    @{ 
+        var ndto = ViewData["Notice"] as TNoticeDto;
+    }
 <!DOCTYPE html>
 
 <html>
@@ -10,12 +14,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link href="~/Content/WeiXin/css/table.css" rel="stylesheet" />
     <link href="~/Content/WeiXin/BeatPicker/BeatPicker.min.css" rel="stylesheet" />
+    <link href="~/Content/layer_mobile/need/layer.css" rel="stylesheet" />
+    <script src="~/Content/layer_mobile/layer.js"></script>
     <script src="~/Content/WeiXin/fixTable/fixTable.js"></script>
     <script src="~/Content/WeiXin/BeatPicker/BeatPicker.min.js"></script>
     <script src="~/Content/WeiXin/BeatPicker/jquery-1.11.0.min.js"></script>
     <script src="~/Content/WeiXin/js/table.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            ShowNotice();
             var pagesize = Math.ceil($(".cont").height() / 30) - 1;//获取每页条数
             var len;                    //共几条
             var pageindex = 1;          //当前页码
@@ -77,8 +84,8 @@
                         len = ret.total;    //总条数
                         if (len != 0)
                             pagenum = Math.ceil(len / pagesize)
-                        init();
                     }
+                    init();
                 })
             }
             searchlist(1);
@@ -106,6 +113,32 @@
         //更新用户信息
         UserInfo = function(){
             window.location.href='/TUser/WxEditPortal?id='+@Model.id;
+        }
+        //展示公告
+        ShowNotice = function(){
+            var notice = '@ViewBag.n';
+            if(notice!='-1')return;
+            layer.open({
+                title: [
+                  '@ndto.Title',
+                  'background-color:#8DCE16; color:#fff;'
+                ]
+                  ,anim: 'up'
+                  ,content: '@Html.Raw(ndto.ContentTxt)'
+                  ,shadeClose:false
+                  ,btn: ['知道了']
+                ,success:function(){
+                    $.getJSON("/TUser/UserDayOnly",{type:1},function(ret){
+                        //console.log(ret);
+                    })
+                },yes:function(index){
+                    layer.close(index);//console.log(2);
+                },no:function(){
+                    //console.log(3);
+                },end:function(){
+                    //console.log(4);
+                }
+            });
         }
     </script>
 </head>

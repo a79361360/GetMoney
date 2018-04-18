@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GetMoney.Model.Model
+namespace GetMoney.Model
 {
     public class TUOptionDTO
     {

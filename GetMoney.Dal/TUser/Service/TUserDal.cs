@@ -32,9 +32,9 @@ namespace GetMoney.Dal
         /// <param name="RegIp">注册IP</param>
         /// <param name="TxUrl">头像URI</param>
         /// <param name="list">注册结果返回</param>
-        public void AddTUserByProce(string UserName, string Pwd, string BankPwd,string NickName,string TrueName,string IdentityNum,string Phone, string RegIp,string TxUrl, out Dictionary<string, object> list)
+        public void AddTUserByProce(string UserName, string Pwd, string BankPwd, string NickName, string TrueName, string IdentityNum, string Phone, string RegIp, string TxUrl, out Dictionary<string, object> list)
         {
-            string ProName="SP_AddNewUser";
+            string ProName = "SP_AddNewUser";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@UserName",SqlDbType.NVarChar,50),
@@ -63,7 +63,7 @@ namespace GetMoney.Dal
             string[] str = new string[] { "@Userid", "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }
-        public bool EditTUser(int id, string truename, string identitynum, string phone,string BankNumber,int binid) {
+        public bool EditTUser(int id, string truename, string identitynum, string phone, string BankNumber, int binid) {
             string sql = "Update TUsers set TrueName=@TrueName,IdentityNum=@IdentityNum,Phone=@Phone,BankNumber=@BankNumber,Bankbinid=@binid where id=@id";
             SqlParameter[] parameter = new[]
             {
@@ -114,7 +114,7 @@ namespace GetMoney.Dal
         /// <param name="UserName">用户账号</param>
         /// <param name="UserPwd">用户密码</param>
         /// <returns>存在用户的ID不存在-1</returns>
-        public int VerifyUserByUnamePwd(string UserName,string UserPwd) {
+        public int VerifyUserByUnamePwd(string UserName, string UserPwd) {
             string sql = "select id from TUsers where UserName=@username and UserPwd=@userpwd";
             SqlParameter[] parameter = new[]
             {
@@ -195,7 +195,7 @@ namespace GetMoney.Dal
             DataTable dt = dal.ExtSql(sql, parameter);
             return dt;
         }
-        
+
         public void UpdateUserTx(int userid, string txurl, out Dictionary<string, object> list)
         {
             string ProName = "SP_UpdateUserTx";
@@ -211,7 +211,7 @@ namespace GetMoney.Dal
             string[] str = new string[] { "@ReturnValue" };
             dal.ExtProc(ProName, parameter, str, out list);
         }
-        public DataTable BankBin(long bin,int binlen) {
+        public DataTable BankBin(long bin, int binlen) {
             string sql = "SELECT id,bankName,bankNameEn,cardName,cardType,bin,binLength,issueid FROM TBankBin WHERE bin=@bin AND binLength=@len";
             SqlParameter[] parameter = new[]
             {
@@ -222,6 +222,41 @@ namespace GetMoney.Dal
             parameter[1].Value = binlen;
             DataTable dt = dal.ExtSql(sql, parameter);
             return dt;
+        }
+        /// <summary>
+        /// 是否已经存在
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public int ExtTUserDayOnly(int userid,int type) {
+            string sql = "SELECT TOP 1 Userid FROM TUserDayOnly WHERE Userid=@userid AND Type=@type AND DATEDIFF(DAY,AddTime,GETDATE())=0";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@userid",SqlDbType.Int),
+                new SqlParameter("@type",SqlDbType.Int),
+            };
+            parameter[0].Value = userid;
+            parameter[1].Value = type;
+            var result = dal.ExtScalarSql(sql, parameter);
+            if (result == null) return -1;
+            return Convert.ToInt32(result);
+        }
+        /// <summary>
+        /// 设置今天只允许一次
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public int SetTUserDayOnly(int userid, int type) {
+            string sql = "INSERT INTO TUserDayOnly(Userid,Type)VALUES(@userid,@type)";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@userid",SqlDbType.Int),
+                new SqlParameter("@type",SqlDbType.Int),
+            };
+            parameter[0].Value = userid;
+            parameter[1].Value = type;
+            int result = dal.IntExtSql(sql, parameter);
+            return result;
         }
     }
 }

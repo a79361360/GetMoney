@@ -78,5 +78,17 @@ namespace GetMoney.Dal
         /// <param name="binlen"></param>
         /// <returns></returns>
         DataTable BankBin(long bin, int binlen);
+        /// <summary>
+        /// 是否已经存在
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        int ExtTUserDayOnly(int userid, int type);
+        /// <summary>
+        /// 设置今天只允许一次
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        int SetTUserDayOnly(int userid, int type);
     }
 }

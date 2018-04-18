@@ -90,8 +90,8 @@ window.onresize = function(){
 
 function call(pwidth,prem){
 	var html = document.getElementsByTagName("html")[0];
-	var oWidth = document.body.clientWidth || document.documentElement.clientWidth;
-	var oHeight = document.body.clientHeight || document.documentElement.clientHeight;
+	var oWidth = document.clientWidth || document.documentElement.clientWidth;
+	var oHeight = document.clientHeight || document.documentElement.clientHeight;
 	if (oWidth >= pwidth) {
 		oWidth = pwidth;
 	}if (oWidth > oHeight) {

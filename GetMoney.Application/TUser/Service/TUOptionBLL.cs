@@ -1,6 +1,6 @@
 ﻿using GetMoney.Common.Expand;
 using GetMoney.Dal;
-using GetMoney.Model.Model;
+using GetMoney.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

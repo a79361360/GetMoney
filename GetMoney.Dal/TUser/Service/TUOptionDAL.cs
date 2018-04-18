@@ -1,5 +1,5 @@
 ﻿using GetMoney.Data;
-using GetMoney.Model.Model;
+using GetMoney.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
