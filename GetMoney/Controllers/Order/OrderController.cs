@@ -268,15 +268,16 @@ namespace GetMoney.Controllers.Order
             //string Userid = CommonManager.WebObj.Request("userid", "");
             int Userid = Convert.ToInt32(Session["uid"]);               //当前登入的用户
             string Money = CommonManager.WebObj.Request("money", "");
+            if (!Money.IsInt() || Convert.ToInt32(Money) <= 0) return JsonFormat(new ExtJson { success = false, code = -1000, msg = "请填写大于0整数的值" });
             if (string.IsNullOrEmpty(OrderNo) || string.IsNullOrEmpty(OrderListID) || string.IsNullOrEmpty(Money))
             {
                 return JsonFormat(new ExtJson { success = false, code = -1000, msg = "参数不能为空！" });
             }
             int result = _bll.UpdateOrderListUserMoney(OrderNo, OrderListID, Userid, Convert.ToInt32(Money));
             if (result == 1)
-                return JsonFormat(new ExtJson { success = true, code = 1000, msg = "更新成功！" });
+                return JsonFormat(new ExtJson { success = true, code = 1000, msg = "提交成功！" });
             else
-                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "更新失败！" });
+                return JsonFormat(new ExtJson { success = false, code = -1000, msg = "提交失败！" });
         }
         /// <summary>
         /// 取得当前用户上一次的标金金额

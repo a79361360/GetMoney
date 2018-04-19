@@ -41,7 +41,11 @@
                             UpdateUserMoney(No, listid, this);
                         })
                         $(".update_bg").show();
-                    } 
+                    }else if (ret.code == -1001) {
+                        alert('没有参与竞标的权限了.')
+                    } else {
+                        alert('其他错误');
+                    }
                 });
             }
             if (state == "3") {
@@ -53,9 +57,9 @@
             var text = $("#txt_bj").val();
             $.getJSON("/Order/UpdateOrderListUserMoney", { orderno: No, listid: listid, money: text }, function (ret) {
                 if (ret.code == 1000) {
-                    alert('更新成功');
+                    alert('提交成功');
                 }else
-                    alert('没有提交成功，需要重新提交.');
+                    alert(ret.msg);
             });
         }
     </script>
