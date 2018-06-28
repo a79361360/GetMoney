@@ -5,6 +5,7 @@ using GetMoney.Application.WeiX;
 using GetMoney.Common;
 using GetMoney.Framework;
 using GetMoney.Model;
+using GetMoney.Model.WxModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,9 @@ namespace GetMoney.Controllers
             if (Request["backurl"] != null)
                 backurl = Request["backurl"].ToString();
             string url = WebHelp.GetCurHttpHost() + "/Wx/WeiXLogin?backurl=" + backurl;
+            string url1 = WebHelp.GetCurHttpHost() + "/Wx/WxLogin?backurl=" + backurl;
             ViewBag.url = url;
+            ViewBag.url1 = url1;
             return View();
         }
         public ActionResult WeiXLogin()
@@ -107,7 +110,66 @@ namespace GetMoney.Controllers
                 return Content("读取用户信息失败");
             }
         }
-
+        /// <summary>
+        /// 自己的公众号登入
+        /// </summary>
+        public ActionResult WxLogin() {
+            string backurl = CommonManager.WebObj.Request("backurl", "");
+            CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WxLogin backurl：" + backurl);
+            string url = "";
+            if (Session["uid"] == null)
+            {
+                url = wxbll.RedirectWx(backurl);
+                CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WxLogin url：" + url);
+                return Redirect(url);
+            }
+            else return Redirect(backurl);
+        }
+        /// <summary>
+        /// 微信授权
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult WxAccount() {
+            string code = CommonManager.WebObj.Request("code", "");
+            string state = CommonManager.WebObj.Request("state", "");
+            CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WxAccount code：" + code + "State：" + state);
+            string openid = "", nickname = "", headurl = "", backurl = "/TUser/TUserWxOrder"; TUserDto userdto = new TUserDto();
+            if (!string.IsNullOrEmpty(Request["state"].ToString())) backurl = Request["state"].ToString();  //state非空,跳转地址付值
+            var dto = wxbll.Wx_SNS_AccessToken(wxbll.appid, wxbll.appsecret, code); openid = dto.openid;   //取得用户信息,并附值给openid
+            userdto = _bll.FindUserByUserName(openid);                                                      //通过用openid来读取用户信息DTO
+            CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WxAccount 使用openid取得用户信息");
+            if (userdto != null)
+            {
+                CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WxAccount 存在用户信息: " + userdto.id);
+                if (userdto.State == 3) return Content("当前用户已被禁止登入");
+                Session["uid"] = userdto.id.ToString();                          //设置Session
+                var script = String.Format("<script>window.location.href='" + backurl + "';</script>");
+                return Content(script, "text/html");
+            }
+            else
+            {
+                CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WxAccount 不存在用户信息开始注册: ");
+                userdto = new TUserDto();
+                userdto.UserName = openid; userdto.NickName = nickname; userdto.TxUrl = headurl; userdto.UserPwd = TxtHelp.MD5("123"); userdto.BankPwd = TxtHelp.MD5("123");    //默认密码123
+                int result = -1;    //注册结果
+                string msg = "注册成功!";
+                Dictionary<string, object> list = new Dictionary<string, object>();
+                _bll.RegTUser(userdto, out list);
+                if (list.Count > 0)
+                {
+                    result = Convert.ToInt32(list["@ReturnValue"]);
+                    if (result == 1)
+                    {
+                        CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "注册成功: " + list["@Userid"].ToString());
+                        Session["uid"] = list["@Userid"].ToString();
+                        var script = String.Format("<script>window.location.href='" + backurl + "';</script>");
+                        return Content(script, "text/html");
+                    }
+                }
+            }
+            CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "读取用户数据失败     openid：" + openid);
+            return Content("读取用户信息失败");
+        }
 
         public ActionResult WxCreateFriend()
         {
@@ -129,6 +191,25 @@ namespace GetMoney.Controllers
                 int uid = Convert.ToInt32(Session["uid"]); //徒弟ID
                 ViewBag.uid = uid;          //好友ID
             }
+            return View();
+        }
+        public ActionResult WxMenu() {
+            Wx_Menu dto_menu = new Wx_Menu();
+            List<Wx_Menu_btton> list = new List<Wx_Menu_btton>();
+            Wx_Menu_btton dto = new Wx_Menu_btton();
+            dto.type = "click";
+            dto.name = "人之初";
+            dto.key = "button_001";
+            list.Add(dto);
+            dto.type = "click";
+            dto.name = "圣人训";
+            dto.key = "button_002";
+            list.Add(dto);
+            dto_menu.button = list;
+            return JsonFormat(new ExtJson { success = true, msg = "添加成功！", jsonresult = dto_menu });
+        }
+
+        public ActionResult WxMsgTaken() {
             return View();
         }
     }

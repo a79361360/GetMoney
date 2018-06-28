@@ -32,4 +32,24 @@ namespace GetMoney.Model.WxModel
         public string remark { get; set; }
         public string groupid { get; set; }
     }
+    /// <summary>
+    /// 自定义菜单
+    /// </summary>
+    public class Wx_Menu {
+        public List<Wx_Menu_btton> button { get; set; }
+    }
+    public class Wx_Menu_btton {
+        public string type { get; set; }
+        public string name { get; set; }
+        public string key { get; set; }
+        public string url { get; set; }
+        public List<Wx_Menu_btton> sub_button { get; set; }
+    }
+    /// <summary>
+    /// 个性化菜单
+    /// </summary>
+    public class Wx_CondMenu{
+        public Wx_Menu menu { get; set; }
+        public Wx_Menu conditionalmenu { get; set; }
+    }
 }
