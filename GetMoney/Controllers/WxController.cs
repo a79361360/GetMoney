@@ -31,10 +31,10 @@ namespace GetMoney.Controllers
             string backurl = "/TUser/TUserWxOrder"; //默认回调地址
             if (Request["backurl"] != null)
                 backurl = Request["backurl"].ToString();
-            string url = WebHelp.GetCurHttpHost() + "/Wx/WeiXLogin?backurl=" + backurl;
-            string url1 = WebHelp.GetCurHttpHost() + "/Wx/WxLogin?backurl=" + backurl;
+            string url = WebHelp.GetCurHttpHost() + "/Wx/WxLogin?backurl=" + backurl;
+            //string url1 = WebHelp.GetCurHttpHost() + "/Wx/WxLogin?backurl=" + backurl;
             ViewBag.url = url;
-            ViewBag.url1 = url1;
+            //ViewBag.url1 = url1;
             return View();
         }
         public ActionResult WeiXLogin()
