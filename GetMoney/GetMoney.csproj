@@ -198,6 +198,7 @@
     <Compile Include="Controllers\Nsoup\NsoupController.cs" />
     <Compile Include="Controllers\OnlyNameTest\OnlyNameTestController.cs" />
     <Compile Include="Controllers\Order\OrderController.cs" />
+    <Compile Include="Controllers\Pay\WxPayController.cs" />
     <Compile Include="Controllers\TUser\TuOptionController.cs" />
     <Compile Include="Controllers\TUser\TUserController.cs" />
     <Compile Include="Controllers\WxController.cs" />
@@ -250,6 +251,7 @@
     <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
     <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
     <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\img.gif" />
+    <Content Include="Content\recharge.css" />
     <Content Include="Content\TestPage\bootstrap.min.css" />
     <Content Include="Content\TestPage\bootstrap.min.js" />
     <Content Include="Content\TestPage\jquery-2.1.4.min.js" />
@@ -336,16 +338,26 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\QQ.png" />
+    <Content Include="Images\recharge\1.png" />
+    <Content Include="Images\recharge\baochun.png" />
+    <Content Include="Images\recharge\check.png" />
+    <Content Include="Images\recharge\di.png" />
+    <Content Include="Images\recharge\fangka.png" />
+    <Content Include="Images\recharge\recharge_bg.png" />
+    <Content Include="Images\recharge\tip.png" />
+    <Content Include="Images\recharge\zuanshi.png" />
     <Content Include="Images\weixin.png" />
     <Content Include="Images\wx_loginbg.jpg" />
     <Content Include="Scripts\clipboard.min.js" />
     <Content Include="Scripts\easyloader.js" />
+    <Content Include="Scripts\font-size.js" />
     <Content Include="Scripts\iscroll-probe.js" />
     <Content Include="Scripts\iscroll.js" />
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.easyui.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jscommon.js" />
+    <Content Include="Scripts\recharge.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -433,6 +445,7 @@
     <Content Include="Views\TuOption\ListOptionPortal.cshtml" />
     <Content Include="Views\Home\UserRemark.cshtml" />
     <Content Include="Views\TUser\WxEditPortal.cshtml" />
+    <Content Include="Views\WxPay\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Application\GetMoney.Application.csproj">

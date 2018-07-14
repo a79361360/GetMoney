@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/recharge.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/font-size.js"></script>
+    <script src="~/Scripts/recharge.js"></script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="obtain">
+            <ul>
+                <li>
+                    <span class="fl">您的昵称：</span>
+                    <span class="fr" id="UserNickName">1233</span>
+                </li>
+                <li>
+                    <span class="fl">充值折扣：</span>
+                    <span class="fr" id="zhekou">无（10折）</span>
+                    <button id="yaotuhao">我要3折</button>
+                </li>
+            </ul>
+            <dl class="clear">
+                <dt>充值用户ID：</dt>
+                <dd class="userid">
+                    <input type="text" id="userid" placeholder="请输入要充值的账号" value="111000" />
+                    <ul class="lishi"></ul>
+                </dd>
+                <dt class="Nick">昵&nbsp;&nbsp;称：</dt>
+                <dd class="NickName">用户昵称</dd>
+            </dl>
+            <div class="tishi"><span></span></div>
+        </div>
+        <div class="choice">
+            <ul class="clear" id="xuanze">
+                <li class="on">
+                    <p><img src="../images/recharge/zuanshi.png" />×30</p>
+                    <u>6元</u>
+                    <i></i>
+                </li>
+                <li>
+                    <p><img src="../images/recharge/zuanshi.png" />×60</p>
+                    <u>12元</u>
+                    <i></i>
+                </li>
+                <li>
+                    <p><img src="../images/recharge/zuanshi.png" />×340</p>
+                    <u>68元</u>
+                    <i></i>
+                </li>
+                <li>
+                    <p><img src="../images/recharge/zuanshi.png" />×640</p>
+                    <u>128元</u>
+                    <i></i>
+                </li>
+                <li>
+                    <p><img src="../images/recharge/zuanshi.png" />×1490</p>
+                    <u>298元</u>
+                    <i></i>
+                </li>
+            </ul>
+            <input type="hidden" class="srkk" value="6" />
+        </div>
+        <div class="btn_w">
+            <button class="recharge_btn">点击购买</button>
+        </div>
+        <div class="tip clear">
+            <h1>温馨提示</h1>
+            <ul>
+                <li>充值前，请选择要充值的“用户ID”，点击上方的“用户ID”可切换充值的对象；</li>
+                <li>充值成功后，<span>钻石</span>会自动发到您指定充值的用户账号中；</li>
+                <li>如有充值问题请联系官方客服微信：np059988。</li>
+            </ul>
+        </div>
+    </div>
+    <div class="zanwei"></div>
+    <div class="mgs">
+        <%--<div class="close" onclick="closes()">X</div>--%>
+        <div class="paytips"><span></span></div>
+        <button onclick="closes()">确定</button>
+    </div>
+    <div class="black_bg">
+        <div class="discount">
+            <h3>金牌推广员</h3>
+            <ul>
+                <li><span>方式一：</span>推广80个有效一级好友。</li>
+                <li><span>方式二：</span>花费<i>288元</i>可立即成为金牌推广员(只限前100名)</li>
+            </ul>
+            <p>金牌推广员可永久享受房卡<span>3折</span>优惠。</p>
+            <a href="/WeiXin/Generalize.aspx" class="leftbtn">去推广</a>
+            <button class="rightbtn" id="tuhao">直接购买&nbsp;&nbsp;(￥288)</button>
+        </div>
+    </div>
+</body>
+</html>

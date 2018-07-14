@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Security;
 
 namespace GetMoney.Application.WeiX
 {
@@ -31,7 +32,8 @@ namespace GetMoney.Application.WeiX
         /// <param name="appid"></param>
         /// <param name="secret"></param>
         /// <returns></returns>
-        public WxJsApi_token Wx_Cgi_AccessToken(string appid,string secret) {
+        public WxJsApi_token Wx_Cgi_AccessToken(string appid, string secret)
+        {
             string url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + secret;
             string result = web.Get(url);
             WxJsApi_token dto = JsonConvert.DeserializeObject<WxJsApi_token>(result);
@@ -60,7 +62,7 @@ namespace GetMoney.Application.WeiX
         }
         public string RedirectWx(string reurl)
         {
-            CommonManager.TxtObj.WriteLogs("/Logs/WeiXBLL_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "RedirectWx 开始去微信获取授权" + reurl+ WebHelp.GetCurHttpHost());
+            CommonManager.TxtObj.WriteLogs("/Logs/WeiXBLL_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "RedirectWx 开始去微信获取授权" + reurl + WebHelp.GetCurHttpHost());
             string redirect_uri = HttpUtility.UrlEncode(WebHelp.GetCurHttpHost() + "/Wx/WxAccount");
             string response_type = "code";
             string scope = "snsapi_userinfo";   //snsapi_userinfo不仅只取到openid其他信息也一起取到,snsapi_base只取openid
@@ -68,6 +70,88 @@ namespace GetMoney.Application.WeiX
             string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appid + "&redirect_uri=" + redirect_uri + "&response_type=" + response_type + "&scope=" + scope + "&state=" + state + "#wechat_redirect";
             CommonManager.TxtObj.WriteLogs("/Logs/WeiXBLL_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "RedirectWx url" + url);
             return url;
+        }
+        /// <summary>
+        /// 服务器配置 验证url有效性
+        /// </summary>
+        public string CheckSignature()
+        {
+            string token = "f081bfda13723a69a9b716d1dda129a7";
+            if (string.IsNullOrEmpty(token))
+            {
+                return "";
+            }
+            string signature = CommonManager.WebObj.Request("signature", "");
+            CommonManager.TxtObj.WriteLogs("/Logs/CheckSignature_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "signature: " + signature);
+            string timestamp = CommonManager.WebObj.Request("timestamp", "");
+            CommonManager.TxtObj.WriteLogs("/Logs/CheckSignature_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "timestamp: " + timestamp);
+            string nonce = CommonManager.WebObj.Request("nonce", "");
+            CommonManager.TxtObj.WriteLogs("/Logs/CheckSignature_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "nonce: " + nonce);
+            string echoString = CommonManager.WebObj.Request("echoStr", "");
+            CommonManager.TxtObj.WriteLogs("/Logs/CheckSignature_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "echoString: " + echoString);
+            //排序
+            List<string> list = new List<string>();
+            list.Add(token);
+            list.Add(timestamp);
+            list.Add(nonce);
+            list.Sort();
+
+            //加密
+            string res = string.Join("", list.ToArray());
+            CommonManager.TxtObj.WriteLogs("/Logs/CheckSignature_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "res: " + res);
+            res = FormsAuthentication.HashPasswordForStoringInConfigFile(res, "SHA1").ToLower();
+            CommonManager.TxtObj.WriteLogs("/Logs/CheckSignature_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "res: " + res);
+            if (signature == res)
+            {
+                //HttpContext.Current.Response.Write(echoString);
+                //HttpContext.Current.Response.End();
+                return echoString;
+            }
+            return "";
+        }
+        public void CreateMenu() {
+            CommonManager.TxtObj.WriteLogs("/Logs/CreateMenu_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "CreateMenu开始: ");
+            Wx_Menu dto_menu = new Wx_Menu();                           //总菜单对象
+            List<Wx_Menu_button> list = new List<Wx_Menu_button>();     //子菜单列表
+            Wx_Menu_button dto = new Wx_Menu_button();                  //子菜单对象
+            dto.type = "view"; dto.name = "会单入口"; dto.url = "http://gm.cf518.cn/TUser/TUserWxOrder"; list.Add(dto);
+            //dto.name = "游戏中心";
+            //List<Wx_Menu_button> list1 = new List<Wx_Menu_button>();
+            //Wx_Menu_button dto1 = new Wx_Menu_button();
+            //dto1.type = "view"; dto1.name = "游戏下载"; dto1.url = "http://fkwx.0599yx.com/WeiXin/Download.aspx"; list1.Add(dto1);
+            //dto1 = new Wx_Menu_button();
+            ////dto1.type = "click"; dto1.name = "联系客服"; dto1.key = "button_0102"; list1.Add(dto1);
+            //dto1.type = "view"; dto1.name = "联系客服"; dto1.url = "https://fzlwhywlkjyxgs.qiyukf.com/client?k=17a6055ef74032942d6a13c61ef988d7&wp=1&robotShuntSwitch=0"; list1.Add(dto1);
+            ////添加二级菜单到一级菜单游戏中心
+            //dto.sub_button = list1; list.Add(dto);
+            ////领取福利
+            //dto = new Wx_Menu_button(); //实例化一级菜单领取福利
+            //dto.name = "领取福利";
+            //list1 = new List<Wx_Menu_button>();
+            //dto1 = new Wx_Menu_button();
+            //dto1.type = "view"; dto1.name = "领取福利"; dto1.url = "http://fkwx.0599yx.com/WeiXin/RedPacket.aspx"; list1.Add(dto1);
+            //dto1 = new Wx_Menu_button();
+            //dto1.type = "view"; dto1.name = "购买房卡"; dto1.url = "http://fkwx.0599yx.com/pay/wxpay.aspx"; list1.Add(dto1);
+            ////添加二级菜单到一级菜单领取福利
+            //dto.sub_button = list1; list.Add(dto);
+            ////个人中心
+            //dto = new Wx_Menu_button(); //实例化一级菜单个人中心
+            //dto.name = "个人中心";
+            //list1 = new List<Wx_Menu_button>();
+            //dto1 = new Wx_Menu_button();
+            //dto1.type = "view"; dto1.name = "我的账户"; dto1.url = "http://fkwx.0599yx.com/WeiXin/MyInfo.aspx"; list1.Add(dto1);
+            //dto1 = new Wx_Menu_button();
+            //dto1.type = "view"; dto1.name = "邀请有礼"; dto1.url = "http://fkwx.0599yx.com/WeiXin/Generalize.aspx"; list1.Add(dto1);
+            //dto.sub_button = list1; list.Add(dto);
+            //将菜单列表绑定到Menu
+            dto_menu.button = list;
+
+            WxJsApi_token dto_Cgi = Wx_Cgi_AccessToken(appid, appsecret);      //access_token
+            CommonManager.TxtObj.WriteLogs("/Logs/CreateMenu_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "access_token: " + dto_Cgi.access_token);
+            string url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + dto_Cgi.access_token;
+            string postdata = "" + JsonConvert.SerializeObject(dto_menu, Newtonsoft.Json.Formatting.Indented);
+            string result = CommonManager.WebObj.Post(url, postdata);
+            CommonManager.TxtObj.WriteLogs("/Logs/CreateMenu_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "CreateMenu: " + result);
         }
     }
 }
