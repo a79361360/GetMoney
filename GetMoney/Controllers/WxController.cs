@@ -36,10 +36,10 @@ namespace GetMoney.Controllers
             string backurl = "/TUser/TUserWxOrder"; //默认回调地址
             if (Request["backurl"] != null)
                 backurl = Request["backurl"].ToString();
-            string url = WebHelp.GetCurHttpHost() + "/Wx/WeiXLogin?backurl=" + backurl;
-            string url1 = WebHelp.GetCurHttpHost() + "/Wx/WxLogin?backurl=" + backurl;
+            string url = WebHelp.GetCurHttpHost() + "/Wx/WxLogin?backurl=" + backurl;
+            //string url1 = WebHelp.GetCurHttpHost() + "/Wx/WxLogin?backurl=" + backurl;
             ViewBag.url = url;
-            ViewBag.url1 = url1;
+            //ViewBag.url1 = url1;
             return View();
         }
         public ActionResult WeiXLogin()
@@ -155,7 +155,8 @@ namespace GetMoney.Controllers
             {
                 CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "WxAccount 不存在用户信息开始注册: ");
                 userdto = new TUserDto();
-                userdto.UserName = openid; userdto.NickName = nickname; userdto.TxUrl = headurl; userdto.UserPwd = TxtHelp.MD5("123"); userdto.BankPwd = TxtHelp.MD5("123");    //默认密码123
+                var wx_user = wxbll.Get_SNS_UserInfo(openid, dto.access_token);
+                userdto.UserName = openid; userdto.NickName = wx_user.nickname; userdto.TxUrl = wx_user.headimgurl; userdto.UserPwd = TxtHelp.MD5("123"); userdto.BankPwd = TxtHelp.MD5("123");    //默认密码123
                 int result = -1;    //注册结果
                 string msg = "注册成功!";
                 Dictionary<string, object> list = new Dictionary<string, object>();
