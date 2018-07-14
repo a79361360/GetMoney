@@ -3,14 +3,19 @@ using FJSZ.OA.Common.Web;
 using GetMoney.Application;
 using GetMoney.Application.WeiX;
 using GetMoney.Common;
+using GetMoney.Common.Expand;
 using GetMoney.Framework;
 using GetMoney.Model;
 using GetMoney.Model.WxModel;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
 
 namespace GetMoney.Controllers
 {
@@ -193,24 +198,90 @@ namespace GetMoney.Controllers
             }
             return View();
         }
-        public ActionResult WxMenu() {
-            Wx_Menu dto_menu = new Wx_Menu();
-            List<Wx_Menu_btton> list = new List<Wx_Menu_btton>();
-            Wx_Menu_btton dto = new Wx_Menu_btton();
-            dto.type = "click";
-            dto.name = "人之初";
-            dto.key = "button_001";
-            list.Add(dto);
-            dto.type = "click";
-            dto.name = "圣人训";
-            dto.key = "button_002";
-            list.Add(dto);
-            dto_menu.button = list;
-            return JsonFormat(new ExtJson { success = true, msg = "添加成功！", jsonresult = dto_menu });
-        }
+        /// <summary>
+        /// 服务器配置接口
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult WxMsgToken() {
+            //string result = "";
+            //result = wxbll.CheckSignature();
+            //return Content(result);
 
-        public ActionResult WxMsgTaken() {
-            return View();
+            CommonManager.TxtObj.WriteLogs("/Logs/WxMsgToken_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "开始: ");
+            Stream requestStream = Request.InputStream;
+            byte[] requestByte = new byte[requestStream.Length];
+            requestStream.Read(requestByte, 0, (int)requestStream.Length);
+            string s = Encoding.UTF8.GetString(requestByte);
+            CommonManager.TxtObj.WriteLogs("/Logs/WxMsgToken_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "获取输入流字符串: " + s);
+            //            s = @"<xml><ToUserName><![CDATA[gh_c414afdbd6d7]]></ToUserName>
+            //<FromUserName><![CDATA[oMO1C0fMcme_T4nDKXAREkUoGZWc]]></FromUserName>
+            //<CreateTime>1529412251</CreateTime>
+            //<MsgType><![CDATA[text]]></MsgType>
+            //<Content><![CDATA[texy]]></Content>
+            //<MsgId>6568775600578283548</MsgId>
+            //</xml>";
+            //封装请求类
+            XmlDocument requestDocXml = new XmlDocument();
+            requestDocXml.LoadXml(s);
+            XmlElement rootElement = requestDocXml.DocumentElement;
+            WxXmlModel WxXmlModel = new WxXmlModel();
+            //XmlSerializer serializer = new XmlSerializer(typeof(WxXmlModel));
+            //var result = (WxXmlModel)serializer.Deserialize(new MemoryStream(Encoding.Unicode.GetBytes(s)));
+            WxXmlModel.ToUserName = rootElement.SelectSingleNode("ToUserName").InnerText;
+            WxXmlModel.FromUserName = rootElement.SelectSingleNode("FromUserName").InnerText;
+            WxXmlModel.CreateTime = rootElement.SelectSingleNode("CreateTime").InnerText;
+            WxXmlModel.MsgType = rootElement.SelectSingleNode("MsgType").InnerText;
+            string type = "", result = "";
+            switch (WxXmlModel.MsgType)
+            {
+                case "text":
+                    CommonManager.TxtObj.WriteLogs("/Logs/WxMsgToken_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "开始text: " + WxXmlModel.MsgType);
+                    result = "<xml><ToUserName><![CDATA[" + WxXmlModel.FromUserName + "]]></ToUserName>";
+                    result += "<FromUserName><![CDATA[" + WxXmlModel.ToUserName + "]]></FromUserName>";
+                    result += "<CreateTime>" + DateTime.Now.ToUnixTimeStamp() + "</CreateTime>";
+                    result += "<MsgType><![CDATA[transfer_customer_service]]></MsgType></xml>";
+                    CommonManager.TxtObj.WriteLogs("/Logs/WxMsgToken_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "result: " + result);
+                    //创建菜单
+                    WxXmlModel.Content = rootElement.SelectSingleNode("Content").InnerText;
+                    if (WxXmlModel.Content == "createmenu_qiu")
+                        wxbll.CreateMenu();
+                    break;
+                case "image":
+                    CommonManager.TxtObj.WriteLogs("/Logs/WxMsgToken_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "开始image: ");
+                    break;
+                case "event":
+                    WxXmlModel.Event = rootElement.SelectSingleNode("Event").InnerText;
+                    WxXmlModel.EventKey = rootElement.SelectSingleNode("EventKey").InnerText;
+                    if (WxXmlModel.Event == "subscribe")
+                    {
+                        result = "<xml><ToUserName><![CDATA[" + WxXmlModel.FromUserName + "]]></ToUserName>";
+                        result += "<FromUserName><![CDATA[" + WxXmlModel.ToUserName + "]]></FromUserName>";
+                        result += "<CreateTime>" + DateTime.Now.ToUnixTimeStamp() + "</CreateTime>";
+                        result += "<MsgType><![CDATA[text]]></MsgType>";
+                        result += "<Content><![CDATA[欢迎关注《宁德极速代码》！\n <a href='http://gm.cf518.cn/wxpay/index'>成为会员</a>]]></Content></xml>";
+                        CommonManager.TxtObj.WriteLogs("/Logs/WxMsgToken_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "result: " + result);
+                    }
+                    if (WxXmlModel.Event == "CLICK")
+                    {
+                        if (WxXmlModel.EventKey == "button_0102")
+                        {
+                            result = "<xml><ToUserName><![CDATA[" + WxXmlModel.FromUserName + "]]></ToUserName>";
+                            result += "<FromUserName><![CDATA[" + WxXmlModel.ToUserName + "]]></FromUserName>";
+                            result += "<CreateTime>" + DateTime.Now.ToUnixTimeStamp() + "</CreateTime>";
+                            result += "<MsgType><![CDATA[text]]></MsgType>";
+                            result += "<Content><![CDATA[联系客服微信:np059988\n 客服工作时间为每日8: 00 - 23:00]]></Content></xml>";
+                        }
+                    }
+                    break;
+                default:
+                    CommonManager.TxtObj.WriteLogs("/Logs/WxMsgToken_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "开始default: " + WxXmlModel.MsgType);
+                    break;
+
+            }
+            //Response.ContentType = "text/xml";
+            //Response.Write(result);
+            //Response.End();
+            return Content(result, "text/xml");
         }
     }
 }
