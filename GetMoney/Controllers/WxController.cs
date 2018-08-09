@@ -284,5 +284,27 @@ namespace GetMoney.Controllers
             //Response.End();
             return Content(result, "text/xml");
         }
+        /// <summary>
+        /// 预约到期提醒
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult WxTemplate_Expire() {
+            string uid = CommonManager.WebObj.Request("uid", "0");
+            var dto_user = _bll.FindUserById(Convert.ToInt32(uid));
+            if (dto_user != null) {
+                Wx_Template dto = new Wx_Template();
+                dto.touser = dto_user.UserName; dto.template_id = "z2v9mM3S6vEBXJ6B-eXKCYaXbavhoDddIA9osrSEAdc";
+                Wx_Template_data dto1 = new Wx_Template_data();
+                Wx_Template_data_dic dto2 = new Wx_Template_data_dic();
+                dto2.value = "尊敬的 "+dto_user.TrueName+" 您预约的标会日期已经到了"; dto2.color = "#173177"; dto1.first = dto2;
+                dto2 = new Wx_Template_data_dic();
+                dto2.value = "标会提醒"; dto2.color = "#173177"; dto1.keynote1 = dto2;
+                dto2 = new Wx_Template_data_dic();
+                dto2.value = ""; dto2.color = "#173177"; dto1.keynote2 = dto2;
+                dto2 = new Wx_Template_data_dic();
+                dto2.value = "您的徒弟【" + nickname + "】成功完成了第" + task + "天新手任务,贡献给您￥10.00，请登录游戏领取！"; dto2.color = "#173177"; dto1.remark = dto2;
+                dto.data = dto1;
+            }
+        }
     }
 }
