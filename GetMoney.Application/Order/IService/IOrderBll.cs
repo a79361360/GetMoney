@@ -49,5 +49,10 @@ namespace GetMoney.Application
         /// <param name="OrderNo"></param>
         /// <returns></returns>
         int DelOrder(string OrderNo);
+        /// <summary>
+        /// 今天开标的用户信息
+        /// </summary>
+        /// <returns></returns>
+        IList<OrderListUserDto> FindCurOrderList();
     }
 }

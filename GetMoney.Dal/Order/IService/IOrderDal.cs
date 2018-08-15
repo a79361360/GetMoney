@@ -30,5 +30,10 @@ namespace GetMoney.Dal
         /// <param name="OrderNo"></param>
         /// <returns></returns>
         int DelOrder(string OrderNo);
+        /// <summary>
+        /// 今天开标的用户信息
+        /// </summary>
+        /// <returns></returns>
+        DataTable FindCurOrderList();
     }
 }

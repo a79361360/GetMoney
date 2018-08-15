@@ -119,11 +119,11 @@ namespace GetMoney.Model.WxModel
     {
         public Wx_Template_data_dic first { get; set; }
         public Wx_Template_data_dic remark { get; set; }
-        public Wx_Template_data_dic keynote1 { get; set; }
-        public Wx_Template_data_dic keynote2 { get; set; }
-        public Wx_Template_data_dic keynote3 { get; set; }
-        public Wx_Template_data_dic keynote4 { get; set; }
-        public Wx_Template_data_dic keynote5 { get; set; }
+        public Wx_Template_data_dic keyword1 { get; set; }
+        public Wx_Template_data_dic keyword2 { get; set; }
+        public Wx_Template_data_dic keyword3 { get; set; }
+        public Wx_Template_data_dic keyword4 { get; set; }
+        public Wx_Template_data_dic keyword5 { get; set; }
     }
     public class Wx_Template_data_dic
     {

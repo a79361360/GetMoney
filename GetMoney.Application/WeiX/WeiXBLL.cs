@@ -1,5 +1,6 @@
 ﻿using FJSZ.OA.Common.Web;
 using GetMoney.Common;
+using GetMoney.Common.Cache;
 using GetMoney.Dal.WeiX;
 using GetMoney.Model;
 using GetMoney.Model.WxModel;
@@ -34,17 +35,27 @@ namespace GetMoney.Application.WeiX
         /// <returns></returns>
         public WxJsApi_token Wx_Cgi_AccessToken(string appid, string secret)
         {
-            string url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + secret;
-            string result = web.Get(url);
-            WxJsApi_token dto = JsonConvert.DeserializeObject<WxJsApi_token>(result);
-            return dto;
+            var dto = CommonManager.CacheObj.Get<AspNetCache>("cgi_token");
+            if (dto == null)
+            {
+                string url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + secret;
+                string result = web.Get(url);
+                dto = JsonConvert.DeserializeObject<WxJsApi_token>(result);
+                CommonManager.CacheObj.Save<AspNetCache>("cgi_token", dto, 120, DateTime.Now);
+            }
+            return (WxJsApi_token)dto;
         }
         //取得SNS网页授权token
         public WxJsApi_token Wx_SNS_AccessToken(string appid, string secret, string code)
         {
-            string url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + "&secret=" + secret + "&code=" + code + "&grant_type=authorization_code";
-            string result = web.Get(url);
-            WxJsApi_token dto = JsonConvert.DeserializeObject<WxJsApi_token>(result);
+            WxJsApi_token dto = (WxJsApi_token)CommonManager.CacheObj.Get<AspNetCache>("sns_token");
+            if (dto == null)
+            {
+                string url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + "&secret=" + secret + "&code=" + code + "&grant_type=authorization_code";
+                string result = web.Get(url);
+                dto = JsonConvert.DeserializeObject<WxJsApi_token>(result);
+                CommonManager.CacheObj.Save<AspNetCache>("sns_token", dto, 120, DateTime.Now);
+            }
             return dto;
         }
         /// <summary>

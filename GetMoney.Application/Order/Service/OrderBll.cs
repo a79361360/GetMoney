@@ -185,5 +185,13 @@ namespace GetMoney.Application
             int result = _dal.DelOrder(OrderNo);
             return result;
         }
+        /// <summary>
+        /// 今天开标的用户信息
+        /// </summary>
+        /// <returns></returns>
+        public IList<OrderListUserDto> FindCurOrderList() {
+            IList<OrderListUserDto> list = DataTableToList.ModelConvertHelper<OrderListUserDto>.ConvertToModel(_dal.FindCurOrderList());
+            return list;
+        }
     }
 }

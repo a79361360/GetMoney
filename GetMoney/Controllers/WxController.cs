@@ -22,9 +22,10 @@ namespace GetMoney.Controllers
     public class WxController : BaseController
     {
         ITUserBll _bll = null;
-        public WxController(ITUserBll bll)
+        IOrderBll _bll_1 = null;
+        public WxController(ITUserBll bll, IOrderBll bll_1)
         {
-            _bll = bll;
+            _bll = bll;_bll_1 = bll_1;
         }
         WeiXBLL wxbll = new WeiXBLL();
         public ActionResult Index()
@@ -288,22 +289,35 @@ namespace GetMoney.Controllers
         /// 预约到期提醒
         /// </summary>
         /// <returns></returns>
-        public ActionResult WxTemplate_Expire() {
-            string uid = CommonManager.WebObj.Request("uid", "0");
-            var dto_user = _bll.FindUserById(Convert.ToInt32(uid));
-            if (dto_user != null) {
-                Wx_Template dto = new Wx_Template();
-                dto.touser = dto_user.UserName; dto.template_id = "z2v9mM3S6vEBXJ6B-eXKCYaXbavhoDddIA9osrSEAdc";
-                Wx_Template_data dto1 = new Wx_Template_data();
-                Wx_Template_data_dic dto2 = new Wx_Template_data_dic();
-                dto2.value = "尊敬的 "+dto_user.TrueName+" 您预约的标会日期已经到了"; dto2.color = "#173177"; dto1.first = dto2;
-                dto2 = new Wx_Template_data_dic();
-                dto2.value = "标会提醒"; dto2.color = "#173177"; dto1.keynote1 = dto2;
-                dto2 = new Wx_Template_data_dic();
-                dto2.value = ""; dto2.color = "#173177"; dto1.keynote2 = dto2;
-                dto2 = new Wx_Template_data_dic();
-                dto2.value = "您的徒弟【" + nickname + "】成功完成了第" + task + "天新手任务,贡献给您￥10.00，请登录游戏领取！"; dto2.color = "#173177"; dto1.remark = dto2;
-                dto.data = dto1;
+        public void WxTemplate_Expire() {
+            var list = _bll_1.FindCurOrderList();
+            if (list.Count > 0)
+            {
+                var token = wxbll.Wx_Cgi_AccessToken(wxbll.appid, wxbll.appsecret);
+                foreach (var item in list)
+                {
+                    //if (item.Userid != 10000) return;
+                    var dto_user = _bll.FindUserById(Convert.ToInt32(item.Userid));
+                    if (dto_user != null)
+                    {
+                        Wx_Template dto = new Wx_Template();
+                        dto.touser = dto_user.UserName; dto.template_id = "z2v9mM3S6vEBXJ6B-eXKCYaXbavhoDddIA9osrSEAdc";
+                        Wx_Template_data dto1 = new Wx_Template_data();
+                        Wx_Template_data_dic dto2 = new Wx_Template_data_dic();
+                        dto2.value = "尊敬的 " + dto_user.TrueName + " 您预约的标会日期已到"; dto2.color = "#173177"; dto1.first = dto2;
+                        dto2 = new Wx_Template_data_dic();
+                        dto2.value = "标会提醒"; dto2.color = "#173177"; dto1.keyword1 = dto2;
+                        dto2 = new Wx_Template_data_dic();
+                        dto2.value = item.Lastdate; dto2.color = "#173177"; dto1.keyword2 = dto2;
+                        dto2 = new Wx_Template_data_dic();
+                        dto2.value = "于【" + item.Lastdate + "】您有一个标会的行程,总会款为:【￥" + item.AccrualMoney+ "】,您的会费为:【￥" + item.StayPayNum + "】,您的利息为:【￥" + item.StayPayTax + "】."; dto2.color = "#173177"; dto1.remark = dto2;
+                        dto.data = dto1;
+
+                        string url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token.access_token;
+                        string postdata = JsonConvert.SerializeObject(dto, Newtonsoft.Json.Formatting.Indented);
+                        string result = CommonManager.WebObj.Post(url, postdata);
+                    }
+                }
             }
         }
     }
