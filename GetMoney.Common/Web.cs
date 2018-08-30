@@ -301,5 +301,11 @@ namespace GetMoney.Common
         public void RemoveCookie(string name) {
             HttpContext.Current.Response.Cookies.Remove(name);
         }
+        public string GetCurHttpsHost()
+        {
+            string httpstr = HttpContext.Current.Request.Url.ToString().Split(':')[0];
+            return httpstr + "://" + HttpContext.Current.Request.Url.Host;
+            //return "https://" + HttpContext.Current.Request.Url.Host;
+        }
     }
 }

@@ -22,6 +22,9 @@ namespace GetMoney.Application
             _repostory = repostory;
             _dal = dal;
         }
+        public TUserBll() {
+            _dal = new TUserDal();
+        }
         /// <summary>
         /// 使用EF来进行用户信息添加,现在基本没有使用这个方法来进行注册用户
         /// </summary>

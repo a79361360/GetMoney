@@ -35,7 +35,8 @@ namespace GetMoney.Application.WeiX
         /// <returns></returns>
         public WxJsApi_token Wx_Cgi_AccessToken(string appid, string secret)
         {
-            var dto = CommonManager.CacheObj.Get<AspNetCache>("cgi_token");
+            var dto = (WxJsApi_token)CommonManager.CacheObj.Get<AspNetCache>("cgi_token");
+            //WxJsApi_token dto = null;
             if (dto == null)
             {
                 string url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + secret;
@@ -48,14 +49,14 @@ namespace GetMoney.Application.WeiX
         //取得SNS网页授权token
         public WxJsApi_token Wx_SNS_AccessToken(string appid, string secret, string code)
         {
-            WxJsApi_token dto = (WxJsApi_token)CommonManager.CacheObj.Get<AspNetCache>("sns_token");
-            if (dto == null)
-            {
-                string url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + "&secret=" + secret + "&code=" + code + "&grant_type=authorization_code";
-                string result = web.Get(url);
-                dto = JsonConvert.DeserializeObject<WxJsApi_token>(result);
-                CommonManager.CacheObj.Save<AspNetCache>("sns_token", dto, 120, DateTime.Now);
-            }
+            //WxJsApi_token dto = (WxJsApi_token)CommonManager.CacheObj.Get<AspNetCache>("sns_token");
+            //if (dto == null)
+            //{
+            string url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appid + "&secret=" + secret + "&code=" + code + "&grant_type=authorization_code";
+            string result = web.Get(url);
+            WxJsApi_token dto = JsonConvert.DeserializeObject<WxJsApi_token>(result);
+            CommonManager.CacheObj.Save<AspNetCache>("sns_token", dto, 120, DateTime.Now);
+            //}
             return dto;
         }
         /// <summary>
@@ -163,6 +164,40 @@ namespace GetMoney.Application.WeiX
             string postdata = "" + JsonConvert.SerializeObject(dto_menu, Newtonsoft.Json.Formatting.Indented);
             string result = CommonManager.WebObj.Post(url, postdata);
             CommonManager.TxtObj.WriteLogs("/Logs/CreateMenu_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "CreateMenu: " + result);
+        }
+        public void WxTemplate_Expire() {
+            IOrderBll _bll_1 = new OrderBll();
+            ITUserBll _bll = new TUserBll();
+            var list = _bll_1.FindCurOrderList();
+            if (list.Count > 0)
+            {
+                //CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "公众号授权 WxTemplate_Expire：");
+                var token = Wx_Cgi_AccessToken(appid, appsecret);
+                foreach (var item in list)
+                {
+                    if (item.Userid != 10000) return;
+                    var dto_user = _bll.FindUserById(Convert.ToInt32(item.Userid));
+                    if (dto_user != null)
+                    {
+                        Wx_Template dto = new Wx_Template();
+                        dto.touser = dto_user.UserName; dto.template_id = "z2v9mM3S6vEBXJ6B-eXKCYaXbavhoDddIA9osrSEAdc";
+                        Wx_Template_data dto1 = new Wx_Template_data();
+                        Wx_Template_data_dic dto2 = new Wx_Template_data_dic();
+                        dto2.value = "尊敬的 " + dto_user.TrueName + " 您预约的标会日期已到"; dto2.color = "#173177"; dto1.first = dto2;
+                        dto2 = new Wx_Template_data_dic();
+                        dto2.value = "标会提醒"; dto2.color = "#173177"; dto1.keyword1 = dto2;
+                        dto2 = new Wx_Template_data_dic();
+                        dto2.value = item.Lastdate; dto2.color = "#173177"; dto1.keyword2 = dto2;
+                        dto2 = new Wx_Template_data_dic();
+                        dto2.value = "于【" + item.Lastdate + "】您有一个标会的行程,总会款为:【￥" + item.AccrualMoney + "】,您的会费为:【￥" + item.StayPayNum + "】,您的利息为:【￥" + item.StayPayTax + "】."; dto2.color = "#173177"; dto1.remark = dto2;
+                        dto.data = dto1;
+                        //CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "开始推送公众号消息 WxTemplate_Expire：");
+                        string url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token.access_token;
+                        string postdata = JsonConvert.SerializeObject(dto, Newtonsoft.Json.Formatting.Indented);
+                        string result = CommonManager.WebObj.Post(url, postdata);
+                    }
+                }
+            }
         }
     }
 }

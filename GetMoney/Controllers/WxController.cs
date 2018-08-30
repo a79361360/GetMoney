@@ -290,13 +290,16 @@ namespace GetMoney.Controllers
         /// </summary>
         /// <returns></returns>
         public void WxTemplate_Expire() {
+            //wxbll.Wx_Cgi_AccessToken(wxbll.appid, wxbll.appsecret);
+            CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "读取会单的列表 WxTemplate_Expire：");
             var list = _bll_1.FindCurOrderList();
             if (list.Count > 0)
             {
+                CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "公众号授权 WxTemplate_Expire：");
                 var token = wxbll.Wx_Cgi_AccessToken(wxbll.appid, wxbll.appsecret);
                 foreach (var item in list)
                 {
-                    //if (item.Userid != 10000) return;
+                    if (item.Userid != 10000) return;
                     var dto_user = _bll.FindUserById(Convert.ToInt32(item.Userid));
                     if (dto_user != null)
                     {
@@ -310,9 +313,9 @@ namespace GetMoney.Controllers
                         dto2 = new Wx_Template_data_dic();
                         dto2.value = item.Lastdate; dto2.color = "#173177"; dto1.keyword2 = dto2;
                         dto2 = new Wx_Template_data_dic();
-                        dto2.value = "于【" + item.Lastdate + "】您有一个标会的行程,总会款为:【￥" + item.AccrualMoney+ "】,您的会费为:【￥" + item.StayPayNum + "】,您的利息为:【￥" + item.StayPayTax + "】."; dto2.color = "#173177"; dto1.remark = dto2;
+                        dto2.value = "于【" + item.Lastdate + "】您有一个标会的行程,总会款为:【￥" + item.AccrualMoney + "】,您的会费为:【￥" + item.StayPayNum + "】,您的利息为:【￥" + item.StayPayTax + "】."; dto2.color = "#173177"; dto1.remark = dto2;
                         dto.data = dto1;
-
+                        CommonManager.TxtObj.WriteLogs("/Logs/WxController_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "开始推送公众号消息 WxTemplate_Expire：");
                         string url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token.access_token;
                         string postdata = JsonConvert.SerializeObject(dto, Newtonsoft.Json.Formatting.Indented);
                         string result = CommonManager.WebObj.Post(url, postdata);

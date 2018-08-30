@@ -170,7 +170,7 @@ namespace GetMoney.Dal
         /// <param name="UserName"></param>
         /// <returns></returns>
         public DataTable FindUserByUserName(string UserName) {
-            string sql = "SELECT [id],[UserName],[UserPwd],[BankPwd],[NickName],[UserJb],[TrueName],[IdentityNum],[Phone],[RegIP],[TxUrl],[State],[Addtime] FROM [TUsers] where UserName=@username";
+            string sql = "SELECT TOP 1 [id],[UserName],[UserPwd],[BankPwd],[NickName],[UserJb],[TrueName],[IdentityNum],[Phone],[RegIP],[TxUrl],[State],[Addtime] FROM [TUsers] where UserName=@username";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@username",SqlDbType.NVarChar,50)
@@ -186,7 +186,7 @@ namespace GetMoney.Dal
         /// <returns></returns>
         public DataTable FindUserById(int id)
         {
-            string sql = "SELECT id,UserName,UserPwd,BankPwd,NickName,UserJb,TrueName,BankNumber,Bankbinid,IdentityNum,Phone,RegIP,TxUrl,State,Addtime,bankName,bankNameEn FROM V_TUsers where id=@id";
+            string sql = "SELECT TOP 1 id,UserName,UserPwd,BankPwd,NickName,UserJb,TrueName,BankNumber,Bankbinid,IdentityNum,Phone,RegIP,TxUrl,State,Addtime,bankName,bankNameEn FROM V_TUsers where id=@id";
             SqlParameter[] parameter = new[]
             {
                 new SqlParameter("@id",SqlDbType.Int)

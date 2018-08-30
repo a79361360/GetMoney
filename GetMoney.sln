@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney", "GetMoney\GetMoney.csproj", "{84D2585C-E3E4-47B3-B9C1-DE80952DD8EC}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney.Dal", "GetMoney.Dal\GetMoney.Dal.csproj", "{B68C2FDF-AA00-40C9-BDEC-8A9AA7DA3E6C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoney.Common", "GetMoney.Common\GetMoney.Common.csproj", "{3B284068-357D-4F66-B070-1F8E5CFBEFB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoneyService", "GetMoneyService\GetMoneyService.csproj", "{5F5500A7-B75C-45E1-AFAA-3F19426F756D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{3B284068-357D-4F66-B070-1F8E5CFBEFB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B284068-357D-4F66-B070-1F8E5CFBEFB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B284068-357D-4F66-B070-1F8E5CFBEFB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F5500A7-B75C-45E1-AFAA-3F19426F756D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F5500A7-B75C-45E1-AFAA-3F19426F756D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F5500A7-B75C-45E1-AFAA-3F19426F756D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F5500A7-B75C-45E1-AFAA-3F19426F756D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

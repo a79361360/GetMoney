@@ -18,6 +18,10 @@ namespace GetMoney.Application
             _repostory = repostory;
             _dal = dal;
         }
+        public OrderBll()
+        {
+            _dal = new OrderDal();
+        }
         /// <summary>
         /// 添加会单
         /// </summary>

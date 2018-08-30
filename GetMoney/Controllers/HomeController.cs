@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GetMoney.Application.Email;
+using GetMoney.Application.Job;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -51,6 +53,15 @@ namespace GetMoney.Controllers
         /// <returns></returns>
         public ActionResult UserRemark() {
             return View();
+        }
+        public void TestJob() {
+            SystemScheduler _systemScheduler = SystemScheduler.CreateInstance();
+            _systemScheduler.StartScheduler();
+        }
+        public void TestEmail() {
+            EmailBLL bll = new EmailBLL();
+            string content = "<p style='color:red;font-size:14px;'>邮件测试</p>";
+            bll.SendMail("592452713@qq.com", "Hello", content);
         }
     }
 }
