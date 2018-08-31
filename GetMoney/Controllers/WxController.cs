@@ -299,7 +299,7 @@ namespace GetMoney.Controllers
                 var token = wxbll.Wx_Cgi_AccessToken(wxbll.appid, wxbll.appsecret);
                 foreach (var item in list)
                 {
-                    if (item.Userid != 10000) return;
+                    //if (item.Userid != 10000) return;
                     var dto_user = _bll.FindUserById(Convert.ToInt32(item.Userid));
                     if (dto_user != null)
                     {
