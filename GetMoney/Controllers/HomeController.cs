@@ -61,7 +61,10 @@ namespace GetMoney.Controllers
         public void TestEmail() {
             EmailBLL bll = new EmailBLL();
             string content = "<p style='color:red;font-size:14px;'>邮件测试</p>";
-            bll.SendMail("592452713@qq.com", "Hello", content);
+            //bll.SendMail("592452713@qq.com", "Hello", content);
+            string[] receivers = { "592452713@qq.com", "a79361360@163.com" };
+            string[] filepath = { @"F:\奖励通知.docx", @"F:\111.txt" };
+            bll.SendMail(receivers, filepath, "Hello", content);
         }
     }
 }
