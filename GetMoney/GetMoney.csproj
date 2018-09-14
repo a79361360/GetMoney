@@ -457,6 +457,7 @@
     <Content Include="Views\Home\UserRemark.cshtml" />
     <Content Include="Views\TUser\WxEditPortal.cshtml" />
     <Content Include="Views\WxPay\Index.cshtml" />
+    <Content Include="Views\Order\ImportOrderPortal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Application\GetMoney.Application.csproj">

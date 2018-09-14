@@ -353,5 +353,12 @@ namespace GetMoney.Controllers.Order
         public ActionResult PIndex() {
             return View();
         }
+        public ActionResult ImportOrderPortal() {
+            return View();
+        }
+        public void ImPort() {
+            _bll.CreateOrderByImport(Convert.ToInt32(Session["uid"]), 2);
+
+        }
     }
 }

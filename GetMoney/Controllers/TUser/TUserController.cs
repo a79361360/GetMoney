@@ -424,7 +424,7 @@ namespace GetMoney.Controllers.TUser
         /// </summary>
         /// <returns></returns>
         public ActionResult TestLogin() {
-            string uid = CommonManager.WebObj.RequestForm("uid", "");
+            string uid = CommonManager.WebObj.Request("uid", "");
             if (uid != "")
             {
                 Session["uid"] = uid;

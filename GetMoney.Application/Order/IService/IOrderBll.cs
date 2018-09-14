@@ -54,5 +54,12 @@ namespace GetMoney.Application
         /// </summary>
         /// <returns></returns>
         IList<OrderListUserDto> FindCurOrderList();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="filetype"></param>
+        /// <returns></returns>
+        int CreateOrderByImport(int uid, int filetype);
     }
 }

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using GetMoney.Framework.Common;
 using GetMoney.Dal;
+using System.Data.OleDb;
+using System.Data;
 
 namespace GetMoney.Application
 {
@@ -197,5 +199,85 @@ namespace GetMoney.Application
             IList<OrderListUserDto> list = DataTableToList.ModelConvertHelper<OrderListUserDto>.ConvertToModel(_dal.FindCurOrderList());
             return list;
         }
+        public int CreateOrderByImport(int touuid,int uid,int filetype) {
+            string pathx = "/DownLoad/OrderImport/" + DateTime.Now.ToString("yyyy-MM-dd") + "/";                                        //图片地址
+            string suffix = filetype == 1 ? ".txt" : ".xlsx";
+            string filename = TxtHelp.MD5(uid.ToString() + "321645abcdef") + suffix;                 //图片名称
+            string path = Common.CommonManager.FileObj.HttpUploadFile(pathx, filename); //返回完整的上传地址 
+            if (!string.IsNullOrEmpty(path)) {
+                var dt = GetExcelDatatable(path);
+                if (dt.Rows.Count > 0) {
+                    DataRow dr = dt.Rows[0];
+                    OrderDto dto = new OrderDto();
+                    IList<UListDto> list = new List<UListDto>();    //会员列表
+                    int pepernum = 0;                               //会员人数
+                    foreach (DataRow item in dt.Rows) {
+                        UListDto dto_1 = new UListDto();
+                        dto_1.id = Convert.ToInt32(item["会员列表"]);
+                        list.Add(dto_1);
+                        pepernum++;
+                    }
+                    dto.PeoperNum = pepernum;                           //会员人数
+                    dto.PeoperIds = ListToString(list);                 //会员ids
+                    dto.PeoperMoney = Convert.ToInt32(dr["会费金额"]);  //会费金额
+                    dto.LowestMoney = Convert.ToInt32(dr["最低标息"]);  //最低标息
+                    dto.Remark = dr["备注"].ToString();                 //备注
+                    dto.TouUserid = touuid;                             //会头
+                    dto.MoneySendType = (MnSdTypeEnum)Convert.ToInt32(dr["放款类型"]);
+                    dto.MeetType = Convert.ToInt32(dr["标会类型"]);
+                    dto.MeetNum = Convert.ToInt32(dr["标会频率"]);
+                    dto.Meetextnum = Convert.ToInt32(dr["加标频率"]);
+                    //if (dto.MeetType == 1 || dto.MeetType == 2) {
+                    //    dto.MeetNum = 1;
+                    //}
+                    dto.Address = dr["标会地址"].ToString();
+                    dto.FirstDate = Convert.ToDateTime(dr["首次标会日期时间"]);
+                    if (!string.IsNullOrEmpty(dr["首次加标日期时间"].ToString()))
+                    {
+                        dto.FirstExtraDate = Convert.ToDateTime(dr["首次加标日期时间"].ToString());
+                    }
+                    int result = CreateOrder(dto);
+                }
+            }
+            return 1;
+        }
+        //2：Excel数据导入Datable
+        //@param fileUrl 服务器文件路径
+        //@return System.Data.DataTable dt 
+        protected System.Data.DataTable GetExcelDatatable(string fileUrl)
+        {
+            //office2007之前 仅支持.xls
+            //const string cmdText = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties='Excel 8.0;IMEX=1';";
+            //支持.xls和.xlsx，即包括office2010等版本的   HDR=Yes代表第一行是标题，不是数据；
+            const string cmdText = "Provider=Microsoft.Ace.OleDb.12.0;Data Source={0};Extended Properties='Excel 12.0; HDR=Yes; IMEX=1'";
+
+            System.Data.DataTable dt = null;
+            //建立连接
+            OleDbConnection conn = new OleDbConnection(string.Format(cmdText, fileUrl));
+
+            //打开连接
+            if (conn.State == ConnectionState.Broken || conn.State == ConnectionState.Closed)
+            {
+                conn.Open();
+            }
+
+
+            System.Data.DataTable schemaTable = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+
+            //获取Excel的第一个Sheet名称
+            string sheetName = schemaTable.Rows[0]["TABLE_NAME"].ToString().Trim();
+
+            //查询sheet中的数据
+            string strSql = "select * from [" + sheetName + "]";
+            OleDbDataAdapter da = new OleDbDataAdapter(strSql, conn);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            dt = ds.Tables[0];
+
+            return dt;
+
+
+        }
+
     }
 }
