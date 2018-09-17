@@ -57,9 +57,9 @@ namespace GetMoney.Application
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="uid"></param>
+        /// <param name="touuid"></param>
         /// <param name="filetype"></param>
         /// <returns></returns>
-        int CreateOrderByImport(int uid, int filetype);
+        int CreateOrderByImport(int touuid, int filetype);
     }
 }

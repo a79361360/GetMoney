@@ -199,10 +199,10 @@ namespace GetMoney.Application
             IList<OrderListUserDto> list = DataTableToList.ModelConvertHelper<OrderListUserDto>.ConvertToModel(_dal.FindCurOrderList());
             return list;
         }
-        public int CreateOrderByImport(int touuid,int uid,int filetype) {
+        public int CreateOrderByImport(int touuid,int filetype) {
             string pathx = "/DownLoad/OrderImport/" + DateTime.Now.ToString("yyyy-MM-dd") + "/";                                        //图片地址
             string suffix = filetype == 1 ? ".txt" : ".xlsx";
-            string filename = TxtHelp.MD5(uid.ToString() + "321645abcdef") + suffix;                 //图片名称
+            string filename = TxtHelp.MD5(touuid.ToString() + "321645abcdef") + suffix;                 //图片名称
             string path = Common.CommonManager.FileObj.HttpUploadFile(pathx, filename); //返回完整的上传地址 
             if (!string.IsNullOrEmpty(path)) {
                 var dt = GetExcelDatatable(path);
@@ -219,14 +219,16 @@ namespace GetMoney.Application
                     }
                     dto.PeoperNum = pepernum;                           //会员人数
                     dto.PeoperIds = ListToString(list);                 //会员ids
-                    dto.PeoperMoney = Convert.ToInt32(dr["会费金额"]);  //会费金额
-                    dto.LowestMoney = Convert.ToInt32(dr["最低标息"]);  //最低标息
+                    if (dr["会费金额"] != null && dr["会费金额"].ToString().IsInt())
+                        dto.PeoperMoney = Convert.ToInt32(dr["会费金额"]);  //会费金额
+                    if (dr["最低标息"] != null && dr["最低标息"].ToString().IsInt())
+                        dto.LowestMoney = Convert.ToInt32(dr["最低标息"]);  //最低标息
                     dto.Remark = dr["备注"].ToString();                 //备注
                     dto.TouUserid = touuid;                             //会头
-                    dto.MoneySendType = (MnSdTypeEnum)Convert.ToInt32(dr["放款类型"]);
-                    dto.MeetType = Convert.ToInt32(dr["标会类型"]);
-                    dto.MeetNum = Convert.ToInt32(dr["标会频率"]);
-                    dto.Meetextnum = Convert.ToInt32(dr["加标频率"]);
+                    dto.MoneySendType = (MnSdTypeEnum)Convert.ToInt32(StrToInt(dr["放款类型"].ToString()));
+                    dto.MeetType = Convert.ToInt32(StrToInt(dr["标会类型"].ToString()));
+                    dto.MeetNum = Convert.ToInt32(StrToInt(dr["标会频率"].ToString()));
+                    dto.Meetextnum = Convert.ToInt32(StrToInt(dr["加标频率"].ToString()));
                     //if (dto.MeetType == 1 || dto.MeetType == 2) {
                     //    dto.MeetNum = 1;
                     //}
@@ -240,6 +242,50 @@ namespace GetMoney.Application
                 }
             }
             return 1;
+        }
+        /// <summary>
+        /// 将中文转换成数字类型
+        /// </summary>
+        /// <param name="LName"></param>
+        /// <returns></returns>
+        protected int StrToInt(string LName) {
+            switch (LName)
+            {
+                case "会款总额+利息":
+                    return 1;
+                case "会款总额-利息":
+                    return 2;
+                case "每N月标会一次":
+                    return 1;
+                case "每N次标会后加标一次":
+                    return 3;
+                case "1个月":
+                    return 1;
+                case "2个月":
+                    return 2;
+                case "3个月":
+                    return 3;
+                case "4个月":
+                    return 4;
+                case "5个月":
+                    return 5;
+                case "6个月":
+                    return 6;
+                case "没有加标":
+                    return 0;
+                case "每1个正常标后加标1次":
+                    return 1;
+                case "每2个正常标后加标1次":
+                    return 2;
+                case "每3个正常标后加标1次":
+                    return 3;
+                case "每4个正常标后加标1次":
+                    return 4;
+                case "每5个正常标后加标1次":
+                    return 5;
+                default:
+                    return -1;
+            }
         }
         //2：Excel数据导入Datable
         //@param fileUrl 服务器文件路径
