@@ -68,13 +68,13 @@ namespace GetMoney.Common.Expand
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static bool IsInt(this string s)
-        {
-            int i;
-            if (int.TryParse(s, out i))
-                return true;
-            return false;
-        }
+        //public static bool IsInt(this string s)
+        //{
+        //    int i;
+        //    if (int.TryParse(s, out i))
+        //        return true;
+        //    return false;
+        //}
 
         /// <summary>
         /// 是否是Int64类型
@@ -159,21 +159,24 @@ namespace GetMoney.Common.Expand
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static string MD5(this string s)
+        //public static string MD5(this string s)
+        //{
+        //    string md5 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "MD5");
+        //    return md5.ToLower();
+        //}
+        public static string SHA1Encrypt(this string s)
         {
-            string md5 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "MD5");
-            return md5.ToLower();
+            return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(s, "SHA1");
         }
-
         /// <summary>
         /// MD5加密16位
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static string MD516(this string s)
-        {
-            return MD5(s).Substring(8, 16);
-        }
+        //public static string MD516(this string s)
+        //{
+        //    return MD5(s).Substring(8, 16);
+        //}
 
         /// <summary>
         /// Base64编码

@@ -6,97 +6,210 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-    <link href="~/Content/recharge.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery.min.js"></script>
-    <script src="~/Scripts/font-size.js"></script>
-    <script src="~/Scripts/recharge.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title></title>
+    <script type="text/javascript" src="/Scripts/jquery.min.js"></script>
+    <script type="text/javascript">
+        ; (function (doc, win) { var max = 1080, docEl = doc.documentElement, resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize', recalc = function () { var clientWidth = docEl.clientWidth; if (!clientWidth) return; if (clientWidth >= max) { docEl.style.fontSize = '100px' } else { docEl.style.fontSize = 100 * clientWidth / max + 'px' } }; if (!doc.addEventListener) return; win.addEventListener(resizeEvt, recalc, false); doc.addEventListener('DOMContentLoaded', recalc, false) })(document, window);
+    </script>
+    <style>
+        * {margin: 0;padding: 0;list-style: none;border: 0;font-family: 'Microsoft YaHei';box-sizing: border-box;outline: 0;}
+        html {width: 100%;max-width: 1080px;height: 100%;margin: 0 auto;background: #fff;}
+        body {width: 100%;max-width: 1080px;height: 100%;margin: 0 auto;overflow: hidden;overflow-y: auto;position: relative;}
+        input {outline: 0;-webkit-appearance: none;-moz-appearance: none;}
+        :-moz-placeholder {color: #DDD;opacity: 1;}
+        ::-moz-placeholder {color: #DDD;opacity: 1;}
+        input:-ms-input-placeholder {color: #DDD;opacity: 1;}
+        input::-webkit-input-placeholder {color: #DDD;opacity: 1;}
+
+        .PNumCon {width: 100%;height: 2.04rem;padding: 0 .36rem;border-bottom: .02rem solid #e7e7e7;position: relative;}
+        .numcon {height: 1.4rem;padding: .25rem 0;}
+        .numcon input {width: 100%;height: .9rem;border: 0;background: #fff;font-size: .9rem;color: #0e0e0e;display: block;}
+
+        .lishi {display: block;width: 100%;position: absolute;top: 1.4rem;left: 0;right: 0;z-index: 2;border-top: .02rem solid #ddd;display: none;}
+        .lishi li {height: 1.34rem;line-height: 1.34rem;border-bottom: .02rem solid #e7e7e7;background: #fff;cursor: pointer;color: #0e0e0e;font-size: .55rem;padding: 0 .36rem;}
+        .lishi li:last-child {text-align: center;color: #108ee9;height: 1.24rem;line-height: 1.24rem;}
+
+        .tisp {font-size: .3rem;line-height: .3rem;color: #6b6b6b;font-weight: bold;}
+        .tisp span {color: #FE9857;}
+
+        .tab {display: block;height: 1.9rem;padding: 0 .5rem .2rem;}
+        /*.tab li {display: block;width: 50%;float: left;height: 1.7rem;line-height: 1.7rem;text-align: left;cursor: pointer;font-size: .5rem;}*/
+        .tab li {display: block;width: 50%;float: left;height: 1.7rem;line-height: 1.7rem;text-align: center;cursor: pointer;font-size: .5rem;position: relative;}
+        .tab li:not(:first-child)::after {content: "";display: block;position: absolute;top: .3rem;bottom: .3rem;left: .01rem;width: .02rem;background: #ddd;}
+        .tab li.hover {color: #FE9857;}
+        .tab li.hover::before {content: "∨";display: block;position: absolute;top: 1.1rem;left: 0;right: 0;width: 100%;height: .4rem;line-height: .4rem;text-align: center;}
+
+        .choice {padding: 0 .36rem;}
+        .choice ul, .choice ul li {display: block;font-size: .3rem;}
+        .choice ul::after {content: "";display: block;height: .01rem;width: 100%;clear: both;}
+        .choice ul li {width: 31%;cursor: pointer;float: left;height: 1.68rem;line-height: .4rem;padding: .08rem;border: .02rem solid #FFC0A3;border-radius: .1rem;background: #fff;margin-bottom: .34rem;position: relative;}
+        .choice ul li:not(:nth-child(3n)) {margin-right: 3.5%;}
+        .choice ul li.on { /*border:.02rem solid #E55050; */border: .02rem solid #D52929;background: #FFEDE5;}
+        .choice ul li p, .choice ul li u {display: block;text-align: center;font-style: normal;}
+        .choice ul li p {font-weight: bold;font-size: .55rem;line-height: 1rem;}
+        .choice ul li u,.choice ul li u s{text-decoration: none;font-size: .34rem;}
+        .choice ul li i {width: .5rem;height: .5rem;background: url(/images/recharge/check.png) right bottom no-repeat;background-size: 100%;display: none;position: absolute;right: -.02rem;bottom: -.02rem;}
+        .choice ul li.on i {display: block;}
+
+        .btn_w {margin: .36rem;}
+        .recharge_btn {display: block;width: 100%;height: 1.26rem;line-height: 1.26rem;text-align: center;color: #fff;background: #FF8F00;border: none;border-radius: .63rem;font-size: .48rem; /*-moz-box-shadow:0px 0px .25rem rgba(0,0,0,.5) inset; -webkit-box-shadow:0px 0px .25rem rgba(0,0,0,.5) inset; box-shadow:0px 0px .25rem rgba(0,0,0,.5) inset;*/}
+
+        .mgs{position:fixed; left:1rem; right:1rem; top:50%; margin-top:-1rem; height:2.8rem; display:none; background:#fff; border-radius:.2rem; box-shadow:0 0 .3rem rgba(0,0,0,.5); padding:.7rem .5rem .5rem;}
+        .close{position:absolute; right:-.15rem; top:-.15rem; width:.5rem; height:.5rem; line-height:.5rem; text-align:center; font-size:.3rem; border-radius:50%; background:#44b8e6; color:#fff; box-shadow:0 0 .3rem rgba(0,0,0,.5);}
+        .paytips{ height:.6rem; font-size:.3rem; display:flex; flex-direction:column; align-content:center; align-items:center; justify-content:center;}
+        .mgs button{height:.7rem; width:100%; border:0; background:#FF8F00; color:#fff; margin:.3rem 0 0; border-radius:.1rem; display:block;}
+
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            gethistory();
+            $(".srkk").val(9.98)
+            //$.getJSON("/Handler/Common.ashx", { action: "getnickname", userid: "" }, function (ret) {
+            //    if (ret.code == 1000) {
+            //        $("#userid").text(ret.data);
+            //        numInfo();
+            //    }
+            //})
+            //输入框获得焦点时，如果历史充值记录有值则显示，否则不显示
+            $("#userid").bind("focus", function () {
+                var leng = $(".lishi li").length;
+                if (leng > 0) {
+                    $(".lishi").fadeIn();
+                } else {
+                    $(".lishi").fadeOut();
+                }
+            });
+            //失去焦点事显示被充值账号的昵称
+            $("#userid").bind("blur", function () {
+                $(".lishi").fadeOut();
+                var userid = $(this).val();
+                if (userid == "") {
+                    $(".tisp").html("")
+                } else {
+                    numInfo();
+                }
+            });
+            //输入时监听输入位数
+            $("#userid").bind("input propertychange change", function (event) {
+                if ($(this).val().length == 11) {
+                    $(".lishi").fadeOut();
+                    numInfo();
+                }
+            })
+            //点击历史充值记录将值赋给充值号码，并隐藏历史记录
+            $(".lishi li").bind("click", function () {
+                $("#userid").val($(this).text());
+                $(".lishi").fadeOut();
+            });
+            $(".choice li").click(function () {
+                var val1 = $(this).children("u").children("s").text();
+                $(".srkk").val(val1);
+                $(this).addClass("on").siblings().removeClass("on");
+            });
+            //点击充值
+            $(".recharge_btn").click(function () {
+                var userid = $("#userid").val();
+                var totalmoney = $(".srkk").val();
+                if (totalmoney == "") {
+                    $(".tishi span").text("请至少选择一个金额");
+                    setTimeout(function () { $(".tishi").fadeOut(); }, 1000);
+                } else if (userid == "") {
+                    $(".tishi span").text("请输入一个账号");
+                    setTimeout(function () { $(".tishi").fadeOut(); }, 1000);
+                } else {
+                    $.post("", { userid: userid, totalmoney: totalmoney }, function (ret) {
+                        if (ret.code == 1000) {
+                            WeixinJSBridge.invoke('getBrandWCPayRequest', JSON.parse(ret.data), function (res) {
+                                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                    //支付成功
+                                    $(".paytips span").text("支付成功")
+                                    $(".mgs").fadeIn();
+                                    gethistory();
+                                }
+                            });
+                        } else {
+                            //授权支付失败
+                            $(".paytips span").text(ret.tips);
+                            $(".mgs").fadeIn()
+                        }
+                    })
+                }
+            })
+         });
+        //关闭支付成功或失败的提示框
+        closes = function () {
+            $(".mgs").fadeOut();
+        }
+        cha = function () {
+            $(".black_bg").fadeOut();
+        }
+
+        //显示号码信息
+        numInfo = function () {
+            var phoneNum = $("#userid").val();
+            $.post("", { action: "gethistory", phoneNum: phoneNum}, function (ret) {
+                if (ret.code == 1000) {
+                    $(".tisp").html(ret.tips);
+                }
+            })
+        }
+
+        //给历史充值记录列表赋值
+        gethistory = function () {
+            var zonshu = "";
+            $.post("", { action: "gethistory" }, function (ret) {
+                if (ret.code == 1000) {
+                    $.each(ret.data, function (key, val) {
+                        zonshu += "<li>" + val.TragetID + "</li>";
+                    });
+                    $(".lishi").html(zonshu);
+                }
+            })
+        }
+    </script>
 </head>
 <body>
-    <div class="wrap">
-        <div class="obtain">
-            <ul>
-                <li>
-                    <span class="fl">您的昵称：</span>
-                    <span class="fr" id="UserNickName">1233</span>
-                </li>
-                <li>
-                    <span class="fl">充值折扣：</span>
-                    <span class="fr" id="zhekou">无（10折）</span>
-                    <button id="yaotuhao">我要3折</button>
-                </li>
-            </ul>
-            <dl class="clear">
-                <dt>充值用户ID：</dt>
-                <dd class="userid">
-                    <input type="text" id="userid" placeholder="请输入要充值的账号" value="111000" />
-                    <ul class="lishi"></ul>
-                </dd>
-                <dt class="Nick">昵&nbsp;&nbsp;称：</dt>
-                <dd class="NickName">用户昵称</dd>
-            </dl>
-            <div class="tishi"><span></span></div>
-        </div>
-        <div class="choice">
-            <ul class="clear" id="xuanze">
-                <li class="on">
-                    <p><img src="../images/recharge/zuanshi.png" />×30</p>
-                    <u>6元</u>
-                    <i></i>
-                </li>
-                <li>
-                    <p><img src="../images/recharge/zuanshi.png" />×60</p>
-                    <u>12元</u>
-                    <i></i>
-                </li>
-                <li>
-                    <p><img src="../images/recharge/zuanshi.png" />×340</p>
-                    <u>68元</u>
-                    <i></i>
-                </li>
-                <li>
-                    <p><img src="../images/recharge/zuanshi.png" />×640</p>
-                    <u>128元</u>
-                    <i></i>
-                </li>
-                <li>
-                    <p><img src="../images/recharge/zuanshi.png" />×1490</p>
-                    <u>298元</u>
-                    <i></i>
-                </li>
-            </ul>
-            <input type="hidden" class="srkk" value="6" />
-        </div>
-        <div class="btn_w">
-            <button class="recharge_btn">点击购买</button>
-        </div>
-        <div class="tip clear">
-            <h1>温馨提示</h1>
-            <ul>
-                <li>充值前，请选择要充值的“用户ID”，点击上方的“用户ID”可切换充值的对象；</li>
-                <li>充值成功后，<span>钻石</span>会自动发到您指定充值的用户账号中；</li>
-                <li>如有充值问题请联系官方客服微信：np059988。</li>
-            </ul>
-        </div>
+    <div class="PNumCon">
+        <div class="numcon"><input type="text" id="userid" placeholder="请输入手机号码" autocomplete="off" maxlength="11" value="12345678901" /></div>
+        <ul class="lishi">
+            <li>12345678901</li>
+            <li>12345678902</li>
+            <li>12345678903</li>
+            <li>清空历史充值号码</li>
+        </ul>
+        <div class="tisp">通讯录号码（福建移动）<!--<span>不在通讯录中</span>（福建移动）--></div>
     </div>
-    <div class="zanwei"></div>
+
+    <ul class="tab">
+        <li class="hover">充话费</li>
+        <li>充流量</li>
+    </ul>
+
+    <div class="choice">
+        <ul class="clear" id="xuanze">
+            <li class="on">
+                <p>10元</p>
+                <u>售价：<s>9.98</s></u>
+                <i></i>
+            </li>
+            <li>
+                <p>20元</p>
+                <u>售价：<s>19.96</s></u>
+                <i></i>
+            </li>
+        </ul>
+        <input type="hidden" class="srkk" value="6" />
+    </div>
+
+    <div class="btn_w">
+        <button class="recharge_btn">点击购买</button>
+    </div>
     <div class="mgs">
-        <%--<div class="close" onclick="closes()">X</div>--%>
         <div class="paytips"><span></span></div>
         <button onclick="closes()">确定</button>
-    </div>
-    <div class="black_bg">
-        <div class="discount">
-            <h3>金牌推广员</h3>
-            <ul>
-                <li><span>方式一：</span>推广80个有效一级好友。</li>
-                <li><span>方式二：</span>花费<i>288元</i>可立即成为金牌推广员(只限前100名)</li>
-            </ul>
-            <p>金牌推广员可永久享受房卡<span>3折</span>优惠。</p>
-            <a href="/WeiXin/Generalize.aspx" class="leftbtn">去推广</a>
-            <button class="rightbtn" id="tuhao">直接购买&nbsp;&nbsp;(￥288)</button>
-        </div>
     </div>
 </body>
 </html>

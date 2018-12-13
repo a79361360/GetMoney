@@ -1,5 +1,4 @@
-﻿using GetMoney.Application.Job;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace GetMoneyService
 {
-    public partial class Service1 : ServiceBase
+    partial class GetMoneyService : ServiceBase
     {
-        public Service1()
+        public GetMoneyService()
         {
             InitializeComponent();
         }
@@ -22,10 +21,12 @@ namespace GetMoneyService
         {
             SystemScheduler _systemScheduler = SystemScheduler.CreateInstance();
             _systemScheduler.StartScheduler();
+            // TODO: 在此处添加代码以启动服务。
         }
 
         protected override void OnStop()
         {
+            // TODO: 在此处添加代码以执行停止服务所需的关闭操作。
         }
     }
 }

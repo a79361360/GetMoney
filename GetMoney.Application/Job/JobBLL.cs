@@ -17,8 +17,8 @@ namespace GetMoney.Application.Job
             {
                 //WeiXBLL wxbll = new WeiXBLL();
                 //wxbll.WxTemplate_Expire();
-                //string Host = CommonManager.WebObj.GetCurHttpsHost();
-                CommonManager.WebObj.Get("http://gm.cf518.cn/Wx/WxTemplate_Expire");
+                string Host = CommonManager.WebObj.GetCurHttpsHost();
+                //CommonManager.WebObj.Get("https://gm.cf518.cn/Wx/WxTemplate_Expire");
             }
             catch (Exception ex)
             {

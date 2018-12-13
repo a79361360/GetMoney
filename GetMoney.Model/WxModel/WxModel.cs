@@ -44,7 +44,13 @@ namespace GetMoney.Model.WxModel
         public string url { get; set; }
         public List<Wx_Menu_button> sub_button { get; set; }
     }
-
+    public class WxJsApi_ticket
+    {
+        public int errcode { get; set; }
+        public string errmsg { get; set; }
+        public string ticket { get; set; }
+        public string expires_in { get; set; }
+    }
     /// <summary>
     /// 微信接口XmlModel
     /// XML解析

@@ -309,7 +309,7 @@ namespace GetMoney.Common
                     path = Path.Combine(filePath, filename);
                     HttpContext.Current.Request.Files[0].SaveAs(path);
                 }
-                catch { 
+                catch(Exception er) { 
 
                 }
             }

@@ -8,6 +8,7 @@ using GetMoney.Framework.Common;
 using GetMoney.Dal;
 using System.Data.OleDb;
 using System.Data;
+using GetMoney.Common.Expand;
 
 namespace GetMoney.Application
 {
@@ -202,7 +203,7 @@ namespace GetMoney.Application
         public int CreateOrderByImport(int touuid,int filetype) {
             string pathx = "/DownLoad/OrderImport/" + DateTime.Now.ToString("yyyy-MM-dd") + "/";                                        //图片地址
             string suffix = filetype == 1 ? ".txt" : ".xlsx";
-            string filename = TxtHelp.MD5(touuid.ToString() + "321645abcdef") + suffix;                 //图片名称
+            string filename = TxtHelp.MD5(touuid.ToString() + DateTime.Now.ToUnixTimeStamp() + "321645abcdef") + suffix;                 //图片名称
             string path = Common.CommonManager.FileObj.HttpUploadFile(pathx, filename); //返回完整的上传地址 
             if (!string.IsNullOrEmpty(path)) {
                 var dt = GetExcelDatatable(path);
@@ -239,9 +240,10 @@ namespace GetMoney.Application
                         dto.FirstExtraDate = Convert.ToDateTime(dr["首次加标日期时间"].ToString());
                     }
                     int result = CreateOrder(dto);
+                    return result;
                 }
             }
-            return 1;
+            return -1;  //失败
         }
         /// <summary>
         /// 将中文转换成数字类型

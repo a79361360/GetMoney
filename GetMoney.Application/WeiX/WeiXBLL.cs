@@ -1,12 +1,14 @@
 ﻿using FJSZ.OA.Common.Web;
 using GetMoney.Common;
 using GetMoney.Common.Cache;
+using GetMoney.Common.Expand;
 using GetMoney.Dal.WeiX;
 using GetMoney.Model;
 using GetMoney.Model.WxModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -198,6 +200,77 @@ namespace GetMoney.Application.WeiX
                     }
                 }
             }
+        }
+        public string Get_signature(long timestamp, string noncestr)
+        {
+            WxJsApi_token dto_token = Wx_Cgi_AccessToken(appid, appsecret);      //access_token
+            string jsapi_ticket = Get_Jsapi_Ticket(dto_token.access_token);                                                  //jsapi_ticket
+            CommonManager.TxtObj.WriteLogs("/Logs/Get_signature_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "access_token " + dto_token.access_token + "jsapi_ticket " + jsapi_ticket);
+            string url = HttpContext.Current.Request.Url.ToString();                                                        //url
+            List<WxParameter> listParam = new List<WxParameter>();
+            listParam.Add(new WxParameter("noncestr", noncestr));
+            listParam.Add(new WxParameter("jsapi_ticket", jsapi_ticket));
+            listParam.Add(new WxParameter("timestamp", timestamp.ToString()));
+            listParam.Add(new WxParameter("url", url));
+            StringBuilder str = wxsign(listParam);
+            string signature = str.ToString().SHA1Encrypt();
+            CommonManager.TxtObj.WriteLogs("/Logs/Generalize_" + DateTime.Now.ToString("yyyyMMddHH") + ".log", "signature " + signature);
+            return signature.ToLower();
+        }
+        public string Get_Jsapi_Ticket(string access_token)
+        {
+            var t = CommonManager.CacheObj.Get<AspNetCache>("jsapi_ticket");
+            if (t == null)
+            {
+                string url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + access_token + "&type=jsapi";
+                string result = CommonManager.WebObj.Get(url);
+                WxJsApi_ticket dto = JsonConvert.DeserializeObject<WxJsApi_ticket>(result);
+                t = dto.ticket;
+                CommonManager.CacheObj.Save<AspNetCache>("jsapi_ticket", dto.ticket, 120, DateTime.Now);
+            }
+            return t.ToString();
+        }
+        public StringBuilder wxsign(List<WxParameter> listParam)
+        {
+            NameValueCollection postCollection = new NameValueCollection();
+            foreach (var item in listParam)
+            {
+                if (!string.IsNullOrEmpty(item.Value))
+                {
+                    postCollection.Add(item.Name, item.Value);
+                }
+            }
+            var dic = GetSortedDictionary(postCollection, null);
+            StringBuilder tmp = new StringBuilder();
+            FillStringBuilder(tmp, dic);//将QueryString填入StringBuilder 
+            return tmp;
+        }
+        private SortedDictionary<string, string> GetSortedDictionary(NameValueCollection collection, Func<string, bool> filter = null)
+        {
+            //获取排序的键值对  
+            SortedDictionary<string, string> dic = new SortedDictionary<string, string>();
+            if (collection != null && collection.Count > 0)
+            {
+                foreach (var k in collection.AllKeys)
+                {
+                    if (filter == null || !filter(k))
+                    {//如果没设置过滤条件或者无需过滤  
+                        dic.Add(k, collection[k]);
+                    }
+                }
+            }
+            return dic;
+        }
+        private void FillStringBuilder(StringBuilder builder, SortedDictionary<string, string> dic)
+        {
+            foreach (var kv in dic)
+            {
+                if (builder.Length != 0)
+                    builder.Append('&');
+                builder.Append(kv.Key);
+                builder.Append('=');
+                builder.Append(kv.Value);
+            }//按key顺序组织字符串  
         }
     }
 }

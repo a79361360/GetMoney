@@ -356,9 +356,14 @@ namespace GetMoney.Controllers.Order
         public ActionResult ImportOrderPortal() {
             return View();
         }
-        public void ImPort() {
-            _bll.CreateOrderByImport(Convert.ToInt32(Session["uid"]), 2);
-
+        public ActionResult ImPort() {
+            if (Session["uid"] == null)
+                return Redirect("/Wx/LoginPortal?backurl=/Order/ImPort");
+            int result = _bll.CreateOrderByImport(Convert.ToInt32(Session["uid"]), 2);
+            if (result == 1) {
+                return Redirect("/Wx/LoginPortal?backurl=/TUser/TUserWxOrder");
+            }
+            return Content("上传失败");
         }
     }
 }

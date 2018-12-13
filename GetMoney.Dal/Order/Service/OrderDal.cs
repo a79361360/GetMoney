@@ -185,7 +185,7 @@ namespace GetMoney.Dal
         /// </summary>
         /// <returns></returns>
         public DataTable FindCurOrderList() {
-            string sql = "SELECT CONVERT(NVARCHAR(19),a.MeetDate,120) Lastdate,SUM(b.StayPayNum) StayPayNum,b.StayPayTax,b.Userid,(SELECT PeoperNum*PeoperMoney FROM Orders WHERE OrderNo=a.OrderNo) AccrualMoney FROM Order_Lists a INNER JOIN Order_ListUsers b ON a.id=b.OrderListID WHERE a.id IN(SELECT id FROM Order_Lists WHERE DATEDIFF(DAY,MeetDate,GETDATE())=0) GROUP BY a.MeetDate,b.StayPayTax,b.Userid,a.OrderNo";
+            string sql = "SELECT CONVERT(NVARCHAR(19),a.MeetDate,120) Lastdate,SUM(b.StayPayNum) StayPayNum,b.StayPayTax,b.Userid,(SELECT PeoperNum*PeoperMoney FROM Orders WHERE OrderNo=a.OrderNo) AccrualMoney FROM Order_Lists a INNER JOIN Order_ListUsers b ON a.id=b.OrderListID WHERE a.id IN(SELECT id FROM Order_Lists WHERE DATEDIFF(DAY,MeetDate,GETDATE()) IN(-2,-1,0)) GROUP BY a.MeetDate,b.StayPayTax,b.Userid,a.OrderNo";
             var dt = dal.ExtSql(sql);
             return dt;
         }

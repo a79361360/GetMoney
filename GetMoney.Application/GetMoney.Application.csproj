@@ -75,6 +75,7 @@
     <Compile Include="Job\JobBLL.cs" />
     <Compile Include="Job\SystemScheduler.cs" />
     <Compile Include="Notice\NoticeBll.cs" />
+    <Compile Include="Nsoup\EducBLL.cs" />
     <Compile Include="Nsoup\MyWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -109,6 +110,10 @@
     <ProjectReference Include="..\GetMoney.Model\GetMoney.Model.csproj">
       <Project>{964de9d2-17e0-48b8-aba3-5dffcbc6eb8e}</Project>
       <Name>GetMoney.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HttpHelper19\HttpHelper19.csproj">
+      <Project>{F6051E31-539A-490F-9698-B2CE58A59C0C}</Project>
+      <Name>HttpHelper19</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
