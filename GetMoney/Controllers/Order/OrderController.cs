@@ -38,7 +38,7 @@ namespace GetMoney.Controllers.Order
         }
 
         public ActionResult AddOrder()
-        { 
+        {
             OrderDto dto = new OrderDto();
             dto.OrderNo = DateTime.Now.ToString("yyyyMMddHHmmssfffffff");
             dto.PeoperNum = 20;
@@ -57,7 +57,7 @@ namespace GetMoney.Controllers.Order
         public ActionResult Remove() {
             string id = "1";
             bool result = _bll.RemoveOrder(id);
-            if (result) 
+            if (result)
                 return JsonFormat(new ExtJson { success = true, msg = "删除成功！" });
             else
                 return JsonFormat(new ExtJson { success = false, msg = "删除失败！" });
@@ -89,7 +89,7 @@ namespace GetMoney.Controllers.Order
         /// </summary>
         /// <returns></returns>
         public ActionResult MyListOrderPage() {
-            if(Session["uid"]==null)
+            if (Session["uid"] == null)
                 return JsonFormat(new ExtJsonPage { success = false, code = -1001, msg = "登入状态已失效！" });
             int pageIndex = Convert.ToInt32(Request["pageIndex"]) - 1;      //当前页,这个存储过程首页0为开始
             int pageSize = Convert.ToInt32(Request["pageSize"]);            //每页条数
@@ -238,7 +238,7 @@ namespace GetMoney.Controllers.Order
         /// 更新会单记录的最终竞标结果,并且更新状态(1为结束,2为未结束,3为异常)
         /// </summary>
         /// <returns></returns>
-        public ActionResult UpdateOrderListState() { 
+        public ActionResult UpdateOrderListState() {
             //更新互助单记录及状态
             string OrderNo = CommonManager.WebObj.Request("orderno", "");
             string OrderListID = CommonManager.WebObj.Request("listid", "");
@@ -247,7 +247,7 @@ namespace GetMoney.Controllers.Order
                 return JsonFormat(new ExtJson { success = false, code = -1000, msg = "参数不能为空！" });
             }
             OrderListDto dto = _bll.UpdateOrderListState(OrderNo, OrderListID);
-            if (dto !=null)
+            if (dto != null)
                 return JsonFormat(new ExtJson { success = true, code = 1000, msg = "查询成功！", jsonresult = dto });
             else
                 return JsonFormat(new ExtJson { success = false, code = -1000, msg = "查询失败！" });
@@ -346,6 +346,7 @@ namespace GetMoney.Controllers.Order
         public ActionResult OrderPayMentPortal() {
             return View();
         }
+
         /// <summary>
         /// 手机会单主页
         /// </summary>
@@ -355,6 +356,15 @@ namespace GetMoney.Controllers.Order
         }
         public ActionResult ImportOrderPortal() {
             return View();
+        }
+        public ActionResult FindCurOrder(){
+            if (Session["uid"] == null)
+                return Redirect("/Wx/LoginPortal?backurl=/TUser/TUserWxOrder");
+
+            string orderno = CommonManager.WebObj.Request("orderno", "");
+            int userid = Convert.ToInt32(Session["uid"]);
+            var result = _bll.FindListOrder(orderno, userid);
+            return JsonFormat(new ExtJson { success = true, code = 1000, msg = "获取成功", jsonresult = result });
         }
         public ActionResult ImPort() {
             if (Session["uid"] == null)
