@@ -263,6 +263,10 @@
     <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
     <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
     <Content Include="Content\My97DatePicker\开发包\skin\whyGreen\img.gif" />
+    <Content Include="Content\PayCode\alipaylogo.jpg" />
+    <Content Include="Content\PayCode\pay201902130001.jpg" />
+    <Content Include="Content\PayCode\wx201902130001.jpg" />
+    <Content Include="Content\PayCode\wxlogo.jpg" />
     <Content Include="Content\TestPage\bootstrap.min.css" />
     <Content Include="Content\TestPage\bootstrap.min.js" />
     <Content Include="Content\TestPage\jquery-2.1.4.min.js" />
@@ -461,6 +465,9 @@
     <Content Include="Views\WxPay\Index.cshtml" />
     <Content Include="Views\Order\ImportOrderPortal.cshtml" />
     <Content Include="Views\Glasses\Index.cshtml" />
+    <Content Include="Views\Order\FindCurOrder.cshtml" />
+    <Content Include="Views\Order\TypePayPortal.cshtml" />
+    <Content Include="Views\Order\FindListOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetMoney.Application\GetMoney.Application.csproj">

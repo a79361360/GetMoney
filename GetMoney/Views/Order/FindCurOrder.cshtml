@@ -1,0 +1,31 @@
+﻿@{
+    @model GetMoney.Model.OrderListUserDto
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>快捷转账</title>
+</head>
+<body>
+    <div>
+        @{
+            if (Model == null)
+            {
+                <span>未查询到最近一期会款情况(<span style="color:red">请自行核实计算金额,支付宝转账请在右上角在浏览器中打开后再扫码</span>)</span>
+            }
+            else
+            {
+                <span>
+                    <span style="display:block;">将展示最近一期会款情况以供参考并快捷转账(<span style="color:red">支付宝转账请在右上角在浏览器中打开后再扫码</span>)</span>
+                    会单号：@Model.OrderNo<br>时间：@Model.Lastdate <br>会款：@Model.StayPayNum <br>利息：@Model.StayPayTax <br>合计：<span style="color:red">@(Model.StayPayNum + Model.StayPayTax)</span>
+                </span>
+            }
+        }
+        <img style="display:block; margin:0 auto; width:80%" src="@ViewBag.payimgurl" />
+    </div>
+</body>
+</html>

@@ -200,6 +200,15 @@ namespace GetMoney.Application
             IList<OrderListUserDto> list = DataTableToList.ModelConvertHelper<OrderListUserDto>.ConvertToModel(_dal.FindCurOrderList());
             return list;
         }
+        public IList<OrderListUserDto> FindListOrder(string orderno, int userid) {
+            IList<OrderListUserDto> list = DataTableToList.ModelConvertHelper<OrderListUserDto>.ConvertToModel(_dal.FindListOrder(orderno, userid));
+            return list;
+        }
+        public IList<OrderListUserDto> FindListOrder(string orderno)
+        {
+            IList<OrderListUserDto> list = DataTableToList.ModelConvertHelper<OrderListUserDto>.ConvertToModel(_dal.FindListOrder(orderno));
+            return list;
+        }
         public int CreateOrderByImport(int touuid,int filetype) {
             string pathx = "/DownLoad/OrderImport/" + DateTime.Now.ToString("yyyy-MM-dd") + "/";                                        //图片地址
             string suffix = filetype == 1 ? ".txt" : ".xlsx";

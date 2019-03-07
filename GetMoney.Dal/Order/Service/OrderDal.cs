@@ -189,5 +189,50 @@ namespace GetMoney.Dal
             var dt = dal.ExtSql(sql);
             return dt;
         }
+        /// <summary>
+        /// 当前这一期会脚userid需要转换的金额
+        /// </summary>
+        /// <param name="orderno"></param>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public DataTable FindListOrder(string orderno,int userid) {
+            string sql = "SELECT TOP 1 CONVERT(NVARCHAR(19),a.MeetDate,120) Lastdate,SUM(b.StayPayNum) StayPayNum,b.StayPayTax,b.Userid,a.OrderNo,";
+            sql += "(SELECT PeoperNum * PeoperMoney FROM Orders WHERE OrderNo = a.OrderNo) AccrualMoney";
+            sql += " FROM Order_Lists a INNER JOIN Order_ListUsers b ON a.id = b.OrderListID";
+            sql += " WHERE a.id IN(SELECT id FROM Order_Lists WHERE - 7 < DATEDIFF(DAY, MeetDate, GETDATE()) AND DATEDIFF(DAY, MeetDate, GETDATE()) < 7) AND b.Userid = @Userid AND a.OrderNo = @OrderNo";
+            sql += " GROUP BY a.MeetDate,b.StayPayTax,b.Userid,a.OrderNo";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@Userid",SqlDbType.Int),
+                new SqlParameter("@OrderNo",SqlDbType.VarChar,50)
+            };
+            parameter[0].Value = userid;
+            parameter[1].Value = orderno;
+            var dt = dal.ExtSql(sql, parameter);
+            return dt;
+        }
+        /// <summary>
+        /// 会头查看当前这一期所有待缴会脚的金额
+        /// </summary>
+        /// <param name="orderno"></param>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public DataTable FindListOrder(string orderno)
+        {
+            string sql = "SELECT CONVERT(NVARCHAR(19),a.MeetDate,120) Lastdate,SUM(b.StayPayNum) StayPayNum,b.StayPayTax,b.Userid,a.OrderNo,c.NickName TrueName,";
+            sql += "(SELECT PeoperNum * PeoperMoney FROM Orders WHERE OrderNo = a.OrderNo) AccrualMoney";
+            sql += " FROM Order_Lists a INNER JOIN Order_ListUsers b ON a.id = b.OrderListID";
+            sql += " RIGHT JOIN TUsers c ON b.Userid=c.id";
+            sql += " WHERE a.id IN(SELECT id FROM Order_Lists WHERE - 7 < DATEDIFF(DAY, MeetDate, GETDATE()) AND DATEDIFF(DAY, MeetDate, GETDATE()) < 7) AND a.OrderNo = @OrderNo";
+            sql += " GROUP BY a.MeetDate,b.StayPayTax,b.Userid,a.OrderNo,c.NickName";
+            sql += " Order BY b.Userid";
+            SqlParameter[] parameter = new[]
+            {
+                new SqlParameter("@OrderNo",SqlDbType.VarChar,50)
+            };
+            parameter[0].Value = orderno;
+            var dt = dal.ExtSql(sql, parameter);
+            return dt;
+        }
     }
 }

@@ -358,13 +358,34 @@ namespace GetMoney.Controllers.Order
             return View();
         }
         public ActionResult FindCurOrder(){
-            if (Session["uid"] == null)
-                return Redirect("/Wx/LoginPortal?backurl=/TUser/TUserWxOrder");
+            //if (Session["uid"] == null)
+            //    return Redirect("/Wx/LoginPortal?backurl=/TUser/TUserWxOrder");
 
             string orderno = CommonManager.WebObj.Request("orderno", "");
-            int userid = Convert.ToInt32(Session["uid"]);
+            int userid = Convert.ToInt32(CommonManager.WebObj.Request("uid", "0"));
+            int typepay = Convert.ToInt32(CommonManager.WebObj.Request("typepay", "1"));
+            string payimgurl = "/Content/PayCode/pay201902130001.jpg";
+            if (typepay == 2)
+                payimgurl = "/Content/PayCode/wx201902130001.jpg";
+            ViewBag.payimgurl = payimgurl;
             var result = _bll.FindListOrder(orderno, userid);
-            return JsonFormat(new ExtJson { success = true, code = 1000, msg = "获取成功", jsonresult = result });
+            if (result.Count > 0) {
+                return View(result[0]);
+            }
+            //return JsonFormat(new ExtJson { success = true, code = 1000, msg = "获取成功", jsonresult = result });
+            return View();
+        }
+        public ActionResult FindListOrder() {
+            string orderno = CommonManager.WebObj.Request("orderno", "");
+            var result = _bll.FindListOrder(orderno);
+            //return JsonFormat(new ExtJson { success = true, code = 1000, msg = "获取成功", jsonresult = result });
+            return View(result);
+        }
+        public ActionResult TypePayPortal() {
+            string orderno = CommonManager.WebObj.Request("orderno", "");
+            int userid = Convert.ToInt32(CommonManager.WebObj.Request("uid", "0"));
+            ViewBag.payurl = "/Order/FindCurOrder?orderno=" + orderno + "&uid=" + userid;
+            return View();
         }
         public ActionResult ImPort() {
             if (Session["uid"] == null)

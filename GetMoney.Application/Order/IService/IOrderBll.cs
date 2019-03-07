@@ -55,6 +55,19 @@ namespace GetMoney.Application
         /// <returns></returns>
         IList<OrderListUserDto> FindCurOrderList();
         /// <summary>
+        /// 当前期前7与后7天的会款信息
+        /// </summary>
+        /// <param name="orderno"></param>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        IList<OrderListUserDto> FindListOrder(string orderno, int userid);
+        /// <summary>
+        /// 会头查看前7与后7天所有待缴会脚的金额
+        /// </summary>
+        /// <param name="orderno"></param>
+        /// <returns></returns>
+        IList<OrderListUserDto> FindListOrder(string orderno);
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="touuid"></param>

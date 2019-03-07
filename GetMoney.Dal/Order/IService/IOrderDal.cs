@@ -35,5 +35,18 @@ namespace GetMoney.Dal
         /// </summary>
         /// <returns></returns>
         DataTable FindCurOrderList();
+        /// <summary>
+        /// 当前期前7与后7天的会款信息
+        /// </summary>
+        /// <param name="orderno"></param>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        DataTable FindListOrder(string orderno, int userid);
+        /// <summary>
+        /// 会头查看当前这一期所有待缴会脚的金额
+        /// </summary>
+        /// <param name="orderno"></param>
+        /// <returns></returns>
+        DataTable FindListOrder(string orderno);
     }
 }

@@ -77,7 +77,10 @@
                     if (ret.success) {
                         var str = "";
                         $.each(ret.list, function (i, o) {
-                            str += "<tr><td>" + o.TouTrueName + "</td><td>" + HideOrderNo(o.OrderNo) + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.PeoperNum + "</td><td>" + o.FirstDate1 + "</td><td>" + GetStateN(o.State) + "</td><td><button class=\"btn_fz\" onclick=\"FindOrderLists('/Order/OrderWxLists?orderno=" + o.OrderNo + "')\">查看</button><button class=\"btn_fz\" onclick=\"OrderPriView('/Order/OrderListViewPortal?orderno=" + o.OrderNo + "')\")\">预览</button></td></tr>";
+                            var zz = "<button class=\"btn_fz\" onclick=\"OrderPriView('/Order/TypePayPortal?orderno=" + o.OrderNo + "&uid="+@ViewBag.uid+"')\")\">转账</button>";
+                            if(o.TouUserid == @ViewBag.uid)zz = "<button class=\"btn_fz\" onclick=\"OrderPriView('/Order/FindListOrder?orderno=" + o.OrderNo + "')\")\">全部</button>";
+
+                            str += "<tr><td>" + o.TouTrueName + "</td><td>" + HideOrderNo(o.OrderNo) + "</td><td>" + o.PeoperMoney + "</td><td>" + o.AllPeoperMoney + "</td><td>" + o.PeoperNum + "</td><td>" + o.FirstDate1 + "</td><td>" + GetStateN(o.State) + "</td><td><button class=\"btn_fz\" onclick=\"FindOrderLists('/Order/OrderWxLists?orderno=" + o.OrderNo + "')\">查看</button><button class=\"btn_fz\" onclick=\"OrderPriView('/Order/OrderListViewPortal?orderno=" + o.OrderNo + "')\")\">预览</button>"+zz+"</td></tr>";
                         })
                         str += "</table>";
                         $(".data-list tbody").append(str);

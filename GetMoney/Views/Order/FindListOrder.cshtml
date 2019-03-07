@@ -1,0 +1,64 @@
+﻿@{
+    @model IEnumerable<GetMoney.Model.OrderListUserDto>
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>当前期会脚待交会款列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="~/Content/WeiXin/css/table.css" rel="stylesheet" />
+    <link href="~/Content/WeiXin/BeatPicker/BeatPicker.min.css" rel="stylesheet" />
+    <link href="~/Content/layer_mobile/need/layer.css" rel="stylesheet" />
+    <style>
+        .data-list {
+            overflow: scroll;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="cont">
+        <div class="data-table">
+            <div class="data-list">
+                <table style="min-width:600px;" id="MyTable" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th>UserID</th>
+                            <th>呢称</th>
+                            <th>总和</th>
+                            <th>会款</th>
+                            <th>利息</th>
+                            <th>OrderNo</th>
+                            <th>日期</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Userid</td>
+                                    <td>@item.TrueName</td>
+                                    <td style="color:red">@(item.StayPayNum + item.StayPayTax)</td>
+                                    <td>@item.StayPayNum</td>
+                                    <td>@item.StayPayTax</td>
+                                    <td>@item.OrderNo</td>
+                                    <td>@item.Lastdate</td>
+                                </tr>
+                            }
+                        }
+                        <!-- 数据行 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@*@RenderPage("~/Views/Shared/_WxFoot.cshtml")*@
+</body>
+</html>

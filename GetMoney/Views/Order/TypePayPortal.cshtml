@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>选择转账类型</title>
+</head>
+<body>
+    <div style="position:absolute;top:50%; margin-top:-130px">
+        <span style="display:block; margin:0 auto; width:60%; text-align:center"><a href="@(ViewBag.payurl + "&typepay=1")"><img style="display:block; margin:0 auto; width:50%;" src="/Content/PayCode/alipaylogo.jpg" /></a>支付宝转账</span>
+        <span style="display:block; margin:0 auto; width:60%; text-align:center"><a href="@(ViewBag.payurl + "&typepay=2")"><img style="display:block; margin:0 auto; width:50%;" src="/Content/PayCode/wxlogo.jpg" /></a>微信转账</span>
+    </div>
+</body>
+</html>
